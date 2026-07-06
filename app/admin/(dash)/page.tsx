@@ -3,6 +3,7 @@ import { getContentUpdatedAt } from "@/app/lib/content";
 import { getOrderCount } from "@/app/lib/orders";
 import { getArtistCount, getArtistWorkCount } from "@/app/lib/artists-db";
 import { getChatMessageCount } from "@/app/lib/chat-messages";
+import { getInstagramPostCount, getInstagramSyncState } from "@/app/lib/instagram-db";
 import { getSubscriberCount } from "@/app/lib/subscribers";
 import AdminPageHeader from "@/app/admin/components/ui/AdminPageHeader";
 
@@ -17,21 +18,32 @@ const cards = [
 ];
 
 export default async function AdminDashboard() {
-  const [updatedAt, orders, subs, chats, artists, works] = await Promise.all([
-    getContentUpdatedAt(),
-    getOrderCount(),
-    getSubscriberCount(),
-    getChatMessageCount(),
-    getArtistCount(),
-    getArtistWorkCount(),
-  ]);
+  const [updatedAt, orders, subs, chats, artists, works, igPosts, igSync] =
+    await Promise.all([
+      getContentUpdatedAt(),
+      getOrderCount(),
+      getSubscriberCount(),
+      getChatMessageCount(),
+      getArtistCount(),
+      getArtistWorkCount(),
+      getInstagramPostCount(),
+      getInstagramSyncState(),
+    ]);
+
+  const igMeta = igSync?.last_synced_at
+    ? `${igPosts} posts · synced ${new Date(igSync.last_synced_at).toLocaleDateString()}`
+    : igPosts > 0
+      ? `${igPosts} posts`
+      : "Not synced yet";
 
   const meta: Record<string, string> = {
     artists: `${artists} artists · ${works} works`,
     chat: `${chats} guest questions`,
     orders: `${orders} recorded`,
     subs: `${subs} on the list`,
-    content: updatedAt ? `Edited ${updatedAt.toLocaleString()}` : "Using defaults",
+    content: updatedAt
+      ? `Edited ${updatedAt.toLocaleString()} · Instagram: ${igMeta}`
+      : `Using defaults · Instagram: ${igMeta}`,
   };
 
   return (

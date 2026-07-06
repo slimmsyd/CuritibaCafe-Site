@@ -82,6 +82,30 @@ const ARTISTS_DDL = `
   );
 `;
 
+const INSTAGRAM_POSTS_DDL = `
+  CREATE TABLE IF NOT EXISTS instagram_posts (
+    id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    short_code   TEXT NOT NULL UNIQUE,
+    post_url     TEXT NOT NULL,
+    caption      TEXT NOT NULL DEFAULT '',
+    timestamp    TIMESTAMPTZ NOT NULL,
+    media_type   TEXT NOT NULL DEFAULT 'IMAGE',
+    image_url    TEXT NOT NULL,
+    synced_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+  );
+`;
+
+const INSTAGRAM_SYNC_DDL = `
+  CREATE TABLE IF NOT EXISTS instagram_sync (
+    id               SMALLINT PRIMARY KEY DEFAULT 1,
+    last_synced_at   TIMESTAMPTZ,
+    last_status      TEXT NOT NULL DEFAULT 'never',
+    last_post_count  INTEGER NOT NULL DEFAULT 0,
+    last_error       TEXT,
+    CONSTRAINT instagram_sync_singleton CHECK (id = 1)
+  );
+`;
+
 const ARTIST_WORKS_DDL = `
   CREATE TABLE IF NOT EXISTS artist_works (
     id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -103,6 +127,8 @@ try {
   await sql.query(CHAT_MESSAGES_DDL);
   await sql.query(ARTISTS_DDL);
   await sql.query(ARTIST_WORKS_DDL);
+  await sql.query(INSTAGRAM_POSTS_DDL);
+  await sql.query(INSTAGRAM_SYNC_DDL);
   // Idempotent migration for databases created before email notifications.
   await sql.query(
     `ALTER TABLE orders ADD COLUMN IF NOT EXISTS notification_sent_at TIMESTAMPTZ`,
@@ -164,7 +190,7 @@ try {
   // No seed: getSiteContent() falls back to site.config when the row is absent,
   // and the first admin save materializes the full document.
   console.log(
-    "✓ CRM tables ready: site_content, orders, subscribers, chat_messages, artists, artist_works",
+    "✓ CRM tables ready: site_content, orders, subscribers, chat_messages, artists, artist_works, instagram_posts",
   );
 } catch (err) {
   console.error("✗ Failed to initialize database:", err.message);
