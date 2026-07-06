@@ -57,11 +57,19 @@ const FAQ_ENTRIES: FaqEntry[] = [
       "directions",
       "find",
       "map",
+      "maps",
       "located",
       "parking",
       "caroline",
       "fredericksburg",
       "downtown",
+      "visit",
+      "drive",
+    ],
+    patterns: [
+      /where\s+(are\s+you|is\s+(it|the|curitiba)|do\s+i\s+find)/i,
+      /\b(find\s+us|find\s+you|get\s+there|how\s+to\s+get)\b/i,
+      /\b(address|located|directions|downtown)\b/i,
     ],
   },
   {
@@ -176,7 +184,7 @@ export function getAnswerForIntent(intent: CafeIntent): string {
     }
 
     case "location":
-      return `${visit.address.join(", ")}.\n\nTap Visit on the menu for directions, or open maps: ${visit.directionsUrl}`;
+      return siteData.chat.locationAnswer;
 
     case "menu": {
       const items = menu.items.map((item) => item.label).join(", ");
