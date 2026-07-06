@@ -2,35 +2,46 @@ import Link from "next/link";
 import {
   getArtistCount,
   getArtistWorkCount,
-  listArtistsWithWorks,
+  listAllArtistsWithWorks,
 } from "@/app/lib/artists-db";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminArtistsPage() {
   const [artists, artistCount, workCount] = await Promise.all([
-    listArtistsWithWorks(),
+    listAllArtistsWithWorks(),
     getArtistCount(),
     getArtistWorkCount(),
   ]);
 
   return (
     <div className="flex flex-col gap-[clamp(20px,4vw,32px)]">
-      <div className="flex flex-col gap-[6px]">
-        <span className="font-display text-[12px] uppercase tracking-[0.34em] text-gold">
-          Artists
-        </span>
-        <h1 className="m-0 font-display text-[clamp(26px,3.4vw,40px)] font-normal leading-[1.05] tracking-[-0.02em]">
-          {artistCount} {artistCount === 1 ? "artist" : "artists"} · {workCount}{" "}
-          {workCount === 1 ? "work" : "works"}
-        </h1>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-col gap-[6px]">
+          <span className="font-display text-[12px] uppercase tracking-[0.34em] text-gold">
+            Artists
+          </span>
+          <h1 className="m-0 font-display text-[clamp(26px,3.4vw,40px)] font-normal leading-[1.05] tracking-[-0.02em]">
+            {artistCount} active · {workCount} works
+          </h1>
+        </div>
+        <Link
+          href="/admin/artists/new"
+          className="rounded-full bg-ink px-[18px] py-[9px] font-display text-[13px] text-white hover:bg-ink/90"
+        >
+          Add artist
+        </Link>
       </div>
 
       {artists.length === 0 ? (
         <p className="rounded-[10px] bg-panel p-[28px] text-[15px] text-ink-soft">
           No artists in the database yet. Run{" "}
           <code className="text-[13px]">npm run db:init</code> then{" "}
-          <code className="text-[13px]">npm run db:seed</code>.
+          <code className="text-[13px]">npm run db:seed</code>, or{" "}
+          <Link href="/admin/artists/new" className="text-gold hover:text-ink">
+            add one
+          </Link>
+          .
         </p>
       ) : (
         <div className="flex flex-col gap-[18px]">
@@ -43,19 +54,34 @@ export default async function AdminArtistsPage() {
                 <div>
                   <h2 className="m-0 font-display text-[20px] tracking-[-0.01em] text-ink">
                     {artist.name}
+                    {!artist.active ? (
+                      <span className="ml-2 text-[12px] font-normal text-red-700">
+                        (hidden)
+                      </span>
+                    ) : null}
                   </h2>
                   <p className="m-0 mt-1 text-[13px] text-muted">
                     {artist.medium} · {artist.price}
                     {artist.featured ? " · Featured" : ""}
                   </p>
                 </div>
-                <Link
-                  href={`/artists/${artist.slug}`}
-                  target="_blank"
-                  className="text-[12px] text-gold hover:text-ink"
-                >
-                  View on site ↗
-                </Link>
+                <div className="flex flex-wrap items-center gap-4 text-[12px]">
+                  <Link
+                    href={`/admin/artists/${artist.id}`}
+                    className="text-gold hover:text-ink"
+                  >
+                    Edit
+                  </Link>
+                  {artist.active ? (
+                    <Link
+                      href={`/artists/${artist.slug}`}
+                      target="_blank"
+                      className="text-muted hover:text-ink"
+                    >
+                      View on site ↗
+                    </Link>
+                  ) : null}
+                </div>
               </div>
 
               <div className="mt-4 overflow-x-auto rounded-[8px] border border-ink/10 bg-white">
@@ -65,6 +91,7 @@ export default async function AdminArtistsPage() {
                       <th className="px-[14px] py-[10px] font-medium">Work</th>
                       <th className="px-[14px] py-[10px] font-medium">Price</th>
                       <th className="px-[14px] py-[10px] font-medium">Sold</th>
+                      <th className="px-[14px] py-[10px] font-medium">Photo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -78,6 +105,9 @@ export default async function AdminArtistsPage() {
                         </td>
                         <td className="px-[14px] py-[10px] text-ink-soft">
                           {work.sold ? "Yes" : "No"}
+                        </td>
+                        <td className="px-[14px] py-[10px] text-ink-soft">
+                          {work.image_url ? "Yes" : "—"}
                         </td>
                       </tr>
                     ))}

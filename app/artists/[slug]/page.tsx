@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/app/components/curitiba/SiteHeader";
 import SiteFooter from "@/app/components/curitiba/SiteFooter";
-import ImagePlaceholder from "@/app/components/curitiba/ImagePlaceholder";
+import CafeImage from "@/app/components/curitiba/CafeImage";
 import {
   getAdjacentArtists,
   getArtistProfile,
@@ -42,7 +42,11 @@ export default async function ArtistProfilePage({ params }: Props) {
       </div>
 
       <section className="grid grid-cols-1 items-start gap-8 px-5 pb-16 pt-8 sm:px-8 sm:pb-20 sm:pt-10 lg:grid-cols-2 lg:gap-2 lg:px-10 lg:pb-[110px]">
-        <ImagePlaceholder label={artist.portraitPlaceholder} aspect="4/5" />
+        <CafeImage
+          src={artist.portraitImageUrl}
+          label={artist.portraitPlaceholder}
+          aspect="4/5"
+        />
         <div className="flex flex-col gap-6 px-0 pt-0 sm:gap-[26px] lg:px-20 lg:pt-[60px]">
           <div className="text-[12px] uppercase tracking-[0.2em] text-faint">
             {artist.medium}
@@ -80,10 +84,19 @@ export default async function ArtistProfilePage({ params }: Props) {
         <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
           {artist.works.map((work) => (
             <div key={work.title} className="flex flex-col items-center gap-[18px]">
-              <ImagePlaceholder label={work.placeholder} aspect="1/1" />
+              <CafeImage
+                src={work.imageUrl}
+                label={work.placeholder}
+                aspect="1/1"
+              />
               <div className="flex flex-col gap-[5px] text-center">
                 <div className="text-[12px] font-medium uppercase tracking-[0.16em] text-ink">
                   {work.title}
+                  {work.sold ? (
+                    <span className="ml-2 text-faint normal-case tracking-normal">
+                      (sold)
+                    </span>
+                  ) : null}
                 </div>
                 <div className="text-[12px] tracking-[0.1em] text-faint">
                   {work.price}

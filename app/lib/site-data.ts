@@ -20,12 +20,15 @@ export type ArtistCard = {
   work: string;
   price: string;
   medium: string;
+  imageUrl?: string;
 };
 
 export type ArtistWork = {
   title: string;
   price: string;
   placeholder: string;
+  imageUrl?: string;
+  sold?: boolean;
 };
 
 export type ArtistProfile = {
@@ -39,6 +42,7 @@ export type ArtistProfile = {
   bio: string;
   quote: string;
   portraitPlaceholder: string;
+  portraitImageUrl?: string;
   works: ArtistWork[];
 };
 

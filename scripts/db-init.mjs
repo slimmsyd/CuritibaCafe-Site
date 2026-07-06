@@ -69,6 +69,8 @@ const ARTISTS_DDL = `
     price                TEXT NOT NULL,
     placeholder          TEXT NOT NULL DEFAULT '',
     portrait_placeholder TEXT NOT NULL DEFAULT '',
+    portrait_image       TEXT NOT NULL DEFAULT '',
+    shelf_image          TEXT NOT NULL DEFAULT '',
     bio                  TEXT NOT NULL DEFAULT '',
     quote                TEXT NOT NULL DEFAULT '',
     portfolio_link       TEXT NOT NULL DEFAULT '#',
@@ -88,6 +90,7 @@ const ARTIST_WORKS_DDL = `
     title        TEXT NOT NULL,
     price        TEXT NOT NULL,
     placeholder  TEXT NOT NULL DEFAULT '',
+    image_url    TEXT NOT NULL DEFAULT '',
     sold         BOOLEAN NOT NULL DEFAULT false,
     created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
   );
@@ -103,6 +106,15 @@ try {
   // Idempotent migration for databases created before email notifications.
   await sql.query(
     `ALTER TABLE orders ADD COLUMN IF NOT EXISTS notification_sent_at TIMESTAMPTZ`,
+  );
+  await sql.query(
+    `ALTER TABLE artists ADD COLUMN IF NOT EXISTS portrait_image TEXT NOT NULL DEFAULT ''`,
+  );
+  await sql.query(
+    `ALTER TABLE artists ADD COLUMN IF NOT EXISTS shelf_image TEXT NOT NULL DEFAULT ''`,
+  );
+  await sql.query(
+    `ALTER TABLE artist_works ADD COLUMN IF NOT EXISTS image_url TEXT NOT NULL DEFAULT ''`,
   );
   // No seed: getSiteContent() falls back to site.config when the row is absent,
   // and the first admin save materializes the full document.

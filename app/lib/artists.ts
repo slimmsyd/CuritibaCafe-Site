@@ -25,6 +25,7 @@ function toArtistCard(row: ArtistRow): ArtistCard {
     work: row.work_summary,
     price: row.price,
     medium: row.medium,
+    imageUrl: row.shelf_image || undefined,
   };
 }
 
@@ -40,10 +41,13 @@ function toArtistProfile(row: ArtistRow, works: ArtistWorkRow[]): ArtistProfile 
     bio: row.bio,
     quote: row.quote,
     portraitPlaceholder: row.portrait_placeholder,
+    portraitImageUrl: row.portrait_image || undefined,
     works: works.map((work) => ({
       title: work.title,
       price: work.price,
       placeholder: work.placeholder,
+      imageUrl: work.image_url || undefined,
+      sold: work.sold,
     })),
   };
 }
@@ -105,6 +109,7 @@ export async function getFeaturedArtistCard(): Promise<{
   name: string;
   medium: string;
   price: string;
+  imageUrl?: string;
 } | null> {
   if (dbEnabled) {
     const featured = await getFeaturedArtist();
@@ -114,6 +119,7 @@ export async function getFeaturedArtistCard(): Promise<{
         name: featured.name,
         medium: featured.medium,
         price: featured.price,
+        imageUrl: featured.portrait_image || featured.shelf_image || undefined,
       };
     }
   }

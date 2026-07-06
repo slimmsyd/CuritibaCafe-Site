@@ -3,6 +3,7 @@ import AnnouncementBar from "./components/curitiba/AnnouncementBar";
 import SiteHeader from "./components/curitiba/SiteHeader";
 import SiteFooter from "./components/curitiba/SiteFooter";
 import HeroVideo from "./components/curitiba/HeroVideo";
+import CafeImage from "./components/curitiba/CafeImage";
 import ImagePlaceholder from "./components/curitiba/ImagePlaceholder";
 import NewsletterForm from "./components/curitiba/NewsletterForm";
 import EventList from "./components/curitiba/EventList";
@@ -140,7 +141,11 @@ export default async function HomePage() {
           <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
             {artistsPreview.map((artist) => (
               <div key={artist.slug} className="flex flex-col items-center gap-[22px]">
-                <ImagePlaceholder label={artist.placeholder} aspect="4/5" />
+                <CafeImage
+                  src={artist.imageUrl}
+                  label={artist.placeholder}
+                  aspect="4/5"
+                />
                 <div className="flex flex-col gap-1.5 text-center">
                   <div className="text-[13px] font-medium uppercase tracking-[0.16em] text-ink">
                     {artist.name}

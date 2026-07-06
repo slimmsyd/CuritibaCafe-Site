@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SiteHeader from "../components/curitiba/SiteHeader";
 import SiteFooter from "../components/curitiba/SiteFooter";
-import ImagePlaceholder from "../components/curitiba/ImagePlaceholder";
+import CafeImage from "../components/curitiba/CafeImage";
 import { getFeaturedArtistCard, listShelfArtists } from "../lib/artists";
 import { siteData } from "../lib/site-data";
 
@@ -32,7 +32,8 @@ export default async function ArtistsPage() {
 
       {featured ? (
         <section id="featured" className="grid grid-cols-1 bg-sand lg:min-h-[680px] lg:grid-cols-2">
-          <ImagePlaceholder
+          <CafeImage
+            src={featured.imageUrl}
             label={artistsPage.featured.imagePlaceholder}
             aspect="fill"
             className="min-h-[320px] lg:min-h-[680px]"
@@ -70,7 +71,11 @@ export default async function ArtistsPage() {
         <div className="mx-auto grid max-w-[1560px] grid-cols-2 gap-x-2 gap-y-10 sm:grid-cols-3 sm:gap-y-14 lg:grid-cols-4">
           {shelfArtists.map((artist) => (
             <div key={artist.slug} className="flex flex-col items-center gap-4">
-              <ImagePlaceholder label={artist.placeholder} aspect="1/1" />
+              <CafeImage
+                src={artist.imageUrl}
+                label={artist.placeholder}
+                aspect="1/1"
+              />
               <div className="flex flex-col gap-[5px] text-center">
                 <Link
                   href={`/artists/${artist.slug}`}
