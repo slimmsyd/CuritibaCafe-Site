@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #111111;
+  --color-white: #ffffff;
+  --color-sand: #f7f5f0;
+  --color-hairline: #eceae4;
+  --color-muted: #5b5b5b;
+  --color-faint: #9a9a93;
+  --color-newsletter-muted: #b9b9b4;
+  --color-placeholder: #e8e6e0;
+
+  --font-body: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
+}
+
+/*
+ * Base overrides MUST live in `@layer base`. Tailwind v4 emits every utility
+ * inside `@layer utilities`, and unlayered CSS always wins over layered CSS
+ * regardless of specificity. If these rules stayed unlayered, `a { color:
+ * inherit }` would silently override every text-color utility (text-ink,
+ * text-white, text-muted, …) on links — making, e.g., the "Apply to the shelf"
+ * button render white-on-white. Layering them here lets utilities override
+ * per-element while these remain the default.
+ */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    background: var(--color-white);
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-muted);
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-faint);
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
