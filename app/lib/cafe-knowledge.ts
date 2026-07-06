@@ -172,7 +172,7 @@ export function getAnswerForIntent(intent: CafeIntent): string {
 
     case "hours": {
       const lines = visit.hours.map((row) => `${row.days}: ${row.time}`);
-      return `Our hours:\n${lines.join("\n")}\n\nFriday and Saturday we're open until 10 PM. Saturday opens at 9 AM — that's the only weekend difference.`;
+      return `Our hours:\n${lines.join("\n")}\n\nFriday and Saturday we're open until 10 PM. Saturday opens at 9 AM. That's the only weekend difference.`;
     }
 
     case "location":

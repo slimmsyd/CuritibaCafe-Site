@@ -223,7 +223,7 @@ export const siteData = {
     title: "Curitiba",
     subtitle: "Ask about the bar",
     placeholder: "Hours, menu, events…",
-    disclaimer: "Answers from our menu & hours — ask at the counter for anything else",
+    disclaimer: "Answers from our menu and hours. Ask at the counter for anything else.",
     greeting:
       "Welcome to Curitiba. Ask about our hours, summer menu, events, or the artist shelf.",
     suggestions: [

@@ -142,7 +142,7 @@ export default function ChatBot() {
         reply =
           local.reply ||
           getAnswerForIntent("unknown") ||
-          "Something went wrong — try again, or ask at the counter.";
+          "Something went wrong. Try again, or ask at the counter.";
       }
 
       setMessages((prev) => [
