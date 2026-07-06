@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/app/lib/auth-server";
+import { copyToInput, DEFAULT_ARTIST_COPY, type ArtistPageCopy } from "@/app/lib/artist-copy";
 import {
   deactivateArtist,
   saveArtist,
@@ -38,6 +39,24 @@ function parseArtistDraft(raw: unknown): ArtistInput {
   if (!str("slug")) throw new Error("Slug is required.");
   if (!str("name")) throw new Error("Name is required.");
 
+  const copyRaw = (d.copy ?? {}) as Record<string, unknown>;
+  const copyStr = (key: keyof ArtistPageCopy) =>
+    String(copyRaw[key] ?? DEFAULT_ARTIST_COPY[key]).trim();
+  const copy = copyToInput({
+    portfolioCta: copyStr("portfolioCta"),
+    counterLine: copyStr("counterLine"),
+    sinceLine: copyStr("sinceLine"),
+    worksHeading: copyStr("worksHeading"),
+    worksFooter: copyStr("worksFooter"),
+    soldLabel: copyStr("soldLabel"),
+    prevArtistLabel: copyStr("prevArtistLabel"),
+    nextArtistLabel: copyStr("nextArtistLabel"),
+    featuredEyebrow: copyStr("featuredEyebrow"),
+    featuredBio: String(copyRaw.featuredBio ?? "").trim(),
+    featuredCta: copyStr("featuredCta"),
+    featuredPriceLine: copyStr("featuredPriceLine"),
+  });
+
   return {
     id: d.id ? num("id") : undefined,
     slug: str("slug"),
@@ -54,6 +73,7 @@ function parseArtistDraft(raw: unknown): ArtistInput {
     quote: str("quote"),
     portfolioLink: str("portfolioLink") || "#",
     onShelfSince: str("onShelfSince"),
+    copy,
     featured: bool("featured"),
     active: d.id ? bool("active") : true,
     sortOrder: num("sortOrder"),

@@ -11,6 +11,7 @@ import {
   saveArtistAction,
   type ArtistSaveState,
 } from "@/app/admin/artist-actions";
+import { copyToInput, DEFAULT_ARTIST_COPY, type ArtistPageCopy } from "@/app/lib/artist-copy";
 import type { ArtistWithWorks } from "@/app/lib/artists-db";
 
 type WorkDraft = {
@@ -38,6 +39,7 @@ type ArtistDraft = {
   quote: string;
   portfolioLink: string;
   onShelfSince: string;
+  copy: ArtistPageCopy;
   featured: boolean;
   active: boolean;
   sortOrder: number;
@@ -80,6 +82,7 @@ function toDraft(artist?: ArtistWithWorks): ArtistDraft {
       quote: "",
       portfolioLink: "#",
       onShelfSince: "",
+      copy: { ...DEFAULT_ARTIST_COPY },
       featured: false,
       active: true,
       sortOrder: 0,
@@ -103,6 +106,20 @@ function toDraft(artist?: ArtistWithWorks): ArtistDraft {
     quote: artist.quote,
     portfolioLink: artist.portfolio_link,
     onShelfSince: artist.on_shelf_since,
+    copy: copyToInput({
+      portfolioCta: artist.portfolio_cta,
+      counterLine: artist.counter_line,
+      sinceLine: artist.since_line,
+      worksHeading: artist.works_heading,
+      worksFooter: artist.works_footer,
+      soldLabel: artist.sold_label,
+      prevArtistLabel: artist.prev_artist_label,
+      nextArtistLabel: artist.next_artist_label,
+      featuredEyebrow: artist.featured_eyebrow,
+      featuredBio: artist.featured_bio,
+      featuredCta: artist.featured_cta,
+      featuredPriceLine: artist.featured_price_line,
+    }),
     featured: artist.featured,
     active: artist.active,
     sortOrder: artist.sort_order,
@@ -153,6 +170,13 @@ export default function ArtistEditor({
 
   const set = <K extends keyof ArtistDraft>(key: K, value: ArtistDraft[K]) => {
     setDraft((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const setCopy = <K extends keyof ArtistPageCopy>(key: K, value: ArtistPageCopy[K]) => {
+    setDraft((prev) => ({
+      ...prev,
+      copy: { ...prev.copy, [key]: value },
+    }));
   };
 
   const setName = (name: string) => {
@@ -286,6 +310,117 @@ export default function ArtistEditor({
       </AdminSection>
 
       <AdminSection
+        title="Page copy"
+        description="Labels and lines shown on the artist profile and featured block. Use {price}, {since}, and {firstName} where noted."
+      >
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <AdminField label="Portfolio button" hint="Profile page CTA.">
+            <input
+              className="admin-input"
+              value={draft.copy.portfolioCta}
+              onChange={(e) => setCopy("portfolioCta", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Counter line" hint="Use {price} for the starting price.">
+            <input
+              className="admin-input"
+              value={draft.copy.counterLine}
+              onChange={(e) => setCopy("counterLine", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="On shelf line" hint="Use {since} for the date.">
+            <input
+              className="admin-input"
+              value={draft.copy.sinceLine}
+              onChange={(e) => setCopy("sinceLine", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Works section heading">
+            <input
+              className="admin-input"
+              value={draft.copy.worksHeading}
+              onChange={(e) => setCopy("worksHeading", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Sold label" hint="Shown next to sold pieces.">
+            <input
+              className="admin-input"
+              value={draft.copy.soldLabel}
+              onChange={(e) => setCopy("soldLabel", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Previous artist label">
+            <input
+              className="admin-input"
+              value={draft.copy.prevArtistLabel}
+              onChange={(e) => setCopy("prevArtistLabel", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Next artist label">
+            <input
+              className="admin-input"
+              value={draft.copy.nextArtistLabel}
+              onChange={(e) => setCopy("nextArtistLabel", e.target.value)}
+            />
+          </AdminField>
+          <div className="sm:col-span-2">
+            <AdminField
+              label="Works footer"
+              hint="Use {firstName} for the artist’s first name."
+            >
+              <textarea
+                className="admin-textarea min-h-[88px]"
+                value={draft.copy.worksFooter}
+                onChange={(e) => setCopy("worksFooter", e.target.value)}
+              />
+            </AdminField>
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-[#ebeae5] pt-8">
+          <h3 className="m-0 mb-5 text-[14px] font-medium uppercase tracking-[0.12em] text-ink-soft">
+            Featured block
+          </h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <AdminField label="Featured eyebrow" hint="Only when this artist is featured.">
+              <input
+                className="admin-input"
+                value={draft.copy.featuredEyebrow}
+                onChange={(e) => setCopy("featuredEyebrow", e.target.value)}
+              />
+            </AdminField>
+            <AdminField label="Featured CTA" hint="Button on the Artists page.">
+              <input
+                className="admin-input"
+                value={draft.copy.featuredCta}
+                onChange={(e) => setCopy("featuredCta", e.target.value)}
+              />
+            </AdminField>
+            <AdminField label="Featured price line" hint="Use {price}.">
+              <input
+                className="admin-input"
+                value={draft.copy.featuredPriceLine}
+                onChange={(e) => setCopy("featuredPriceLine", e.target.value)}
+              />
+            </AdminField>
+            <div className="sm:col-span-2">
+              <AdminField
+                label="Featured bio"
+                hint="Longer blurb for the featured section. Leave blank to use the main bio."
+              >
+                <textarea
+                  className="admin-textarea"
+                  value={draft.copy.featuredBio}
+                  onChange={(e) => setCopy("featuredBio", e.target.value)}
+                  placeholder={draft.bio || "Uses the main bio when empty."}
+                />
+              </AdminField>
+            </div>
+          </div>
+        </div>
+      </AdminSection>
+
+      <AdminSection
         title="Works on the shelf"
         description="Each piece can have its own photo, price, and sold status."
         action={
@@ -353,6 +488,14 @@ export default function ArtistEditor({
                       value={work.price}
                       onChange={(e) => setWork(index, { price: e.target.value })}
                       placeholder="$38"
+                    />
+                  </AdminField>
+                  <AdminField label="Image alt text" hint="Describes the photo if it fails to load.">
+                    <input
+                      className="admin-input"
+                      value={work.placeholder}
+                      onChange={(e) => setWork(index, { placeholder: e.target.value })}
+                      placeholder="Demitasse pair - photo"
                     />
                   </AdminField>
                   <div className="sm:col-span-2">

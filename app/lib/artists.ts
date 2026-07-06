@@ -7,6 +7,7 @@ import {
   getArtistProfile as getStaticArtistProfile,
   shelfArtists,
 } from "./site-data";
+import { copyToInput, resolveArtistCopy } from "./artist-copy";
 import {
   getActiveArtists,
   getArtistBySlug,
@@ -30,7 +31,7 @@ function toArtistCard(row: ArtistRow): ArtistCard {
 }
 
 function toArtistProfile(row: ArtistRow, works: ArtistWorkRow[]): ArtistProfile {
-  return {
+  const data = {
     slug: row.slug,
     name: row.name,
     firstName: row.first_name,
@@ -49,6 +50,29 @@ function toArtistProfile(row: ArtistRow, works: ArtistWorkRow[]): ArtistProfile 
       imageUrl: work.image_url || undefined,
       sold: work.sold,
     })),
+  };
+
+  return {
+    ...data,
+    copy: resolveArtistCopy(copyToInput({
+      portfolioCta: row.portfolio_cta,
+      counterLine: row.counter_line,
+      sinceLine: row.since_line,
+      worksHeading: row.works_heading,
+      worksFooter: row.works_footer,
+      soldLabel: row.sold_label,
+      prevArtistLabel: row.prev_artist_label,
+      nextArtistLabel: row.next_artist_label,
+      featuredEyebrow: row.featured_eyebrow,
+      featuredBio: row.featured_bio,
+      featuredCta: row.featured_cta,
+      featuredPriceLine: row.featured_price_line,
+    }), {
+      price: data.price,
+      since: data.since,
+      firstName: data.firstName,
+      bio: data.bio,
+    }),
   };
 }
 
@@ -110,25 +134,53 @@ export async function getFeaturedArtistCard(): Promise<{
   medium: string;
   price: string;
   imageUrl?: string;
+  imagePlaceholder: string;
+  copy: ReturnType<typeof resolveArtistCopy>;
 } | null> {
   if (dbEnabled) {
     const featured = await getFeaturedArtist();
     if (featured) {
+      const copy = resolveArtistCopy(copyToInput({
+        portfolioCta: featured.portfolio_cta,
+        counterLine: featured.counter_line,
+        sinceLine: featured.since_line,
+        worksHeading: featured.works_heading,
+        worksFooter: featured.works_footer,
+        soldLabel: featured.sold_label,
+        prevArtistLabel: featured.prev_artist_label,
+        nextArtistLabel: featured.next_artist_label,
+        featuredEyebrow: featured.featured_eyebrow,
+        featuredBio: featured.featured_bio,
+        featuredCta: featured.featured_cta,
+        featuredPriceLine: featured.featured_price_line,
+      }), {
+        price: featured.price,
+        since: featured.on_shelf_since,
+        firstName: featured.first_name,
+        bio: featured.bio,
+      });
+
       return {
         slug: featured.slug,
         name: featured.name,
         medium: featured.medium,
         price: featured.price,
         imageUrl: featured.portrait_image || featured.shelf_image || undefined,
+        imagePlaceholder: featured.portrait_placeholder || featured.placeholder,
+        copy,
       };
     }
   }
 
-  const marina = artistProfiles.marina;
+  const marina = getStaticArtistProfile("marina");
+  if (!marina) return null;
+
   return {
     slug: marina.slug,
     name: marina.name,
     medium: marina.medium,
     price: marina.price,
+    imagePlaceholder: marina.portraitPlaceholder,
+    copy: marina.copy,
   };
 }

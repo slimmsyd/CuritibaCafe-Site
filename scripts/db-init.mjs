@@ -116,6 +116,51 @@ try {
   await sql.query(
     `ALTER TABLE artist_works ADD COLUMN IF NOT EXISTS image_url TEXT NOT NULL DEFAULT ''`,
   );
+
+  const copyColumns = [
+    ["portfolio_cta", "Their portfolio"],
+    ["counter_line", "At the counter - {price}"],
+    ["since_line", "On the shelf since {since}"],
+    ["works_heading", "On the shelf"],
+    [
+      "works_footer",
+      "Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.",
+    ],
+    ["sold_label", "(sold)"],
+    ["prev_artist_label", "Previous artist"],
+    ["next_artist_label", "Next artist"],
+    ["featured_eyebrow", "Featured this month"],
+    ["featured_bio", ""],
+    ["featured_cta", "View their work"],
+    ["featured_price_line", "At the counter - {price}"],
+  ];
+  for (const [column, defaultValue] of copyColumns) {
+    await sql.query(
+      `ALTER TABLE artists ADD COLUMN IF NOT EXISTS ${column} TEXT NOT NULL DEFAULT '${defaultValue.replace(/'/g, "''")}'`,
+    );
+  }
+  await sql.query(`
+    UPDATE artists SET
+      portfolio_cta = COALESCE(NULLIF(portfolio_cta, ''), 'Their portfolio'),
+      counter_line = COALESCE(NULLIF(counter_line, ''), 'At the counter - {price}'),
+      since_line = COALESCE(NULLIF(since_line, ''), 'On the shelf since {since}'),
+      works_heading = COALESCE(NULLIF(works_heading, ''), 'On the shelf'),
+      works_footer = COALESCE(NULLIF(works_footer, ''), 'Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.'),
+      sold_label = COALESCE(NULLIF(sold_label, ''), '(sold)'),
+      prev_artist_label = COALESCE(NULLIF(prev_artist_label, ''), 'Previous artist'),
+      next_artist_label = COALESCE(NULLIF(next_artist_label, ''), 'Next artist'),
+      featured_eyebrow = COALESCE(NULLIF(featured_eyebrow, ''), 'Featured this month'),
+      featured_cta = COALESCE(NULLIF(featured_cta, ''), 'View their work'),
+      featured_price_line = COALESCE(NULLIF(featured_price_line, ''), 'At the counter - {price}')
+  `);
+  await sql.query(`
+    UPDATE artists SET
+      featured_bio = 'Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in - the shelf carries the same pieces, numbered and signed.',
+      featured_cta = 'View her work',
+      featured_price_line = 'At the counter - from $38'
+    WHERE slug = 'marina' AND (featured_bio = '' OR featured_cta = 'View their work')
+  `);
+
   // No seed: getSiteContent() falls back to site.config when the row is absent,
   // and the first admin save materializes the full document.
   console.log(

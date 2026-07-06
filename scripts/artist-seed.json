@@ -14,6 +14,11 @@
     "portfolioLink": "#",
     "onShelfSince": "January 2026",
     "featured": true,
+    "copy": {
+      "featuredBio": "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in - the shelf carries the same pieces, numbered and signed.",
+      "featuredCta": "View her work",
+      "featuredPriceLine": "At the counter - from $38"
+    },
     "works": [
       { "title": "Demitasse pair", "price": "$38", "placeholder": "Demitasse pair - photo" },
       { "title": "Pour-over set", "price": "$120", "placeholder": "Pour-over set - photo" },

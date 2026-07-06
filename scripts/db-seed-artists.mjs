@@ -15,6 +15,26 @@ const sql = neon(url);
 const seedPath = join(dirname(fileURLToPath(import.meta.url)), "artist-seed.json");
 const artists = JSON.parse(readFileSync(seedPath, "utf8"));
 
+const DEFAULT_COPY = {
+  portfolioCta: "Their portfolio",
+  counterLine: "At the counter - {price}",
+  sinceLine: "On the shelf since {since}",
+  worksHeading: "On the shelf",
+  worksFooter:
+    "Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.",
+  soldLabel: "(sold)",
+  prevArtistLabel: "Previous artist",
+  nextArtistLabel: "Next artist",
+  featuredEyebrow: "Featured this month",
+  featuredBio: "",
+  featuredCta: "View their work",
+  featuredPriceLine: "At the counter - {price}",
+};
+
+function resolveCopy(artist) {
+  return { ...DEFAULT_COPY, ...(artist.copy ?? {}) };
+}
+
 try {
   const existing = await sql`SELECT count(*)::int AS count FROM artists`;
   if ((existing[0]?.count ?? 0) > 0) {
@@ -24,10 +44,15 @@ try {
 
   for (let i = 0; i < artists.length; i++) {
     const artist = artists[i];
+    const copy = resolveCopy(artist);
     const rows = await sql`
       INSERT INTO artists (
         slug, slot_id, sort_order, name, first_name, medium, work_summary, price,
-        placeholder, portrait_placeholder, bio, quote, portfolio_link, on_shelf_since, featured
+        placeholder, portrait_placeholder, bio, quote, portfolio_link, on_shelf_since,
+        portfolio_cta, counter_line, since_line, works_heading, works_footer,
+        sold_label, prev_artist_label, next_artist_label,
+        featured_eyebrow, featured_bio, featured_cta, featured_price_line,
+        featured
       ) VALUES (
         ${artist.slug},
         ${artist.slotId},
@@ -43,6 +68,18 @@ try {
         ${artist.quote},
         ${artist.portfolioLink},
         ${artist.onShelfSince},
+        ${copy.portfolioCta},
+        ${copy.counterLine},
+        ${copy.sinceLine},
+        ${copy.worksHeading},
+        ${copy.worksFooter},
+        ${copy.soldLabel},
+        ${copy.prevArtistLabel},
+        ${copy.nextArtistLabel},
+        ${copy.featuredEyebrow},
+        ${copy.featuredBio},
+        ${copy.featuredCta},
+        ${copy.featuredPriceLine},
         ${artist.featured ?? false}
       )
       RETURNING id

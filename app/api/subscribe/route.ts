@@ -13,7 +13,7 @@ import { NextResponse } from "next/server";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
-  let body: { email?: unknown };
+  let body: { email?: unknown; source?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -25,14 +25,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
 
-  console.log("[subscribe] new signup", email);
+  const source =
+    typeof body.source === "string" && body.source.trim()
+      ? body.source.trim().slice(0, 64)
+      : "free-chapter";
+
+  console.log("[subscribe] new signup", email, source);
 
   // Persist to the database when the CRM is enabled (no-op otherwise), and on a
   // genuinely new signup send the welcome + admin emails via Resend (no-op when
   // the DB or Resend env is unset).
   try {
     const { upsertSubscriber } = await import("@/app/lib/subscribers");
-    const { isNew } = await upsertSubscriber(email, "free-chapter");
+    const { isNew } = await upsertSubscriber(email, source);
     if (isNew) {
       const { sendNewsletterEmails } = await import("@/app/lib/email");
       await sendNewsletterEmails(email);

@@ -1,3 +1,5 @@
+import { resolveArtistCopy } from "./artist-copy";
+
 export type MenuItem = {
   id: string;
   label: string;
@@ -31,7 +33,7 @@ export type ArtistWork = {
   sold?: boolean;
 };
 
-export type ArtistProfile = {
+export type ArtistProfileData = {
   slug: string;
   name: string;
   firstName: string;
@@ -44,6 +46,10 @@ export type ArtistProfile = {
   portraitPlaceholder: string;
   portraitImageUrl?: string;
   works: ArtistWork[];
+};
+
+export type ArtistProfile = ArtistProfileData & {
+  copy: ReturnType<typeof resolveArtistCopy>;
 };
 
 export type PastEvent = {
@@ -512,7 +518,7 @@ export const shelfArtists: ArtistCard[] = [
   },
 ];
 
-export const artistProfiles: Record<string, ArtistProfile> = {
+export const artistProfiles: Record<string, ArtistProfileData> = {
   marina: {
     slug: "marina",
     name: "Marina Duarte",
@@ -663,7 +669,26 @@ export const artistOrder = [
 ] as const;
 
 export function getArtistProfile(slug: string): ArtistProfile | undefined {
-  return artistProfiles[slug];
+  const profile = artistProfiles[slug];
+  if (!profile) return undefined;
+  return {
+    ...profile,
+    copy: resolveArtistCopy(
+      slug === "marina"
+        ? {
+            featuredBio: siteData.artistsPage.featured.bio,
+            featuredCta: "View her work",
+            featuredPriceLine: siteData.artistsPage.featured.price,
+          }
+        : undefined,
+      {
+        price: profile.price,
+        since: profile.since,
+        firstName: profile.firstName,
+        bio: profile.bio,
+      },
+    ),
+  };
 }
 
 export function getAdjacentArtists(slug: string) {

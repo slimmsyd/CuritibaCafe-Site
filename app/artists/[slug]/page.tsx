@@ -65,21 +65,21 @@ export default async function ArtistProfilePage({ params }: Props) {
               href={artist.link}
               className="border border-ink px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
             >
-              Their portfolio
+              {artist.copy.portfolioCta}
             </Link>
             <span className="text-[13px] text-muted">
-              At the counter - {artist.price}
+              {artist.copy.counterLineRendered}
             </span>
           </div>
           <div className="mt-1 text-[12px] uppercase tracking-[0.1em] text-faint">
-            On the shelf since {artist.since}
+            {artist.copy.sinceLineRendered}
           </div>
         </div>
       </section>
 
       <section className="px-5 pb-16 sm:px-8 sm:pb-20 lg:px-10 lg:pb-[120px]">
         <h2 className="mb-10 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-14">
-          On the shelf
+          {artist.copy.worksHeading}
         </h2>
         <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
           {artist.works.map((work) => (
@@ -94,7 +94,7 @@ export default async function ArtistProfilePage({ params }: Props) {
                   {work.title}
                   {work.sold ? (
                     <span className="ml-2 text-faint normal-case tracking-normal">
-                      (sold)
+                      {artist.copy.soldLabel}
                     </span>
                   ) : null}
                 </div>
@@ -106,8 +106,7 @@ export default async function ArtistProfilePage({ params }: Props) {
           ))}
         </div>
         <p className="mx-auto mt-10 max-w-[440px] text-center text-[13px] leading-[1.7] text-faint sm:mt-12">
-          Every piece is sold at the counter only - no shipping, no holds.
-          Seventy percent goes directly to {artist.firstName}.
+          {artist.copy.worksFooterRendered}
         </p>
       </section>
 
@@ -117,7 +116,7 @@ export default async function ArtistProfilePage({ params }: Props) {
           className="flex flex-col gap-2 border-b border-hairline px-5 py-10 hover:text-muted sm:border-b-0 sm:border-r sm:px-10 sm:py-11"
         >
           <span className="text-[11px] uppercase tracking-[0.18em] text-faint">
-            Previous artist
+            {artist.copy.prevArtistLabel}
           </span>
           <span className="text-[15px] font-medium uppercase tracking-[0.14em] text-ink">
             {adjacent.prev.name}
@@ -128,7 +127,7 @@ export default async function ArtistProfilePage({ params }: Props) {
           className="flex flex-col gap-2 px-5 py-10 hover:text-muted sm:items-end sm:px-10 sm:py-11 sm:text-right"
         >
           <span className="text-[11px] uppercase tracking-[0.18em] text-faint">
-            Next artist
+            {artist.copy.nextArtistLabel}
           </span>
           <span className="text-[15px] font-medium uppercase tracking-[0.14em] text-ink">
             {adjacent.next.name}

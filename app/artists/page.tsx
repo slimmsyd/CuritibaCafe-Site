@@ -34,13 +34,13 @@ export default async function ArtistsPage() {
         <section id="featured" className="grid grid-cols-1 bg-sand lg:min-h-[680px] lg:grid-cols-2">
           <CafeImage
             src={featured.imageUrl}
-            label={artistsPage.featured.imagePlaceholder}
+            label={featured.imagePlaceholder}
             aspect="fill"
             className="min-h-[320px] lg:min-h-[680px]"
           />
           <div className="flex flex-col justify-center gap-7 px-5 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-[90px]">
             <div className="text-[12px] uppercase tracking-[0.2em] text-faint">
-              Featured this month
+              {featured.copy.featuredEyebrow}
             </div>
             <h2 className="m-0 text-[22px] font-medium uppercase tracking-[0.14em] text-ink sm:text-[26px]">
               {featured.name}
@@ -49,16 +49,18 @@ export default async function ArtistsPage() {
               {featured.medium}
             </div>
             <p className="m-0 max-w-[440px] text-pretty text-[15px] leading-[1.8] text-muted">
-              {artistsPage.featured.bio}
+              {featured.copy.featuredBioRendered}
             </p>
             <div className="mt-2 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-8">
               <Link
                 href={`/artists/${featured.slug}`}
                 className="border border-ink px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
               >
-                View her work
+                {featured.copy.featuredCta}
               </Link>
-              <span className="text-[13px] text-muted">{featured.price}</span>
+              <span className="text-[13px] text-muted">
+                {featured.copy.featuredPriceLineRendered}
+              </span>
             </div>
           </div>
         </section>

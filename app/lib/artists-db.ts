@@ -1,4 +1,5 @@
 import "server-only";
+import { type ArtistPageCopy } from "./artist-copy";
 import { dbEnabled, sql } from "./db";
 
 export type ArtistRow = {
@@ -19,6 +20,18 @@ export type ArtistRow = {
   quote: string;
   portfolio_link: string;
   on_shelf_since: string;
+  portfolio_cta: string;
+  counter_line: string;
+  since_line: string;
+  works_heading: string;
+  works_footer: string;
+  sold_label: string;
+  prev_artist_label: string;
+  next_artist_label: string;
+  featured_eyebrow: string;
+  featured_bio: string;
+  featured_cta: string;
+  featured_price_line: string;
   featured: boolean;
   active: boolean;
   created_at: string;
@@ -65,6 +78,7 @@ export type ArtistInput = {
   quote: string;
   portfolioLink: string;
   onShelfSince: string;
+  copy: ArtistPageCopy;
   featured: boolean;
   active: boolean;
   sortOrder: number;
@@ -220,6 +234,18 @@ export async function saveArtist(input: ArtistInput): Promise<number> {
         quote = ${input.quote},
         portfolio_link = ${input.portfolioLink},
         on_shelf_since = ${input.onShelfSince},
+        portfolio_cta = ${input.copy.portfolioCta},
+        counter_line = ${input.copy.counterLine},
+        since_line = ${input.copy.sinceLine},
+        works_heading = ${input.copy.worksHeading},
+        works_footer = ${input.copy.worksFooter},
+        sold_label = ${input.copy.soldLabel},
+        prev_artist_label = ${input.copy.prevArtistLabel},
+        next_artist_label = ${input.copy.nextArtistLabel},
+        featured_eyebrow = ${input.copy.featuredEyebrow},
+        featured_bio = ${input.copy.featuredBio},
+        featured_cta = ${input.copy.featuredCta},
+        featured_price_line = ${input.copy.featuredPriceLine},
         featured = ${input.featured},
         active = ${input.active},
         updated_at = now()
@@ -230,7 +256,11 @@ export async function saveArtist(input: ArtistInput): Promise<number> {
       INSERT INTO artists (
         slug, slot_id, sort_order, name, first_name, medium, work_summary, price,
         placeholder, portrait_placeholder, portrait_image, shelf_image, bio, quote,
-        portfolio_link, on_shelf_since, featured, active
+        portfolio_link, on_shelf_since,
+        portfolio_cta, counter_line, since_line, works_heading, works_footer,
+        sold_label, prev_artist_label, next_artist_label,
+        featured_eyebrow, featured_bio, featured_cta, featured_price_line,
+        featured, active
       ) VALUES (
         ${slug},
         ${`artist-${slug}`},
@@ -248,6 +278,18 @@ export async function saveArtist(input: ArtistInput): Promise<number> {
         ${input.quote},
         ${input.portfolioLink},
         ${input.onShelfSince},
+        ${input.copy.portfolioCta},
+        ${input.copy.counterLine},
+        ${input.copy.sinceLine},
+        ${input.copy.worksHeading},
+        ${input.copy.worksFooter},
+        ${input.copy.soldLabel},
+        ${input.copy.prevArtistLabel},
+        ${input.copy.nextArtistLabel},
+        ${input.copy.featuredEyebrow},
+        ${input.copy.featuredBio},
+        ${input.copy.featuredCta},
+        ${input.copy.featuredPriceLine},
         ${input.featured},
         ${input.active}
       )
