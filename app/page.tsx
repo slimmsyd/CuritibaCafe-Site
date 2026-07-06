@@ -8,19 +8,27 @@ import NewsletterForm from "./components/curitiba/NewsletterForm";
 import EventList from "./components/curitiba/EventList";
 import LocationMap from "./components/curitiba/LocationMap";
 import Reviews from "./components/curitiba/Reviews";
+import InstagramFeed from "./components/curitiba/InstagramFeed";
+import SocialLinks from "./components/curitiba/SocialLinks";
 import { siteData } from "./lib/site-data";
 import { getGoogleReviews } from "./lib/reviews";
+import { getInstagramPosts } from "./lib/instagram";
+
+export const maxDuration = 90;
 
 export default async function HomePage() {
-  const reviews = await getGoogleReviews();
+  const [reviews, instagram] = await Promise.all([
+    getGoogleReviews(),
+    getInstagramPosts(),
+  ]);
 
   return (
-    <div className="min-w-[1100px] bg-white">
+    <div className="w-full overflow-x-hidden bg-white">
       <AnnouncementBar />
       <SiteHeader variant="landing" />
 
       <section id="top" className="sticky top-0 z-0">
-        <div className="relative h-[82vh] min-h-[560px] overflow-hidden bg-ink">
+        <div className="relative h-[72vh] min-h-[420px] overflow-hidden bg-ink sm:h-[78vh] sm:min-h-[520px] lg:h-[82vh] lg:min-h-[560px]">
           <HeroVideo src={siteData.hero.video} />
           <div
             className="pointer-events-none absolute inset-0 z-[1]"
@@ -29,23 +37,24 @@ export default async function HomePage() {
                 "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.35) 100%)",
             }}
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-14 z-[2] flex flex-col items-center gap-[18px]">
+          <div className="pointer-events-none absolute inset-x-0 bottom-8 z-[2] flex flex-col items-center gap-4 px-5 sm:bottom-14 sm:gap-[18px]">
             <div
-              className="text-[13px] uppercase tracking-[0.2em] text-white"
+              className="text-center text-[12px] uppercase tracking-[0.2em] text-white sm:text-[13px]"
               style={{ textShadow: "0 1px 12px rgba(0,0,0,0.35)" }}
             >
               {siteData.hero.season}
             </div>
             <Link
               href={siteData.hero.cta.href}
-              className="pointer-events-auto border border-ink bg-white px-[42px] py-[15px] text-[13px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
+              className="pointer-events-auto border border-ink bg-white px-8 py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted sm:px-[42px] sm:py-[15px] sm:text-[13px]"
             >
               {siteData.hero.cta.label}
             </Link>
+            <SocialLinks variant="hero" />
             <div
               role="img"
               aria-label={`Rated ${reviews.rating.toFixed(1)} out of 5 stars from ${reviews.count}+ reviews`}
-              className="mt-2 flex items-center gap-4 bg-ink/70 px-9 py-4 text-white"
+              className="mt-1 flex flex-wrap items-center justify-center gap-3 bg-ink/70 px-5 py-3 text-white sm:mt-2 sm:gap-4 sm:px-9 sm:py-4"
             >
               <div className="flex gap-[7px]" aria-hidden>
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -60,12 +69,12 @@ export default async function HomePage() {
                   </svg>
                 ))}
               </div>
-              <span className="text-[16px] tracking-[0.08em]" aria-hidden>
+              <span className="text-[15px] tracking-[0.08em] sm:text-[16px]" aria-hidden>
                 {reviews.rating.toFixed(1)}
               </span>
-              <span className="h-[18px] w-px bg-white/40" aria-hidden />
+              <span className="hidden h-[18px] w-px bg-white/40 sm:block" aria-hidden />
               <span
-                className="text-[13px] uppercase tracking-[0.2em] text-white/90"
+                className="text-[11px] uppercase tracking-[0.2em] text-white/90 sm:text-[13px]"
                 aria-hidden
               >
                 {reviews.count}+ Reviews
@@ -76,11 +85,11 @@ export default async function HomePage() {
       </section>
 
       <div className="relative z-10 bg-white shadow-[0_-24px_60px_rgba(0,0,0,0.12)]">
-        <section id="menu" className="px-10 pb-[120px] pt-[110px]">
-          <h2 className="mb-16 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
+        <section id="menu" className="px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
+          <h2 className="mb-10 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-16">
             {siteData.menu.title}
           </h2>
-          <div className="mx-auto grid max-w-[1560px] grid-cols-3 gap-2">
+          <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
             {siteData.menu.items.map((item) => (
               <div key={item.id} className="flex flex-col items-center gap-[26px]">
                 <ImagePlaceholder label={item.placeholder} aspect="4/5" />
@@ -95,15 +104,15 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="events" className="px-10 pb-[120px]">
+        <section id="events" className="px-5 pb-16 sm:px-8 sm:pb-20 lg:px-10 lg:pb-[120px]">
           <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
             {siteData.eventsPreview.title}
           </h2>
-          <p className="mx-auto mb-14 max-w-[520px] text-pretty text-center text-[15px] leading-[1.6] text-muted">
+          <p className="mx-auto mb-10 max-w-[520px] text-pretty text-center text-[15px] leading-[1.6] text-muted sm:mb-14">
             {siteData.eventsPreview.body}
           </p>
           <EventList events={siteData.eventsPreview.items} />
-          <div className="mt-12 flex justify-center gap-12">
+          <div className="mt-10 flex flex-col items-center justify-center gap-6 sm:mt-12 sm:flex-row sm:gap-12">
             <Link
               href="/events"
               className="border border-ink px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
@@ -112,21 +121,21 @@ export default async function HomePage() {
             </Link>
             <Link
               href="/events#host"
-              className="self-center border-b border-ink pb-0.5 text-[12px] uppercase tracking-[0.16em] text-ink hover:text-muted"
+              className="border-b border-ink pb-0.5 text-[12px] uppercase tracking-[0.16em] text-ink hover:text-muted"
             >
               Host your event here
             </Link>
           </div>
         </section>
 
-        <section id="artists" className="bg-sand px-10 pb-[120px] pt-[110px]">
+        <section id="artists" className="bg-sand px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
           <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
             {siteData.artistsPreview.title}
           </h2>
-          <p className="mx-auto mb-16 max-w-[560px] text-pretty text-center text-[15px] leading-[1.6] text-muted">
+          <p className="mx-auto mb-12 max-w-[560px] text-pretty text-center text-[15px] leading-[1.6] text-muted sm:mb-16">
             {siteData.artistsPreview.body}
           </p>
-          <div className="mx-auto grid max-w-[1560px] grid-cols-3 gap-2">
+          <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
             {siteData.artistsPreview.items.map((artist) => (
               <div key={artist.slug} className="flex flex-col items-center gap-[22px]">
                 <ImagePlaceholder label={artist.placeholder} aspect="4/5" />
@@ -141,7 +150,7 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-          <div className="mt-14 flex justify-center gap-12">
+          <div className="mt-10 flex flex-col items-center justify-center gap-6 sm:mt-14 sm:flex-row sm:gap-12">
             <Link
               href="/artists"
               className="border border-ink bg-white px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
@@ -150,18 +159,20 @@ export default async function HomePage() {
             </Link>
             <Link
               href="/artists#sell"
-              className="self-center border-b border-ink pb-0.5 text-[12px] uppercase tracking-[0.16em] text-ink hover:text-muted"
+              className="border-b border-ink pb-0.5 text-[12px] uppercase tracking-[0.16em] text-ink hover:text-muted"
             >
               Sell your work here
             </Link>
           </div>
         </section>
 
+        <InstagramFeed data={instagram} />
+
         <Reviews data={reviews} />
 
-        <section id="visit" className="grid min-h-[620px] grid-cols-2">
-          <LocationMap query={siteData.visit.mapQuery} className="min-h-[620px]" />
-          <div className="flex flex-col items-center justify-center gap-10 px-[60px] py-20 text-center">
+        <section id="visit" className="grid min-h-0 grid-cols-1 lg:min-h-[620px] lg:grid-cols-2">
+          <LocationMap query={siteData.visit.mapQuery} className="min-h-[320px] lg:min-h-[620px]" />
+          <div className="flex flex-col items-center justify-center gap-8 px-5 py-14 text-center sm:gap-10 sm:px-10 sm:py-20 lg:px-[60px]">
             <h2 className="m-0 text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
               {siteData.visit.title}
             </h2>
@@ -172,9 +183,9 @@ export default async function HomePage() {
                 </span>
               ))}
             </div>
-            <div className="flex w-[260px] flex-col gap-2.5 text-[14px] text-muted">
+            <div className="flex w-full max-w-[260px] flex-col gap-2.5 text-[14px] text-muted">
               {siteData.visit.hours.map((row) => (
-                <div key={row.days} className="flex justify-between gap-8">
+                <div key={row.days} className="flex justify-between gap-4 sm:gap-8">
                   <span>{row.days}</span>
                   <span className="text-ink">{row.time}</span>
                 </div>
@@ -193,9 +204,9 @@ export default async function HomePage() {
 
         <section
           id="newsletter"
-          className="flex flex-col items-center gap-9 bg-ink px-10 py-[110px] text-white"
+          className="flex flex-col items-center gap-7 bg-ink px-5 py-16 text-white sm:gap-9 sm:px-8 sm:py-20 lg:px-10 lg:py-[110px]"
         >
-          <h2 className="m-0 text-[15px] font-semibold uppercase tracking-[0.18em]">
+          <h2 className="m-0 text-center text-[15px] font-semibold uppercase tracking-[0.18em]">
             {siteData.newsletter.title}
           </h2>
           <p className="m-0 max-w-[480px] text-pretty text-center text-[15px] leading-[1.6] text-newsletter-muted">

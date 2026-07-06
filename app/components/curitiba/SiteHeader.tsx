@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BrandLogo from "@/app/components/curitiba/BrandLogo";
+import MobileNav from "@/app/components/curitiba/MobileNav";
 import { siteData } from "@/app/lib/site-data";
 
 type HeaderVariant = "landing" | "events" | "artists" | "artist";
@@ -71,10 +72,10 @@ function navActive(variant: HeaderVariant, href: string) {
 
 export default function SiteHeader({ variant = "landing" }: { variant?: HeaderVariant }) {
   return (
-    <header className="sticky top-0 z-40 flex h-[72px] items-center justify-between border-b border-hairline bg-white px-10">
+    <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-hairline bg-white px-5 sm:h-[72px] sm:px-8 lg:px-10">
       <BrandLogo size="nav" />
 
-      <nav className="flex gap-9 text-[14px] tracking-[0.04em]">
+      <nav className="hidden gap-9 text-[14px] tracking-[0.04em] lg:flex">
         {siteData.nav.map((link) => {
           const active = navActive(variant, link.href);
           return (
@@ -94,7 +95,7 @@ export default function SiteHeader({ variant = "landing" }: { variant?: HeaderVa
       </nav>
 
       {variant === "landing" ? (
-        <div className="flex items-center gap-[22px] text-ink">
+        <div className="hidden items-center gap-[22px] text-ink lg:flex">
           <Link href="#menu" aria-label="Search" className="flex hover:text-muted">
             <SearchIcon />
           </Link>
@@ -108,18 +109,20 @@ export default function SiteHeader({ variant = "landing" }: { variant?: HeaderVa
       ) : variant === "events" ? (
         <Link
           href="/events#host"
-          className="border border-ink px-[22px] py-[10px] text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
+          className="hidden border border-ink px-[22px] py-[10px] text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted lg:inline-flex"
         >
           Host an event
         </Link>
       ) : (
         <Link
           href="/artists#sell"
-          className="border border-ink px-[22px] py-[10px] text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
+          className="hidden border border-ink px-[22px] py-[10px] text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted lg:inline-flex"
         >
           Sell with us
         </Link>
       )}
+
+      <MobileNav variant={variant} />
     </header>
   );
 }

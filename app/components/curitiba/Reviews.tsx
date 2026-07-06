@@ -31,7 +31,7 @@ export default function Reviews({ data }: { data: ReviewsData }) {
   const cards = data.reviews.slice(0, 3);
 
   return (
-    <section id="reviews" className="px-10 pb-[120px] pt-[110px]">
+    <section id="reviews" className="px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
       <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
         {siteData.reviews.title}
       </h2>
@@ -43,7 +43,7 @@ export default function Reviews({ data }: { data: ReviewsData }) {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-[1560px] grid-cols-3 gap-2">
+      <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((review, i) => (
           <figure
             key={`${review.author}-${i}`}

@@ -130,7 +130,7 @@ export default function ChatBot() {
   }, [typing]);
 
   return (
-    <div className="pointer-events-none fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
       {open ? (
         <div
           role="dialog"

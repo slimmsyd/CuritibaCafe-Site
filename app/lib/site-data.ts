@@ -57,14 +57,29 @@ export type ReviewItem = {
   photo?: string;
 };
 
+export type SocialLinkIcon =
+  | "instagram"
+  | "tiktok"
+  | "website"
+  | "events"
+  | "press";
+
+export type SocialLink = {
+  id: string;
+  label: string;
+  href: string;
+  icon: SocialLinkIcon;
+  external?: boolean;
+};
+
 export const siteData = {
   brand: {
-    name: "Curitiba",
+    name: "Curitiba Art Café",
     logo: "/curitiba-logo.png",
     logoAlt: "Curitiba Art Café",
-    domain: "curitiba.cafe",
-    tagline: "Coffee, community, craft.",
-    copyright: "© 2026 Curitiba Coffee. Made with the neighborhood.",
+    domain: "www.curitibaartcafe.com",
+    tagline: "Craft coffee and cocktails.",
+    copyright: "© 2026 Curitiba Art Café. Made with the neighborhood.",
   },
 
   announcement: {
@@ -73,11 +88,12 @@ export const siteData = {
   },
 
   seo: {
-    title: "Curitiba - Coffee, Community, Craft",
+    title: "Curitiba Art Café | Craft Coffee & Cocktails in Fredericksburg, VA",
     description:
-      "A neighborhood cafe focused on craft coffee, community events, and an artist shelf where 70% of every sale goes to the maker.",
-    ogTitle: "Curitiba",
-    ogDescription: "Coffee, community, craft.",
+      "Curitiba Art Café is a neighborhood art café in historic downtown Fredericksburg — craft coffee, cocktails, live music, events, and local art on the shelf.",
+    ogTitle: "Curitiba Art Café",
+    ogDescription:
+      "Craft coffee and cocktails in downtown Fredericksburg. Live events, local art, and a room worth staying for.",
   },
 
   nav: [
@@ -212,6 +228,53 @@ export const siteData = {
     ],
   },
 
+  // Pulled from https://linktr.ee/CuritibaArt
+  social: [
+    {
+      id: "instagram",
+      label: "Instagram",
+      href: "https://www.instagram.com/curitiba_art_cafe",
+      icon: "instagram",
+      external: true,
+    },
+    {
+      id: "tiktok",
+      label: "TikTok",
+      href: "https://www.tiktok.com/@curitiba_art_cafe",
+      icon: "tiktok",
+      external: true,
+    },
+    {
+      id: "events",
+      label: "Events",
+      href: "/events",
+      icon: "events",
+    },
+    {
+      id: "website",
+      label: "Website",
+      href: "https://www.curitibaartcafe.com/",
+      icon: "website",
+      external: true,
+    },
+    {
+      id: "press",
+      label: "Press",
+      href: "https://www.fredericksburgfreepress.com/2025/09/03/forced-to-improvise-jazz-collective-finds-new-arrangement-at-curitiba",
+      icon: "press",
+      external: true,
+    },
+  ] satisfies SocialLink[],
+
+  instagram: {
+    title: "On Instagram",
+    body: "Morning light at the bar, new work on the shelf, and the room between pours - follow along at the cafe.",
+    profileUrl: "https://www.instagram.com/curitiba_art_cafe/",
+    handle: "curitiba_art_cafe",
+    postCount: 6,
+    daysWindow: 30,
+  },
+
   reviews: {
     title: "What people say",
     // Live top-5 Google reviews load when GOOGLE_PLACES_API_KEY is set; this
@@ -256,8 +319,14 @@ export const siteData = {
       { href: "/#newsletter", label: "Newsletter" },
     ],
     follow: [
-      { href: "#top", label: "Instagram" },
-      { href: "#top", label: "Spotify" },
+      { href: "https://www.instagram.com/curitiba_art_cafe", label: "Instagram" },
+      { href: "https://www.tiktok.com/@curitiba_art_cafe", label: "TikTok" },
+      { href: "/events", label: "Events" },
+      { href: "https://www.curitibaartcafe.com/", label: "Website" },
+      {
+        href: "https://www.fredericksburgfreepress.com/2025/09/03/forced-to-improvise-jazz-collective-finds-new-arrangement-at-curitiba",
+        label: "Press",
+      },
     ],
   },
 

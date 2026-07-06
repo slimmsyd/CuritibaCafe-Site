@@ -15,20 +15,40 @@ const hanken = Hanken_Grotesk({
   weight: ["400", "500", "600", "700"],
 });
 
+const siteUrl = resolveSiteUrl(siteData.brand.domain);
+
 export const metadata: Metadata = {
-  metadataBase: new URL(resolveSiteUrl(siteData.brand.domain)),
-  title: siteData.seo.title,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteData.seo.title,
+    template: `%s | ${siteData.brand.name}`,
+  },
   description: siteData.seo.description,
+  applicationName: siteData.brand.name,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteData.seo.ogTitle,
     description: siteData.seo.ogDescription,
     type: "website",
-    url: resolveSiteUrl(siteData.brand.domain),
+    url: siteUrl,
+    siteName: siteData.brand.name,
+    locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: siteData.brand.logoAlt,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteData.seo.ogTitle,
     description: siteData.seo.ogDescription,
+    images: ["/twitter-image.png"],
   },
 };
 

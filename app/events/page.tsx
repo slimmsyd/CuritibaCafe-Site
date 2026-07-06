@@ -13,14 +13,14 @@ export default function EventsPage() {
   const { eventsPage } = siteData;
 
   return (
-    <div className="min-w-[1100px] bg-white">
+    <div className="w-full overflow-x-hidden bg-white">
       <SiteHeader variant="events" />
 
-      <section className="px-10 pb-[90px] pt-[110px] text-center">
+      <section className="px-5 pb-12 pt-16 text-center sm:px-8 sm:pb-16 sm:pt-20 lg:px-10 lg:pb-[90px] lg:pt-[110px]">
         <div className="mb-5 text-[12px] uppercase tracking-[0.2em] text-faint">
           {eventsPage.eyebrow}
         </div>
-        <h1 className="m-0 text-[34px] font-medium uppercase tracking-[0.18em] text-ink">
+        <h1 className="m-0 text-[26px] font-medium uppercase tracking-[0.18em] text-ink sm:text-[34px]">
           {eventsPage.title}
         </h1>
         <p className="mx-auto mt-6 max-w-[540px] text-pretty text-[15px] leading-[1.7] text-muted">
@@ -28,8 +28,8 @@ export default function EventsPage() {
         </p>
       </section>
 
-      <section id="upcoming" className="px-10 pb-[120px]">
-        <h2 className="mb-12 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
+      <section id="upcoming" className="px-5 pb-16 sm:px-8 sm:pb-20 lg:px-10 lg:pb-[120px]">
+        <h2 className="mb-10 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-12">
           Upcoming
         </h2>
         <EventList events={upcomingEvents} showSeats />
@@ -38,15 +38,15 @@ export default function EventsPage() {
         </p>
       </section>
 
-      <section id="past" className="bg-sand px-10 pb-[120px] pt-[110px]">
+      <section id="past" className="bg-sand px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
         <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
           Past events
         </h2>
-        <p className="mx-auto mb-16 max-w-[480px] text-pretty text-center text-[15px] leading-[1.6] text-muted">
+        <p className="mx-auto mb-12 max-w-[480px] text-pretty text-center text-[15px] leading-[1.6] text-muted sm:mb-16">
           A record of the room - what we&apos;ve poured, played, and hung on the
           walls.
         </p>
-        <div className="mx-auto grid max-w-[1560px] grid-cols-3 gap-2">
+        <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
           {pastEvents.map((ev) => (
             <div key={ev.slotId} className="flex flex-col items-center gap-[22px]">
               <ImagePlaceholder label={ev.placeholder} aspect="4/5" />
@@ -61,27 +61,27 @@ export default function EventsPage() {
         </div>
       </section>
 
-      <section id="host" className="grid min-h-[720px] grid-cols-2">
-        <div className="flex flex-col justify-center gap-8 px-20 py-[90px]">
+      <section id="host" className="grid grid-cols-1 lg:min-h-[720px] lg:grid-cols-2">
+        <div className="flex flex-col justify-center gap-8 px-5 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-[90px]">
           <h2 className="m-0 text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
             {eventsPage.host.title}
           </h2>
           <p className="m-0 max-w-[440px] text-pretty text-[15px] leading-[1.7] text-muted">
             {eventsPage.host.body}
           </p>
-          <div className="flex max-w-[400px] flex-col gap-4 text-[14px]">
+          <div className="flex w-full max-w-[400px] flex-col gap-4 text-[14px]">
             {eventsPage.host.details.map((row) => (
               <div
                 key={row.label}
-                className="flex justify-between border-b border-hairline pb-3.5"
+                className="flex justify-between gap-4 border-b border-hairline pb-3.5"
               >
                 <span className="text-muted">{row.label}</span>
-                <span className="text-ink">{row.value}</span>
+                <span className="text-right text-ink">{row.value}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex flex-col justify-center bg-ink px-20 py-[90px] text-white">
+        <div className="flex flex-col justify-center bg-ink px-5 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-[90px]">
           <EventInquiryForm />
         </div>
       </section>
