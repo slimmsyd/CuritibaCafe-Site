@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/app/components/curitiba/BrandLogo";
 import { siteData } from "@/app/lib/site-data";
 
 type FooterVariant = "full" | "compact";
@@ -13,12 +14,7 @@ export default function SiteFooter({
   if (variant === "compact") {
     return (
       <footer className="flex items-center justify-between border-t border-hairline px-10 py-12 text-[12px] tracking-[0.04em] text-faint">
-        <Link
-          href="/"
-          className="text-[16px] font-semibold uppercase tracking-[0.22em] text-ink hover:text-muted"
-        >
-          {siteData.brand.name}
-        </Link>
+        <BrandLogo size="compact" />
         <span>{siteData.brand.copyright}</span>
         <Link
           href={compactLink.href}
@@ -33,9 +29,7 @@ export default function SiteFooter({
   return (
     <footer className="border-t border-hairline px-10 pb-12 pt-[72px]">
       <div className="mx-auto mb-[72px] flex max-w-[1560px] items-start justify-between">
-        <div className="text-[21px] font-semibold uppercase tracking-[0.22em] text-ink">
-          {siteData.brand.name}
-        </div>
+        <BrandLogo size="footer" />
         <div className="flex gap-24">
           <FooterColumn title="Cafe" links={siteData.footer.cafe} />
           <FooterColumn title="Community" links={siteData.footer.community} />

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/app/components/curitiba/BrandLogo";
 import { siteData } from "@/app/lib/site-data";
 
 type HeaderVariant = "landing" | "events" | "artists" | "artist";
@@ -71,12 +72,7 @@ function navActive(variant: HeaderVariant, href: string) {
 export default function SiteHeader({ variant = "landing" }: { variant?: HeaderVariant }) {
   return (
     <header className="sticky top-0 z-40 flex h-[72px] items-center justify-between border-b border-hairline bg-white px-10">
-      <Link
-        href="/"
-        className="text-[21px] font-semibold uppercase tracking-[0.22em] text-ink"
-      >
-        {siteData.brand.name}
-      </Link>
+      <BrandLogo size="nav" />
 
       <nav className="flex gap-9 text-[14px] tracking-[0.04em]">
         {siteData.nav.map((link) => {

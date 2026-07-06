@@ -60,6 +60,8 @@ export type ReviewItem = {
 export const siteData = {
   brand: {
     name: "Curitiba",
+    logo: "/curitiba-logo.png",
+    logoAlt: "Curitiba Art Café",
     domain: "curitiba.cafe",
     tagline: "Coffee, community, craft.",
     copyright: "© 2026 Curitiba Coffee. Made with the neighborhood.",
@@ -193,6 +195,21 @@ export const siteData = {
   newsletter: {
     title: "First to know",
     body: "New menus, event invitations, and the next artists on the shelf - once a month, nothing more.",
+  },
+
+  chat: {
+    title: "Curitiba",
+    subtitle: "Ask about the bar",
+    placeholder: "Hours, menu, events…",
+    disclaimer: "Preview assistant - full answers coming soon",
+    greeting:
+      "Welcome to Curitiba. Ask about our hours, summer menu, events, or the artist shelf.",
+    suggestions: [
+      "What are your hours?",
+      "What's on the menu?",
+      "Upcoming events",
+      "Where are you located?",
+    ],
   },
 
   reviews: {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./cart/CartContext";
+import ChatBot from "./components/curitiba/ChatBot";
 import IntroLoader from "./components/curitiba/IntroLoader";
 import { SiteContentProvider } from "./lib/site-content";
 import { getSiteContent } from "./lib/content";
@@ -44,6 +45,7 @@ export default async function RootLayout({
         <IntroLoader />
         <SiteContentProvider content={site}>
           <CartProvider maxQty={site.product.maxQty}>{children}</CartProvider>
+          <ChatBot />
         </SiteContentProvider>
       </body>
     </html>
