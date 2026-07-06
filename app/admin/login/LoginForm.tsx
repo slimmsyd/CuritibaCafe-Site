@@ -19,7 +19,7 @@ export default function LoginForm() {
             required
             autoFocus
             placeholder="••••••••"
-            className="w-full rounded-[8px] border border-[rgba(26,23,20,0.22)] bg-paper py-[13px] pl-[15px] pr-[46px] font-body text-[16px] text-ink outline-none transition-colors focus:border-gold"
+            className="admin-input py-3 pl-4 pr-12 text-[16px]"
           />
           <button
             type="button"
@@ -50,7 +50,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-[2px] cursor-pointer rounded-full border-none bg-dark px-[24px] py-[14px] font-display text-[15px] font-medium tracking-[0.02em] text-paper transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+        className="admin-btn-primary mt-1 w-full"
       >
         {pending ? "Signing in…" : "Sign in"}
       </button>

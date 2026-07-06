@@ -9,8 +9,14 @@
   --color-faint: #9a9a93;
   --color-newsletter-muted: #b9b9b4;
   --color-placeholder: #e8e6e0;
+  --color-gold: #2d6a4f;
+  --color-gold-hover: #245a42;
+  --color-panel: #f3f2ee;
+  --color-paper: #fafaf8;
+  --color-ink-soft: #5c5c56;
 
   --font-body: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
+  --font-display: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
 }
 
 /*
@@ -66,6 +72,44 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+@layer components {
+  .admin-input {
+    @apply w-full rounded-lg border border-[#e4e3de] bg-white px-3.5 py-2.5 text-[15px] text-ink outline-none transition-[border-color,box-shadow] placeholder:text-faint focus:border-gold focus:ring-2 focus:ring-gold/15;
+  }
+
+  .admin-textarea {
+    @apply w-full min-h-[120px] resize-y rounded-lg border border-[#e4e3de] bg-white px-3.5 py-2.5 text-[15px] leading-relaxed text-ink outline-none transition-[border-color,box-shadow] placeholder:text-faint focus:border-gold focus:ring-2 focus:ring-gold/15;
+  }
+
+  .admin-label {
+    @apply text-[13px] font-medium text-ink;
+  }
+
+  .admin-hint {
+    @apply text-[12px] leading-relaxed text-ink-soft;
+  }
+
+  .admin-section {
+    @apply rounded-xl border border-[#ebeae5] bg-white p-6 shadow-[0_1px_2px_rgba(17,17,17,0.04)] sm:p-8;
+  }
+
+  .admin-btn-primary {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg bg-gold px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-gold-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .admin-btn-secondary {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-[#dddcd6] bg-white px-5 py-2.5 text-[14px] font-medium text-ink transition-colors hover:border-ink/25 hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold;
+  }
+
+  .admin-nav-link {
+    @apply flex min-h-10 items-center gap-2.5 rounded-lg px-3 text-[14px] text-ink-soft transition-colors hover:bg-panel hover:text-ink;
+  }
+
+  .admin-nav-link-active {
+    @apply bg-panel font-medium text-ink;
   }
 }
 

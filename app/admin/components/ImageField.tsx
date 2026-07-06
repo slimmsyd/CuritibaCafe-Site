@@ -36,22 +36,24 @@ function fileToDataUrl(file: File, maxW = 1600, quality = 0.82): Promise<string>
   });
 }
 
-const inputClass =
-  "w-full rounded-[8px] border border-[rgba(26,23,20,0.22)] bg-paper px-[12px] py-[9px] font-body text-[14px] text-ink outline-none transition-colors focus:border-gold";
-
 export default function ImageField({
   label,
+  hint,
   value,
   onChange,
   assets,
+  variant = "card",
 }: {
   label: string;
+  hint?: string;
   value: string;
   onChange: (v: string) => void;
   assets: ImageAssets;
+  variant?: "card" | "compact";
 }) {
   const [drag, setDrag] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [showPath, setShowPath] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const isData = value.startsWith("data:");
@@ -68,76 +70,97 @@ export default function ImageField({
     }
   };
 
+  const dropZone = (
+    <div
+      onClick={() => inputRef.current?.click()}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDrag(true);
+      }}
+      onDragLeave={() => setDrag(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDrag(false);
+        handleFile(e.dataTransfer.files?.[0]);
+      }}
+      className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed text-center transition-colors ${
+        variant === "card" ? "min-h-[180px] px-4 py-8" : "px-3 py-4"
+      } ${
+        drag
+          ? "border-gold bg-gold/5 text-ink"
+          : "border-[#dddcd6] bg-paper text-ink-soft hover:border-gold/50"
+      }`}
+    >
+      {value ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={value}
+          alt=""
+          className={
+            variant === "card"
+              ? "mb-3 max-h-[140px] w-full rounded-md object-contain"
+              : "mb-2 max-h-[72px] w-full rounded-md object-contain"
+          }
+        />
+      ) : null}
+      <span className="text-[13px] font-medium text-ink">
+        {busy ? "Processing…" : drag ? "Drop image here" : "Upload image"}
+      </span>
+      <span className="mt-1 text-[12px] text-ink-soft">
+        Drag and drop, or click to browse
+      </span>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFile(e.target.files?.[0])}
+      />
+    </div>
+  );
+
   return (
-    <label className="flex flex-col gap-[6px] text-[12px] text-muted">
-      <span>{label}</span>
-      <div className="flex items-start gap-[12px]">
-        <div className="flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-ink/15 bg-paper">
-          {value ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={value} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <span className="text-[10px] text-muted">none</span>
-          )}
-        </div>
-        <div className="flex flex-1 flex-col gap-[6px]">
-          <div
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setDrag(true);
-            }}
-            onDragLeave={() => setDrag(false)}
-            onDrop={(e) => {
-              e.preventDefault();
-              setDrag(false);
-              handleFile(e.dataTransfer.files?.[0]);
-            }}
-            className={`flex cursor-pointer items-center justify-center rounded-[8px] border border-dashed px-[12px] py-[10px] text-center text-[12px] transition-colors ${
-              drag
-                ? "border-gold bg-gold/[0.08] text-ink"
-                : "border-ink/25 text-muted hover:border-gold/60"
-            }`}
-          >
-            {busy
-              ? "Processing…"
-              : drag
-                ? "Drop to upload"
-                : "Drag an image here, or click to upload"}
-          </div>
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleFile(e.target.files?.[0])}
-          />
-          <input
-            className={inputClass}
-            list={listId}
-            placeholder="/artists/photo.jpg"
-            value={isData ? "" : value}
-            onChange={(e) => onChange(e.target.value)}
-          />
-          <datalist id={listId}>
-            {assets.images.map((a) => (
-              <option key={a} value={a} />
-            ))}
-          </datalist>
-          {isData ? (
-            <span className="text-[11px] text-muted">
-              Image embedded.{" "}
-              <button
-                type="button"
-                onClick={() => onChange("")}
-                className="text-gold underline"
-              >
-                clear
-              </button>
-            </span>
-          ) : null}
-        </div>
+    <div className="flex flex-col gap-2">
+      <div>
+        <p className="m-0 admin-label">{label}</p>
+        {hint ? <p className="m-0 mt-1 admin-hint">{hint}</p> : null}
       </div>
-    </label>
+
+      {dropZone}
+
+      <div className="flex flex-wrap items-center gap-3 text-[12px]">
+        {isData ? (
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="font-medium text-gold hover:underline"
+          >
+            Remove image
+          </button>
+        ) : null}
+        <button
+          type="button"
+          onClick={() => setShowPath((v) => !v)}
+          className="text-ink-soft hover:text-ink"
+        >
+          {showPath ? "Hide file path" : "Use file path instead"}
+        </button>
+      </div>
+
+      {showPath ? (
+        <input
+          className="admin-input"
+          list={listId}
+          placeholder="/curitiba-logo.png"
+          value={isData ? "" : value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      ) : null}
+      <datalist id={listId}>
+        {assets.images.map((a) => (
+          <option key={a} value={a} />
+        ))}
+      </datalist>
+    </div>
   );
 }

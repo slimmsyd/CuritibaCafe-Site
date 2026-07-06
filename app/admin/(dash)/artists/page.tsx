@@ -4,6 +4,7 @@ import {
   getArtistWorkCount,
   listAllArtistsWithWorks,
 } from "@/app/lib/artists-db";
+import AdminPageHeader from "@/app/admin/components/ui/AdminPageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -15,106 +16,92 @@ export default async function AdminArtistsPage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-[clamp(20px,4vw,32px)]">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-[6px]">
-          <span className="font-display text-[12px] uppercase tracking-[0.34em] text-gold">
-            Artists
-          </span>
-          <h1 className="m-0 font-display text-[clamp(26px,3.4vw,40px)] font-normal leading-[1.05] tracking-[-0.02em]">
-            {artistCount} active · {workCount} works
-          </h1>
-        </div>
-        <Link
-          href="/admin/artists/new"
-          className="rounded-full bg-ink px-[18px] py-[9px] font-display text-[13px] text-white hover:bg-ink/90"
-        >
-          Add artist
-        </Link>
-      </div>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader
+        eyebrow="Artist shelf"
+        title="Artists"
+        description={`${artistCount} live on site · ${workCount} works tracked`}
+        actions={
+          <Link href="/admin/artists/new" className="admin-btn-primary">
+            Add artist
+          </Link>
+        }
+      />
 
       {artists.length === 0 ? (
-        <p className="rounded-[10px] bg-panel p-[28px] text-[15px] text-ink-soft">
-          No artists in the database yet. Run{" "}
-          <code className="text-[13px]">npm run db:init</code> then{" "}
-          <code className="text-[13px]">npm run db:seed</code>, or{" "}
-          <Link href="/admin/artists/new" className="text-gold hover:text-ink">
-            add one
+        <div className="admin-section text-center">
+          <p className="m-0 text-[15px] text-ink-soft">
+            No artists yet. Add your first maker to the shelf.
+          </p>
+          <Link href="/admin/artists/new" className="admin-btn-primary mt-5 inline-flex">
+            Add artist
           </Link>
-          .
-        </p>
+        </div>
       ) : (
-        <div className="flex flex-col gap-[18px]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {artists.map((artist) => (
-            <div
+            <article
               key={artist.id}
-              className="rounded-[10px] border border-ink/10 bg-panel p-[22px]"
+              className="admin-section flex flex-col gap-4 !p-5"
             >
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <h2 className="m-0 font-display text-[20px] tracking-[-0.01em] text-ink">
+              <div className="flex items-start gap-4">
+                <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-panel">
+                  {artist.shelf_image || artist.portrait_image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={artist.shelf_image || artist.portrait_image}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-[10px] uppercase tracking-wider text-faint">
+                      No photo
+                    </div>
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="m-0 truncate font-display text-[17px] font-medium text-ink">
                     {artist.name}
+                  </h2>
+                  <p className="m-0 mt-1 text-[13px] text-ink-soft">
+                    {artist.medium} · {artist.price}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {!artist.active ? (
-                      <span className="ml-2 text-[12px] font-normal text-red-700">
-                        (hidden)
+                      <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-[11px] font-medium text-red-700">
+                        Hidden
                       </span>
                     ) : null}
-                  </h2>
-                  <p className="m-0 mt-1 text-[13px] text-muted">
-                    {artist.medium} · {artist.price}
-                    {artist.featured ? " · Featured" : ""}
-                  </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-4 text-[12px]">
-                  <Link
-                    href={`/admin/artists/${artist.id}`}
-                    className="text-gold hover:text-ink"
-                  >
-                    Edit
-                  </Link>
-                  {artist.active ? (
-                    <Link
-                      href={`/artists/${artist.slug}`}
-                      target="_blank"
-                      className="text-muted hover:text-ink"
-                    >
-                      View on site ↗
-                    </Link>
-                  ) : null}
+                    {artist.featured ? (
+                      <span className="rounded-full bg-gold/10 px-2.5 py-0.5 text-[11px] font-medium text-gold">
+                        Featured
+                      </span>
+                    ) : null}
+                    <span className="rounded-full bg-panel px-2.5 py-0.5 text-[11px] text-ink-soft">
+                      {artist.works.length} works
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 overflow-x-auto rounded-[8px] border border-ink/10 bg-white">
-                <table className="w-full border-collapse text-[13px]">
-                  <thead>
-                    <tr className="bg-paper text-left font-display text-[11px] uppercase tracking-[0.12em] text-muted">
-                      <th className="px-[14px] py-[10px] font-medium">Work</th>
-                      <th className="px-[14px] py-[10px] font-medium">Price</th>
-                      <th className="px-[14px] py-[10px] font-medium">Sold</th>
-                      <th className="px-[14px] py-[10px] font-medium">Photo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {artist.works.map((work) => (
-                      <tr key={work.id} className="border-t border-ink/10">
-                        <td className="px-[14px] py-[10px] font-medium text-ink">
-                          {work.title}
-                        </td>
-                        <td className="px-[14px] py-[10px] text-ink-soft">
-                          {work.price}
-                        </td>
-                        <td className="px-[14px] py-[10px] text-ink-soft">
-                          {work.sold ? "Yes" : "No"}
-                        </td>
-                        <td className="px-[14px] py-[10px] text-ink-soft">
-                          {work.image_url ? "Yes" : "—"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="flex flex-wrap gap-2 border-t border-[#f0efeb] pt-4">
+                <Link
+                  href={`/admin/artists/${artist.id}`}
+                  className="admin-btn-primary min-h-9 px-4 py-2 text-[13px]"
+                >
+                  Edit
+                </Link>
+                {artist.active ? (
+                  <Link
+                    href={`/artists/${artist.slug}`}
+                    target="_blank"
+                    className="admin-btn-secondary min-h-9 px-4 py-2 text-[13px]"
+                  >
+                    View live
+                  </Link>
+                ) : null}
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}

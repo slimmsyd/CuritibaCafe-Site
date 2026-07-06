@@ -3,6 +3,9 @@
 import { useActionState, useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import ImageField, { type ImageAssets } from "@/app/admin/components/ImageField";
+import AdminField from "@/app/admin/components/ui/AdminField";
+import AdminSection from "@/app/admin/components/ui/AdminSection";
+import AdminToggle from "@/app/admin/components/ui/AdminToggle";
 import {
   deleteArtistAction,
   saveArtistAction,
@@ -41,9 +44,13 @@ type ArtistDraft = {
   works: WorkDraft[];
 };
 
-const inputClass =
-  "w-full rounded-[8px] border border-[rgba(26,23,20,0.22)] bg-paper px-[12px] py-[9px] font-body text-[14px] text-ink outline-none transition-colors focus:border-gold";
-const labelClass = "flex flex-col gap-[5px] text-[12px] text-muted";
+function slugify(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 
 function blankWork(order: number): WorkDraft {
   return {
@@ -113,18 +120,13 @@ function toDraft(artist?: ArtistWithWorks): ArtistDraft {
   };
 }
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
+function Alert({ tone, children }: { tone: "error" | "success"; children: ReactNode }) {
+  const styles =
+    tone === "error"
+      ? "border-red-200 bg-red-50 text-red-800"
+      : "border-green-200 bg-green-50 text-green-800";
   return (
-    <label className={labelClass}>
-      <span>{label}</span>
-      {children}
-    </label>
+    <p className={`rounded-lg border px-4 py-3 text-[14px] ${styles}`}>{children}</p>
   );
 }
 
@@ -137,6 +139,7 @@ export default function ArtistEditor({
 }) {
   const router = useRouter();
   const [draft, setDraft] = useState<ArtistDraft>(() => toDraft(artist));
+  const [slugTouched, setSlugTouched] = useState(Boolean(artist?.slug));
   const [state, formAction, pending] = useActionState<ArtistSaveState, FormData>(
     saveArtistAction,
     {},
@@ -152,6 +155,15 @@ export default function ArtistEditor({
     setDraft((prev) => ({ ...prev, [key]: value }));
   };
 
+  const setName = (name: string) => {
+    setDraft((prev) => ({
+      ...prev,
+      name,
+      firstName: prev.firstName || name.split(" ")[0] || name,
+      slug: slugTouched ? prev.slug : slugify(name),
+    }));
+  };
+
   const setWork = (index: number, patch: Partial<WorkDraft>) => {
     setDraft((prev) => ({
       ...prev,
@@ -162,159 +174,121 @@ export default function ArtistEditor({
   };
 
   return (
-    <form action={formAction} className="flex flex-col gap-[22px]">
+    <form action={formAction} className="flex flex-col gap-8 pb-28">
       <input type="hidden" name="draft" value={JSON.stringify(draft)} readOnly />
 
-      {state.error ? (
-        <p className="rounded-[8px] border border-red-200 bg-red-50 px-[14px] py-[10px] text-[14px] text-red-800">
-          {state.error}
-        </p>
-      ) : null}
-      {state.ok ? (
-        <p className="rounded-[8px] border border-green-200 bg-green-50 px-[14px] py-[10px] text-[14px] text-green-800">
-          Saved.
-        </p>
-      ) : null}
+      {state.error ? <Alert tone="error">{state.error}</Alert> : null}
+      {state.ok ? <Alert tone="success">Changes saved. The live site is updated.</Alert> : null}
 
-      <div className="grid grid-cols-1 gap-[16px] md:grid-cols-2">
-        <Field label="Name">
-          <input
-            className={inputClass}
-            value={draft.name}
-            onChange={(e) => set("name", e.target.value)}
-            required
-          />
-        </Field>
-        <Field label="First name (for copy)">
-          <input
-            className={inputClass}
-            value={draft.firstName}
-            onChange={(e) => set("firstName", e.target.value)}
-          />
-        </Field>
-        <Field label="Slug (URL)">
-          <input
-            className={inputClass}
-            value={draft.slug}
-            onChange={(e) => set("slug", e.target.value.toLowerCase())}
-            placeholder="marina-duarte"
-            required
-          />
-        </Field>
-        <Field label="Medium">
-          <input
-            className={inputClass}
-            value={draft.medium}
-            onChange={(e) => set("medium", e.target.value)}
-          />
-        </Field>
-        <Field label="Work summary (shelf card)">
-          <input
-            className={inputClass}
-            value={draft.workSummary}
-            onChange={(e) => set("workSummary", e.target.value)}
-          />
-        </Field>
-        <Field label="Starting price">
-          <input
-            className={inputClass}
-            value={draft.price}
-            onChange={(e) => set("price", e.target.value)}
-            placeholder="from $38"
-          />
-        </Field>
-        <Field label="On shelf since">
-          <input
-            className={inputClass}
-            value={draft.onShelfSince}
-            onChange={(e) => set("onShelfSince", e.target.value)}
-          />
-        </Field>
-        <Field label="Portfolio link">
-          <input
-            className={inputClass}
-            value={draft.portfolioLink}
-            onChange={(e) => set("portfolioLink", e.target.value)}
-          />
-        </Field>
-        <Field label="Sort order">
-          <input
-            className={inputClass}
-            type="number"
-            value={draft.sortOrder}
-            onChange={(e) => set("sortOrder", Number(e.target.value) || 0)}
-          />
-        </Field>
-        <Field label="Placeholder label (accessibility)">
-          <input
-            className={inputClass}
-            value={draft.placeholder}
-            onChange={(e) => set("placeholder", e.target.value)}
-          />
-        </Field>
-        <Field label="Portrait placeholder label">
-          <input
-            className={inputClass}
-            value={draft.portraitPlaceholder}
-            onChange={(e) => set("portraitPlaceholder", e.target.value)}
-          />
-        </Field>
-      </div>
-
-      <div className="grid grid-cols-1 gap-[16px] md:grid-cols-2">
-        <ImageField
-          label="Portrait image"
-          value={draft.portraitImage}
-          onChange={(v) => set("portraitImage", v)}
-          assets={assets}
-        />
-        <ImageField
-          label="Shelf grid image"
-          value={draft.shelfImage}
-          onChange={(v) => set("shelfImage", v)}
-          assets={assets}
-        />
-      </div>
-
-      <Field label="Bio">
-        <textarea
-          className={`${inputClass} min-h-[120px] resize-y`}
-          value={draft.bio}
-          onChange={(e) => set("bio", e.target.value)}
-        />
-      </Field>
-      <Field label="Quote">
-        <textarea
-          className={`${inputClass} min-h-[80px] resize-y`}
-          value={draft.quote}
-          onChange={(e) => set("quote", e.target.value)}
-        />
-      </Field>
-
-      <div className="flex flex-wrap gap-[18px] text-[14px] text-ink">
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={draft.featured}
-            onChange={(e) => set("featured", e.target.checked)}
-          />
-          Featured on artists page
-        </label>
-        {draft.id ? (
-          <label className="flex items-center gap-2">
+      <AdminSection
+        title="Basics"
+        description="What guests see on the artist shelf and profile header."
+      >
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <AdminField label="Artist name" hint="Full name as shown on the site.">
             <input
-              type="checkbox"
-              checked={draft.active}
-              onChange={(e) => set("active", e.target.checked)}
+              className="admin-input"
+              value={draft.name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Marina Duarte"
+              required
             />
-            Active on site
-          </label>
-        ) : null}
-      </div>
+          </AdminField>
+          <AdminField label="Medium" hint="Ceramics, prints, textiles, etc.">
+            <input
+              className="admin-input"
+              value={draft.medium}
+              onChange={(e) => set("medium", e.target.value)}
+              placeholder="Ceramics"
+            />
+          </AdminField>
+          <AdminField label="Shelf card line" hint="Short description on the grid.">
+            <input
+              className="admin-input"
+              value={draft.workSummary}
+              onChange={(e) => set("workSummary", e.target.value)}
+              placeholder="Hand-thrown cups"
+            />
+          </AdminField>
+          <AdminField label="Starting price" hint="Shown as “from $38” style copy.">
+            <input
+              className="admin-input"
+              value={draft.price}
+              onChange={(e) => set("price", e.target.value)}
+              placeholder="from $38"
+            />
+          </AdminField>
+          <AdminField label="On shelf since">
+            <input
+              className="admin-input"
+              value={draft.onShelfSince}
+              onChange={(e) => set("onShelfSince", e.target.value)}
+              placeholder="January 2026"
+            />
+          </AdminField>
+          <AdminField label="Portfolio link">
+            <input
+              className="admin-input"
+              value={draft.portfolioLink}
+              onChange={(e) => set("portfolioLink", e.target.value)}
+              placeholder="https://…"
+            />
+          </AdminField>
+        </div>
+      </AdminSection>
 
-      <div className="flex flex-col gap-[14px]">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="m-0 font-display text-[18px] text-ink">Works on the shelf</h2>
+      <AdminSection
+        title="Photos"
+        description="Portrait shows on the profile page. Shelf image shows in the grid."
+      >
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <ImageField
+            label="Portrait"
+            hint="Profile page, left column."
+            value={draft.portraitImage}
+            onChange={(v) => set("portraitImage", v)}
+            assets={assets}
+            variant="card"
+          />
+          <ImageField
+            label="Shelf thumbnail"
+            hint="Artists page and homepage preview."
+            value={draft.shelfImage}
+            onChange={(v) => set("shelfImage", v)}
+            assets={assets}
+            variant="card"
+          />
+        </div>
+      </AdminSection>
+
+      <AdminSection
+        title="Story"
+        description="Bio and quote appear on the artist profile."
+      >
+        <div className="flex flex-col gap-5">
+          <AdminField label="Bio">
+            <textarea
+              className="admin-textarea"
+              value={draft.bio}
+              onChange={(e) => set("bio", e.target.value)}
+              placeholder="A short story about the artist and their work."
+            />
+          </AdminField>
+          <AdminField label="Quote" hint="Displayed in italics on their profile.">
+            <textarea
+              className="admin-textarea min-h-[88px]"
+              value={draft.quote}
+              onChange={(e) => set("quote", e.target.value)}
+              placeholder="A cup should feel like it was always yours."
+            />
+          </AdminField>
+        </div>
+      </AdminSection>
+
+      <AdminSection
+        title="Works on the shelf"
+        description="Each piece can have its own photo, price, and sold status."
+        action={
           <button
             type="button"
             onClick={() =>
@@ -323,115 +297,176 @@ export default function ArtistEditor({
                 works: [...prev.works, blankWork(prev.works.length)],
               }))
             }
-            className="cursor-pointer rounded-full border border-ink/20 px-[14px] py-[6px] text-[12px] text-ink hover:bg-ink/[0.05]"
+            className="admin-btn-secondary min-h-9 px-4 py-2 text-[13px]"
           >
-            Add work
+            + Add work
           </button>
+        }
+      >
+        <div className="flex flex-col gap-5">
+          {draft.works.map((work, index) => (
+            <div
+              key={`work-${index}`}
+              className="rounded-lg border border-[#ebeae5] bg-paper p-5"
+            >
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h3 className="m-0 text-[15px] font-medium text-ink">
+                  {work.title || `Work ${index + 1}`}
+                </h3>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setDraft((prev) => ({
+                      ...prev,
+                      works:
+                        prev.works.length > 1
+                          ? prev.works.filter((_, i) => i !== index)
+                          : [blankWork(0)],
+                    }))
+                  }
+                  className="cursor-pointer text-[13px] text-ink-soft hover:text-ink"
+                >
+                  Remove
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-[200px_1fr]">
+                <ImageField
+                  label="Photo"
+                  value={work.imageUrl}
+                  onChange={(v) => setWork(index, { imageUrl: v })}
+                  assets={assets}
+                  variant="compact"
+                />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <AdminField label="Title">
+                    <input
+                      className="admin-input"
+                      value={work.title}
+                      onChange={(e) => setWork(index, { title: e.target.value })}
+                      placeholder="Demitasse pair"
+                    />
+                  </AdminField>
+                  <AdminField label="Price">
+                    <input
+                      className="admin-input"
+                      value={work.price}
+                      onChange={(e) => setWork(index, { price: e.target.value })}
+                      placeholder="$38"
+                    />
+                  </AdminField>
+                  <div className="sm:col-span-2">
+                    <AdminToggle
+                      label="Mark as sold"
+                      description="Shows “sold” on the public artist page."
+                      checked={work.sold}
+                      onChange={(sold) => setWork(index, { sold })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+      </AdminSection>
 
-        {draft.works.map((work, index) => (
-          <div
-            key={`work-${index}`}
-            className="rounded-[10px] border border-ink/10 bg-panel p-[18px]"
-          >
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <span className="font-display text-[14px] text-ink">Work {index + 1}</span>
-              <button
-                type="button"
-                onClick={() =>
-                  setDraft((prev) => ({
-                    ...prev,
-                    works:
-                      prev.works.length > 1
-                        ? prev.works.filter((_, i) => i !== index)
-                        : [blankWork(0)],
-                  }))
-                }
-                className="text-[12px] text-muted hover:text-ink"
+      <AdminSection title="Visibility" description="Control how this artist appears on the site.">
+        <div className="flex flex-col gap-3">
+          <AdminToggle
+            label="Featured artist"
+            description="Highlights this artist at the top of the Artists page."
+            checked={draft.featured}
+            onChange={(featured) => set("featured", featured)}
+          />
+          {draft.id ? (
+            <AdminToggle
+              label="Visible on site"
+              description="Turn off to hide without deleting their record."
+              checked={draft.active}
+              onChange={(active) => set("active", active)}
+            />
+          ) : null}
+        </div>
+      </AdminSection>
+
+      <details className="admin-section">
+        <summary className="cursor-pointer list-none text-[15px] font-medium text-ink">
+          Advanced settings
+        </summary>
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <AdminField label="URL slug" hint="Used in /artists/your-slug">
+            <input
+              className="admin-input"
+              value={draft.slug}
+              onChange={(e) => {
+                setSlugTouched(true);
+                set("slug", e.target.value.toLowerCase());
+              }}
+              placeholder="marina"
+              required
+            />
+          </AdminField>
+          <AdminField label="Sort order" hint="Lower numbers appear first.">
+            <input
+              className="admin-input"
+              type="number"
+              value={draft.sortOrder}
+              onChange={(e) => set("sortOrder", Number(e.target.value) || 0)}
+            />
+          </AdminField>
+          <AdminField label="Image alt text (shelf)">
+            <input
+              className="admin-input"
+              value={draft.placeholder}
+              onChange={(e) => set("placeholder", e.target.value)}
+            />
+          </AdminField>
+          <AdminField label="Image alt text (portrait)">
+            <input
+              className="admin-input"
+              value={draft.portraitPlaceholder}
+              onChange={(e) => set("portraitPlaceholder", e.target.value)}
+            />
+          </AdminField>
+        </div>
+      </details>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#ebeae5] bg-white/95 px-4 py-4 backdrop-blur-sm sm:px-8 lg:left-[240px]">
+        <div className="mx-auto flex max-w-[820px] flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="submit" disabled={pending} className="admin-btn-primary">
+              {pending ? "Saving…" : "Save changes"}
+            </button>
+            {artist ? (
+              <a
+                href={`/artists/${artist.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="admin-btn-secondary"
               >
-                Remove
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-[14px] md:grid-cols-2">
-              <Field label="Title">
-                <input
-                  className={inputClass}
-                  value={work.title}
-                  onChange={(e) => setWork(index, { title: e.target.value })}
-                />
-              </Field>
-              <Field label="Price">
-                <input
-                  className={inputClass}
-                  value={work.price}
-                  onChange={(e) => setWork(index, { price: e.target.value })}
-                />
-              </Field>
-              <Field label="Placeholder label">
-                <input
-                  className={inputClass}
-                  value={work.placeholder}
-                  onChange={(e) => setWork(index, { placeholder: e.target.value })}
-                />
-              </Field>
-              <label className="flex items-center gap-2 self-end pb-2 text-[14px] text-ink">
-                <input
-                  type="checkbox"
-                  checked={work.sold}
-                  onChange={(e) => setWork(index, { sold: e.target.checked })}
-                />
-                Sold
-              </label>
-            </div>
-            <div className="mt-3">
-              <ImageField
-                label="Work photo"
-                value={work.imageUrl}
-                onChange={(v) => setWork(index, { imageUrl: v })}
-                assets={assets}
-              />
-            </div>
+                Preview
+              </a>
+            ) : null}
           </div>
-        ))}
+          {artist ? (
+            <button
+              type="button"
+              onClick={async () => {
+                if (
+                  confirm(
+                    `Hide ${artist.name} from the site? You can turn them back on later.`,
+                  )
+                ) {
+                  await deleteArtistAction(artist.id, artist.slug);
+                }
+              }}
+              className="cursor-pointer text-[13px] font-medium text-red-700 hover:underline"
+            >
+              Remove from shelf
+            </button>
+          ) : null}
+        </div>
       </div>
-
-      <div className="flex flex-wrap items-center gap-[12px]">
-        <button
-          type="submit"
-          disabled={pending}
-          className="cursor-pointer rounded-full bg-ink px-[22px] py-[10px] font-display text-[13px] text-white hover:bg-ink/90 disabled:opacity-60"
-        >
-          {pending ? "Saving…" : "Save artist"}
-        </button>
-        {artist ? (
-          <a
-            href={`/artists/${artist.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[13px] text-gold hover:text-ink"
-          >
-            Preview on site ↗
-          </a>
-        ) : null}
-      </div>
-
-      {artist ? (
-        <button
-          type="button"
-          onClick={async () => {
-            if (
-              confirm(
-                `Remove ${artist.name} from the site? They will be hidden, not permanently deleted.`,
-              )
-            ) {
-              await deleteArtistAction(artist.id, artist.slug);
-            }
-          }}
-          className="cursor-pointer text-left text-[13px] text-red-700 hover:underline"
-        >
-          Remove artist from shelf
-        </button>
-      ) : null}
     </form>
   );
 }

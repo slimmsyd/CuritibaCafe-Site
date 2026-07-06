@@ -4,8 +4,17 @@ import { getOrderCount } from "@/app/lib/orders";
 import { getArtistCount, getArtistWorkCount } from "@/app/lib/artists-db";
 import { getChatMessageCount } from "@/app/lib/chat-messages";
 import { getSubscriberCount } from "@/app/lib/subscribers";
+import AdminPageHeader from "@/app/admin/components/ui/AdminPageHeader";
 
 export const dynamic = "force-dynamic";
+
+const cards = [
+  { href: "/admin/artists", title: "Artists", key: "artists" as const },
+  { href: "/admin/chat", title: "Chat", key: "chat" as const },
+  { href: "/admin/orders", title: "Orders", key: "orders" as const },
+  { href: "/admin/subscribers", title: "Subscribers", key: "subs" as const },
+  { href: "/admin/content", title: "Content", key: "content" as const },
+];
 
 export default async function AdminDashboard() {
   const [updatedAt, orders, subs, chats, artists, works] = await Promise.all([
@@ -17,47 +26,36 @@ export default async function AdminDashboard() {
     getArtistWorkCount(),
   ]);
 
-  const card =
-    "flex flex-col gap-[10px] rounded-[10px] bg-panel p-[clamp(22px,3vw,30px)] transition-colors hover:bg-[#e9e2d3]";
+  const meta: Record<string, string> = {
+    artists: `${artists} artists · ${works} works`,
+    chat: `${chats} guest questions`,
+    orders: `${orders} recorded`,
+    subs: `${subs} on the list`,
+    content: updatedAt ? `Edited ${updatedAt.toLocaleString()}` : "Using defaults",
+  };
 
   return (
-    <div className="flex flex-col gap-[clamp(24px,4vw,36px)]">
-      <div className="flex flex-col gap-[6px]">
-        <span className="font-display text-[12px] uppercase tracking-[0.34em] text-gold">Dashboard</span>
-        <h1 className="m-0 font-display text-[clamp(26px,3.4vw,40px)] font-normal leading-[1.05] tracking-[-0.02em]">
-          Manage your site
-        </h1>
-      </div>
-      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        <Link href="/admin/content" className={card}>
-          <span className="font-display text-[19px] tracking-[-0.01em]">Content</span>
-          <span className="text-[13px] text-muted">
-            {updatedAt ? `Edited ${updatedAt.toLocaleString()}` : "Using defaults"}
-          </span>
-          <span className="mt-[4px] text-[12px] text-gold">Edit everything →</span>
-        </Link>
-        <Link href="/admin/orders" className={card}>
-          <span className="font-display text-[19px] tracking-[-0.01em]">Orders</span>
-          <span className="text-[13px] text-muted">{orders} recorded</span>
-          <span className="mt-[4px] text-[12px] text-gold">View orders →</span>
-        </Link>
-        <Link href="/admin/subscribers" className={card}>
-          <span className="font-display text-[19px] tracking-[-0.01em]">Subscribers</span>
-          <span className="text-[13px] text-muted">{subs} on the list</span>
-          <span className="mt-[4px] text-[12px] text-gold">View subscribers →</span>
-        </Link>
-        <Link href="/admin/chat" className={card}>
-          <span className="font-display text-[19px] tracking-[-0.01em]">Chat</span>
-          <span className="text-[13px] text-muted">{chats} guest questions</span>
-          <span className="mt-[4px] text-[12px] text-gold">View chat log →</span>
-        </Link>
-        <Link href="/admin/artists" className={card}>
-          <span className="font-display text-[19px] tracking-[-0.01em]">Artists</span>
-          <span className="text-[13px] text-muted">
-            {artists} artists · {works} works
-          </span>
-          <span className="mt-[4px] text-[12px] text-gold">View shelf →</span>
-        </Link>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader
+        eyebrow="Dashboard"
+        title="Manage your site"
+        description="Pick a section to update the café site, track chat, or manage the artist shelf."
+      />
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {cards.map((card) => (
+          <Link
+            key={card.href}
+            href={card.href}
+            className="admin-section flex flex-col gap-2 transition-colors hover:border-gold/30"
+          >
+            <span className="font-display text-[18px] font-medium text-ink">
+              {card.title}
+            </span>
+            <span className="text-[14px] text-ink-soft">{meta[card.key]}</span>
+            <span className="mt-1 text-[13px] font-medium text-gold">Open →</span>
+          </Link>
+        ))}
       </div>
     </div>
   );
