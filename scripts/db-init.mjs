@@ -56,18 +56,59 @@ const CHAT_MESSAGES_DDL = `
   );
 `;
 
+const ARTISTS_DDL = `
+  CREATE TABLE IF NOT EXISTS artists (
+    id                   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    slug                 TEXT NOT NULL UNIQUE,
+    slot_id              TEXT NOT NULL,
+    sort_order           INTEGER NOT NULL DEFAULT 0,
+    name                 TEXT NOT NULL,
+    first_name           TEXT NOT NULL,
+    medium               TEXT NOT NULL,
+    work_summary         TEXT NOT NULL,
+    price                TEXT NOT NULL,
+    placeholder          TEXT NOT NULL DEFAULT '',
+    portrait_placeholder TEXT NOT NULL DEFAULT '',
+    bio                  TEXT NOT NULL DEFAULT '',
+    quote                TEXT NOT NULL DEFAULT '',
+    portfolio_link       TEXT NOT NULL DEFAULT '#',
+    on_shelf_since       TEXT NOT NULL DEFAULT '',
+    featured             BOOLEAN NOT NULL DEFAULT false,
+    active               BOOLEAN NOT NULL DEFAULT true,
+    created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at           TIMESTAMPTZ NOT NULL DEFAULT now()
+  );
+`;
+
+const ARTIST_WORKS_DDL = `
+  CREATE TABLE IF NOT EXISTS artist_works (
+    id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    artist_id    BIGINT NOT NULL REFERENCES artists(id) ON DELETE CASCADE,
+    sort_order   INTEGER NOT NULL DEFAULT 0,
+    title        TEXT NOT NULL,
+    price        TEXT NOT NULL,
+    placeholder  TEXT NOT NULL DEFAULT '',
+    sold         BOOLEAN NOT NULL DEFAULT false,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+  );
+`;
+
 try {
   await sql.query(SITE_CONTENT_DDL);
   await sql.query(ORDERS_DDL);
   await sql.query(SUBSCRIBERS_DDL);
   await sql.query(CHAT_MESSAGES_DDL);
+  await sql.query(ARTISTS_DDL);
+  await sql.query(ARTIST_WORKS_DDL);
   // Idempotent migration for databases created before email notifications.
   await sql.query(
     `ALTER TABLE orders ADD COLUMN IF NOT EXISTS notification_sent_at TIMESTAMPTZ`,
   );
   // No seed: getSiteContent() falls back to site.config when the row is absent,
   // and the first admin save materializes the full document.
-  console.log("✓ CRM tables ready: site_content, orders, subscribers, chat_messages");
+  console.log(
+    "✓ CRM tables ready: site_content, orders, subscribers, chat_messages, artists, artist_works",
+  );
 } catch (err) {
   console.error("✗ Failed to initialize database:", err.message);
   process.exit(1);

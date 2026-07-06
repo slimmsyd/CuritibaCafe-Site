@@ -10,6 +10,7 @@ import LocationMap from "./components/curitiba/LocationMap";
 import Reviews from "./components/curitiba/Reviews";
 import InstagramFeed from "./components/curitiba/InstagramFeed";
 import SocialLinks from "./components/curitiba/SocialLinks";
+import { getArtistsPreviewItems } from "./lib/artists";
 import { siteData } from "./lib/site-data";
 import { getGoogleReviews } from "./lib/reviews";
 import { getInstagramPosts } from "./lib/instagram";
@@ -17,9 +18,10 @@ import { getInstagramPosts } from "./lib/instagram";
 export const maxDuration = 90;
 
 export default async function HomePage() {
-  const [reviews, instagram] = await Promise.all([
+  const [reviews, instagram, artistsPreview] = await Promise.all([
     getGoogleReviews(),
     getInstagramPosts(),
+    getArtistsPreviewItems(),
   ]);
 
   return (
@@ -136,7 +138,7 @@ export default async function HomePage() {
             {siteData.artistsPreview.body}
           </p>
           <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
-            {siteData.artistsPreview.items.map((artist) => (
+            {artistsPreview.map((artist) => (
               <div key={artist.slug} className="flex flex-col items-center gap-[22px]">
                 <ImagePlaceholder label={artist.placeholder} aspect="4/5" />
                 <div className="flex flex-col gap-1.5 text-center">

@@ -4,23 +4,26 @@ import SiteHeader from "@/app/components/curitiba/SiteHeader";
 import SiteFooter from "@/app/components/curitiba/SiteFooter";
 import ImagePlaceholder from "@/app/components/curitiba/ImagePlaceholder";
 import {
-  artistOrder,
   getAdjacentArtists,
   getArtistProfile,
-} from "@/app/lib/site-data";
+  listArtistSlugs,
+} from "@/app/lib/artists";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return artistOrder.map((slug) => ({ slug }));
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const slugs = await listArtistSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function ArtistProfilePage({ params }: Props) {
   const { slug } = await params;
-  const artist = getArtistProfile(slug);
+  const artist = await getArtistProfile(slug);
   if (!artist) notFound();
 
-  const adjacent = getAdjacentArtists(slug);
+  const adjacent = await getAdjacentArtists(slug);
   if (!adjacent) notFound();
 
   return (

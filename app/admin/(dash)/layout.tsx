@@ -23,6 +23,7 @@ export default async function DashLayout({
               <Link href="/admin/orders" className="text-ink-soft transition-colors hover:text-gold">Orders</Link>
               <Link href="/admin/subscribers" className="text-ink-soft transition-colors hover:text-gold">Subscribers</Link>
               <Link href="/admin/chat" className="text-ink-soft transition-colors hover:text-gold">Chat</Link>
+              <Link href="/admin/artists" className="text-ink-soft transition-colors hover:text-gold">Artists</Link>
             </nav>
           </div>
           <div className="flex items-center gap-[16px]">

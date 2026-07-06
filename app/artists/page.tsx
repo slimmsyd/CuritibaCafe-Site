@@ -2,10 +2,17 @@ import Link from "next/link";
 import SiteHeader from "../components/curitiba/SiteHeader";
 import SiteFooter from "../components/curitiba/SiteFooter";
 import ImagePlaceholder from "../components/curitiba/ImagePlaceholder";
-import { shelfArtists, siteData } from "../lib/site-data";
+import { getFeaturedArtistCard, listShelfArtists } from "../lib/artists";
+import { siteData } from "../lib/site-data";
 
-export default function ArtistsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ArtistsPage() {
   const { artistsPage } = siteData;
+  const [shelfArtists, featured] = await Promise.all([
+    listShelfArtists(),
+    getFeaturedArtistCard(),
+  ]);
 
   return (
     <div className="w-full overflow-x-hidden bg-white">
@@ -23,36 +30,38 @@ export default function ArtistsPage() {
         </p>
       </section>
 
-      <section id="featured" className="grid grid-cols-1 bg-sand lg:min-h-[680px] lg:grid-cols-2">
-        <ImagePlaceholder
-          label={artistsPage.featured.imagePlaceholder}
-          aspect="fill"
-          className="min-h-[320px] lg:min-h-[680px]"
-        />
-        <div className="flex flex-col justify-center gap-7 px-5 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-[90px]">
-          <div className="text-[12px] uppercase tracking-[0.2em] text-faint">
-            Featured this month
+      {featured ? (
+        <section id="featured" className="grid grid-cols-1 bg-sand lg:min-h-[680px] lg:grid-cols-2">
+          <ImagePlaceholder
+            label={artistsPage.featured.imagePlaceholder}
+            aspect="fill"
+            className="min-h-[320px] lg:min-h-[680px]"
+          />
+          <div className="flex flex-col justify-center gap-7 px-5 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-[90px]">
+            <div className="text-[12px] uppercase tracking-[0.2em] text-faint">
+              Featured this month
+            </div>
+            <h2 className="m-0 text-[22px] font-medium uppercase tracking-[0.14em] text-ink sm:text-[26px]">
+              {featured.name}
+            </h2>
+            <div className="text-[13px] uppercase tracking-[0.16em] text-muted">
+              {featured.medium}
+            </div>
+            <p className="m-0 max-w-[440px] text-pretty text-[15px] leading-[1.8] text-muted">
+              {artistsPage.featured.bio}
+            </p>
+            <div className="mt-2 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-8">
+              <Link
+                href={`/artists/${featured.slug}`}
+                className="border border-ink px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
+              >
+                View her work
+              </Link>
+              <span className="text-[13px] text-muted">{featured.price}</span>
+            </div>
           </div>
-          <h2 className="m-0 text-[22px] font-medium uppercase tracking-[0.14em] text-ink sm:text-[26px]">
-            {artistsPage.featured.name}
-          </h2>
-          <div className="text-[13px] uppercase tracking-[0.16em] text-muted">
-            {artistsPage.featured.medium}
-          </div>
-          <p className="m-0 max-w-[440px] text-pretty text-[15px] leading-[1.8] text-muted">
-            {artistsPage.featured.bio}
-          </p>
-          <div className="mt-2 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-8">
-            <Link
-              href="/artists/marina"
-              className="border border-ink px-[34px] py-3.5 text-[12px] font-medium uppercase tracking-[0.16em] text-ink hover:text-muted"
-            >
-              View her work
-            </Link>
-            <span className="text-[13px] text-muted">{artistsPage.featured.price}</span>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section id="all" className="px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
         <h2 className="mb-12 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-16">
