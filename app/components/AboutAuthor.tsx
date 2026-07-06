@@ -75,7 +75,7 @@ export default async function AboutAuthor() {
             {cta.label}
           </a>
 
-          {/* Listen — meta row of chips (hidden when no songs configured) */}
+          {/* Listen - meta row of chips (hidden when no songs configured) */}
           {songs.length > 0 && (
             <div className="mt-[24px] flex w-full flex-col gap-[10px]">
               <span className="text-[11px] uppercase tracking-[0.2em] text-ink/40">

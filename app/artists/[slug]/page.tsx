@@ -61,7 +61,7 @@ export default async function ArtistProfilePage({ params }: Props) {
               Their portfolio
             </Link>
             <span className="text-[13px] text-muted">
-              At the counter — {artist.price}
+              At the counter - {artist.price}
             </span>
           </div>
           <div className="mt-1 text-[12px] uppercase tracking-[0.1em] text-faint">
@@ -90,7 +90,7 @@ export default async function ArtistProfilePage({ params }: Props) {
           ))}
         </div>
         <p className="mx-auto mt-12 max-w-[440px] text-center text-[13px] leading-[1.7] text-faint">
-          Every piece is sold at the counter only — no shipping, no holds.
+          Every piece is sold at the counter only - no shipping, no holds.
           Seventy percent goes directly to {artist.firstName}.
         </p>
       </section>

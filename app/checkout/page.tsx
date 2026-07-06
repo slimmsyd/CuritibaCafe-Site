@@ -6,7 +6,7 @@ import Checkout from "./Checkout";
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteContent();
   return {
-    title: `Checkout — ${site.product.title}`,
+    title: `Checkout - ${site.product.title}`,
     description: `Complete your order for ${site.product.title} by ${site.product.author}.`,
   };
 }

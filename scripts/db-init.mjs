@@ -1,5 +1,5 @@
 // Create the CRM tables in Neon (orders, subscribers, site_content).
-// Optional — only needed if you want the admin CRM. The template runs without it.
+// Optional - only needed if you want the admin CRM. The template runs without it.
 // Run:  node --env-file=.env.local scripts/db-init.mjs
 import { neon } from "@neondatabase/serverless";
 

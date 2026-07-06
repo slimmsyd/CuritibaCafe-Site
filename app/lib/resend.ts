@@ -2,11 +2,11 @@ import "server-only";
 import { Resend } from "resend";
 
 /**
- * resend.ts — lazy Resend client + env helpers.
+ * resend.ts - lazy Resend client + env helpers.
  *
  * Email is OPTIONAL. Set RESEND_API_KEY, RESEND_FROM_EMAIL, and
  * ADMIN_NOTIFICATION_EMAIL to turn on order + newsletter notifications. With
- * any of them unset, `isEmailConfigured()` is false and sends are skipped — the
+ * any of them unset, `isEmailConfigured()` is false and sends are skipped - the
  * rest of the site is unaffected.
  */
 

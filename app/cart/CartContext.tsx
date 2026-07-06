@@ -10,7 +10,7 @@ import {
 type CartCtx = {
   /** Number of copies of the product in the cart (single-product store). */
   qty: number;
-  /** Kept for API compatibility — the store is hydration-safe via SSR snapshot. */
+  /** Kept for API compatibility - the store is hydration-safe via SSR snapshot. */
   ready: boolean;
   add: () => void;
   setQty: (n: number) => void;

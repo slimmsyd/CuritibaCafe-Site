@@ -1,5 +1,5 @@
 /**
- * stripe.ts — server-only Stripe client (lazy singleton).
+ * stripe.ts - server-only Stripe client (lazy singleton).
  *
  * The client is created on first use, not at import, so `next build` can
  * collect page data without STRIPE_SECRET_KEY present. Never import this from a
@@ -16,7 +16,7 @@ export function getStripe(): Stripe {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
     throw new Error(
-      "STRIPE_SECRET_KEY is not set — add it to .env.local before using payment routes."
+      "STRIPE_SECRET_KEY is not set - add it to .env.local before using payment routes."
     );
   }
   client = new Stripe(secretKey, { typescript: true });

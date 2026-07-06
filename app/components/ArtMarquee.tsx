@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 export type Tile = { src: string; href: string; alt: string };
 
-const SPEED = 55; // pixels per second — gentle, constant drift
+const SPEED = 55; // pixels per second - gentle, constant drift
 
 function TileLink({
   tile,
@@ -41,7 +41,7 @@ export default function ArtMarquee({ tiles }: { tiles: Tile[] }) {
   const x = useMotionValue(0);
   const setRef = useRef<HTMLDivElement>(null);
 
-  // Constant drift — intentionally runs regardless of the OS reduced-motion
+  // Constant drift - intentionally runs regardless of the OS reduced-motion
   // setting, since this marquee is the section's defining motion.
   useAnimationFrame((_, delta) => {
     const setWidth = setRef.current?.offsetWidth ?? 0;

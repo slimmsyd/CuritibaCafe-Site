@@ -18,7 +18,7 @@
  * inside `@layer utilities`, and unlayered CSS always wins over layered CSS
  * regardless of specificity. If these rules stayed unlayered, `a { color:
  * inherit }` would silently override every text-color utility (text-ink,
- * text-white, text-muted, …) on links — making, e.g., the "Apply to the shelf"
+ * text-white, text-muted, …) on links - making, e.g., the "Apply to the shelf"
  * button render white-on-white. Layering them here lets utilities override
  * per-element while these remain the default.
  */

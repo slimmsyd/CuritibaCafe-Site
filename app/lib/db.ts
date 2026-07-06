@@ -3,7 +3,7 @@ import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 
 // Optional database. The template runs fine with NO database (pull-and-go):
 // when DATABASE_URL is unset, `dbEnabled` is false and every caller skips the DB.
-// Importing this module never throws — that keeps the zero-DB build working.
+// Importing this module never throws - that keeps the zero-DB build working.
 const url = process.env.DATABASE_URL;
 
 export const dbEnabled = Boolean(url);

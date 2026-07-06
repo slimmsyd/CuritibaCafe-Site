@@ -50,7 +50,7 @@ async function sendEmail(opts: {
 /** Customer receipt + admin alert for a paid order. */
 export async function sendOrderEmails(order: OrderRow): Promise<SendResult> {
   if (!isEmailConfigured()) {
-    console.warn("[email] skipped order emails — Resend env not configured");
+    console.warn("[email] skipped order emails - Resend env not configured");
     return { ok: false, error: "Email not configured" };
   }
 
@@ -140,7 +140,7 @@ export async function sendOrderEmails(order: OrderRow): Promise<SendResult> {
 /** Welcome email to subscriber + admin alert. */
 export async function sendNewsletterEmails(email: string): Promise<SendResult> {
   if (!isEmailConfigured()) {
-    console.warn("[email] skipped newsletter emails — Resend env not configured");
+    console.warn("[email] skipped newsletter emails - Resend env not configured");
     return { ok: false, error: "Email not configured" };
   }
 

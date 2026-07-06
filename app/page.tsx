@@ -135,7 +135,7 @@ export default async function HomePage() {
                     {artist.name}
                   </div>
                   <div className="text-[14px] text-muted">
-                    {artist.work} — {artist.price}
+                    {artist.work} - {artist.price}
                   </div>
                 </div>
               </div>

@@ -36,7 +36,7 @@ export async function upsertOrder(order: FulfillableOrder): Promise<void> {
 /**
  * Atomically claim an order for notification: stamps notification_sent_at and
  * returns the row, but only on the FIRST call per payment intent. Returns
- * undefined if already claimed (or DB off) — so order emails send exactly once
+ * undefined if already claimed (or DB off) - so order emails send exactly once
  * even though the Stripe webhook may deliver `payment_intent.succeeded` twice.
  */
 export async function claimOrderForNotification(

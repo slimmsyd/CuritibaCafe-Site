@@ -1,13 +1,13 @@
 import "server-only";
 
 /**
- * email-templates.ts — HTML + plain-text builders for transactional email.
+ * email-templates.ts - HTML + plain-text builders for transactional email.
  *
  * Brand-neutral: the header shows whatever `siteName` you pass, and all copy
  * (subject/headline/body/sign-off/footer) comes from the editable site content
  * (site.config.ts → copy.checkout.emails / copy.freeChapter.emails), so the
  * admin CRM can rewrite every word. Pricing is shown as subtotal / shipping /
- * total — no tax line (the template charges no tax).
+ * total - no tax line (the template charges no tax).
  */
 
 const fmtMoney = (cents: number, currency = "usd") =>
@@ -127,7 +127,7 @@ export function orderConfirmationEmail(opts: {
       ${detailRow("Order", `#${opts.orderId}`)}
       ${detailRow("Date", opts.orderedAt)}
       ${detailRow("Email", opts.customerEmail)}
-      ${detailRow("Ship to", opts.shipping || "—")}
+      ${detailRow("Ship to", opts.shipping || "-")}
     </table>
     <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#4a443c;white-space:pre-line;">${escapeHtml(opts.signOff)}</p>
     <p style="margin:0 0 20px;">
@@ -137,7 +137,7 @@ export function orderConfirmationEmail(opts: {
   `;
 
   return {
-    subject: `${opts.subject} — ${opts.productTitle}`,
+    subject: `${opts.subject} - ${opts.productTitle}`,
     html: layout(opts.siteName, opts.subject, body),
     text: [
       opts.headline,
@@ -153,7 +153,7 @@ export function orderConfirmationEmail(opts: {
       `Order #${opts.orderId}`,
       `Date: ${opts.orderedAt}`,
       `Email: ${opts.customerEmail}`,
-      `Ship to:\n${opts.shipping || "—"}`,
+      `Ship to:\n${opts.shipping || "-"}`,
       "",
       opts.signOff,
       "",
@@ -197,7 +197,7 @@ export function orderAdminEmail(opts: {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;border-top:1px solid rgba(26,23,20,0.1);">
       ${detailRow("Customer", opts.customerName)}
       ${detailRow("Email", opts.customerEmail)}
-      ${detailRow("Ship to", opts.shipping || "—")}
+      ${detailRow("Ship to", opts.shipping || "-")}
       ${detailRow("Order", `#${opts.orderId}`)}
       ${detailRow("Date", opts.orderedAt)}
       ${detailRow("Site", opts.siteName)}
@@ -211,7 +211,7 @@ export function orderAdminEmail(opts: {
   const total = fmtMoney(opts.totalCents, opts.currency);
 
   return {
-    subject: `${opts.subject} — ${opts.productTitle} (${total})`,
+    subject: `${opts.subject} - ${opts.productTitle} (${total})`,
     html: layout(opts.siteName, opts.headline, body),
     text: [
       opts.headline,
@@ -224,7 +224,7 @@ export function orderAdminEmail(opts: {
       "",
       `Customer: ${opts.customerName}`,
       `Email: ${opts.customerEmail}`,
-      `Ship to:\n${opts.shipping || "—"}`,
+      `Ship to:\n${opts.shipping || "-"}`,
       `Order #${opts.orderId}`,
       `Date: ${opts.orderedAt}`,
       `Stripe PI: ${opts.paymentIntentId}`,
@@ -306,7 +306,7 @@ export function newsletterAdminEmail(opts: {
     <p style="margin:0 0 20px;">${escapeHtml(opts.body)}</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;border-top:1px solid rgba(26,23,20,0.1);">
       <tr><td style="padding:12px 0;color:#4a443c;">Email</td><td align="right" style="padding:12px 0;font-weight:600;color:#1a1714;">${escapeHtml(opts.email)}</td></tr>
-      <tr><td style="padding:12px 0;color:#4a443c;">List</td><td align="right" style="padding:12px 0;">Free chapter — ${escapeHtml(opts.productTitle)}</td></tr>
+      <tr><td style="padding:12px 0;color:#4a443c;">List</td><td align="right" style="padding:12px 0;">Free chapter - ${escapeHtml(opts.productTitle)}</td></tr>
       <tr><td style="padding:12px 0;color:#4a443c;">Site</td><td align="right" style="padding:12px 0;">${escapeHtml(opts.siteName)}</td></tr>
       <tr><td style="padding:12px 0;color:#4a443c;">Signed up</td><td align="right" style="padding:12px 0;">${escapeHtml(opts.signedUpAt)}</td></tr>
     </table>
@@ -314,7 +314,7 @@ export function newsletterAdminEmail(opts: {
   `;
 
   return {
-    subject: `${opts.subject} — ${opts.email}`,
+    subject: `${opts.subject} - ${opts.email}`,
     html: layout(opts.siteName, opts.headline, body),
     text: [
       opts.headline,
@@ -322,7 +322,7 @@ export function newsletterAdminEmail(opts: {
       opts.body,
       "",
       `Email: ${opts.email}`,
-      `List: Free chapter — ${opts.productTitle}`,
+      `List: Free chapter - ${opts.productTitle}`,
       `Site: ${opts.siteName}`,
       `Signed up: ${opts.signedUpAt}`,
     ].join("\n"),

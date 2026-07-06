@@ -41,10 +41,10 @@ export default async function AdminOrdersPage() {
                     {new Date(o.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-[14px] py-[12px]">
-                    <span className="block font-medium text-ink">{o.name || "—"}</span>
+                    <span className="block font-medium text-ink">{o.name || "-"}</span>
                     <span className="block text-[12px] text-muted">{o.email || ""}</span>
                   </td>
-                  <td className="px-[14px] py-[12px] text-ink-soft">{o.shipping || "—"}</td>
+                  <td className="px-[14px] py-[12px] text-ink-soft">{o.shipping || "-"}</td>
                   <td className="px-[14px] py-[12px] text-center text-ink-soft">{o.qty}</td>
                   <td className="whitespace-nowrap px-[14px] py-[12px] text-right font-medium text-ink">
                     {money(o.amount_cents, o.currency)}

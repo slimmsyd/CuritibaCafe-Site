@@ -1,9 +1,9 @@
 /**
- * site.config.ts — single source of truth for CuritibaSite.
+ * site.config.ts - single source of truth for CuritibaSite.
  *
  * Rebrand the whole site by editing this one file, then dropping your assets
  * into /public (see assets.md). Pricing lives here in CENTS so the server
- * (the Stripe PaymentIntent route) is the only pricing authority — the client
+ * (the Stripe PaymentIntent route) is the only pricing authority - the client
  * never decides what to charge.
  */
 
@@ -14,7 +14,7 @@ export type SiteConfig = {
   brand: {
     /** Shown in copyright, aria labels, social card fallbacks. */
     siteName: string;
-    /** Bare domain, e.g. "yourbook.com" — shown in footer + used for SEO URL. */
+    /** Bare domain, e.g. "yourbook.com" - shown in footer + used for SEO URL. */
     domain: string;
     /** Logo image in /public (PNG/JPG/SVG). Rendered in the header + checkout. */
     logo: string;
@@ -63,7 +63,7 @@ export type SiteConfig = {
   copy: {
     hero: {
       byline: string;
-      /** Headline lines — each entry renders on its own line. */
+      /** Headline lines - each entry renders on its own line. */
       headline: string[];
       /** Full-bleed background slides (cross-fade carousel) from /public. */
       slides: string[];
@@ -106,7 +106,7 @@ export type SiteConfig = {
       successTitle: string;
       successBody: string;
       finePrint: string;
-      /** Resend notification copy — editable in the admin CRM. */
+      /** Resend notification copy - editable in the admin CRM. */
       emails: {
         welcome: {
           subject: string;
@@ -134,7 +134,7 @@ export type SiteConfig = {
       shippingNote: string;
       successTitle: string;
       successBody: string;
-      /** Resend notification copy — editable in the admin CRM. */
+      /** Resend notification copy - editable in the admin CRM. */
       emails: {
         customer: {
           subject: string;
@@ -190,13 +190,13 @@ export const site: SiteConfig = {
     freeShipThresholdCents: 5000,
     maxQty: 10,
     coverImage: "/placeholder/cover.svg",
-    coverAlt: "Curitiba: A City in Motion — cover",
+    coverAlt: "Curitiba: A City in Motion - cover",
     hoverVideo: "",
     tagline: "Urban stories from Brazil's green capital",
     shortDescription:
       "A photographic journey through Curitiba's parks, transit, architecture, and the people who shaped a model city.",
     longDescription: [
-      "Curitiba: A City in Motion traces how a mid-sized Brazilian city became a global reference for sustainable urban planning — from the first bus rapid transit lanes to the botanical gardens that anchor everyday life.",
+      "Curitiba: A City in Motion traces how a mid-sized Brazilian city became a global reference for sustainable urban planning - from the first bus rapid transit lanes to the botanical gardens that anchor everyday life.",
       "Written for travelers, planners, and anyone curious about cities that work, this book pairs street-level storytelling with archival research. The question it keeps asking: what can we borrow from Curitiba, and what must we adapt?",
     ],
     tags: ["#curitiba", "#urbanism", "#brazil", "#travel"],
@@ -236,7 +236,7 @@ export const site: SiteConfig = {
     },
     quote: {
       eyebrow: "From the book",
-      text: "A city is not built in a single plan — it is negotiated",
+      text: "A city is not built in a single plan - it is negotiated",
       highlight: "every morning on the bus, in the market, under the araucária trees.",
       attribution: "Chapter 2 · Curitiba: A City in Motion",
     },
@@ -245,18 +245,18 @@ export const site: SiteConfig = {
       headline: "Stories from the world's greenest capital.",
       metaLine: "10 chapters · 120 photographs",
       body: [
-        "Each chapter follows one thread of Curitiba's identity — transit, public space, food, design, and the immigrant communities that built the city. Maps, timelines, and full-page photography anchor every section.",
+        "Each chapter follows one thread of Curitiba's identity - transit, public space, food, design, and the immigrant communities that built the city. Maps, timelines, and full-page photography anchor every section.",
         "The book draws on interviews with urban planners, bus drivers, gardeners, and longtime residents. It ends not with a blueprint to copy, but with a question: how does your city move?",
       ],
       ctaLabel: "Read the first chapter",
     },
     aboutAuthor: {
       eyebrow: "The author",
-      headline: "Ana Ribeiro — journalist and urban storyteller.",
+      headline: "Ana Ribeiro - journalist and urban storyteller.",
       metaLine: "Writer · Curitiba native",
       body: [
         "Ana Ribeiro grew up riding the Linha Verde and reporting on city hall for a local daily. Her work on transit equity and public space has appeared in magazines across Latin America.",
-        "She wrote Curitiba: A City in Motion for readers who love cities as much as destinations — a book that invites you to look closely at how a place actually works.",
+        "She wrote Curitiba: A City in Motion for readers who love cities as much as destinations - a book that invites you to look closely at how a place actually works.",
       ],
       image: "/placeholder/author.svg",
       imageAlt: "Portrait of Ana Ribeiro",
@@ -266,12 +266,12 @@ export const site: SiteConfig = {
     },
     freeChapter: {
       eyebrow: "Free chapter",
-      headline: "Start in the Jardim Botânico — free.",
+      headline: "Start in the Jardim Botânico - free.",
       body: "Join the list and we'll send the opening chapter straight to your inbox.",
       placeholder: "Your email address",
       submitLabel: "Send me the chapter",
       successTitle: "Obrigado.",
-      successBody: "Check your inbox — your free chapter is on its way.",
+      successBody: "Check your inbox - your free chapter is on its way.",
       finePrint: "No spam. One chapter, then occasional notes from CuritibaSite.",
       emails: {
         welcome: {
@@ -280,10 +280,10 @@ export const site: SiteConfig = {
           body: "You're on the list. We'll send the opening chapter straight to this inbox shortly.\n\nSmall enough to begin today. Deep enough to return to for a lifetime.",
           signOff: "With warmth,\nAna Ribeiro & the CuritibaSite team",
           footer:
-            "No spam — one chapter, then the occasional note. If you didn't request this, you can safely ignore this email.",
+            "No spam - one chapter, then the occasional note. If you didn't request this, you can safely ignore this email.",
         },
         admin: {
-          subject: "New signup — CuritibaSite free chapter",
+          subject: "New signup - CuritibaSite free chapter",
           headline: "Someone joined the list",
           body: "A new reader signed up for the free chapter. Their welcome email has been sent automatically and the address is saved to the subscriber list.",
         },
@@ -292,7 +292,7 @@ export const site: SiteConfig = {
     community: {
       eyebrow: "Beyond the book",
       headline: "The city beyond the page.",
-      body: "CuritibaSite is more than a book — it's a growing archive of urban stories, walking routes, and reader-submitted photographs from across Paraná.",
+      body: "CuritibaSite is more than a book - it's a growing archive of urban stories, walking routes, and reader-submitted photographs from across Paraná.",
       photos: [
         { caption: "Jardim Botânico at dawn", image: "" },
         { caption: "Linha Verde at rush hour", image: "" },
@@ -305,7 +305,7 @@ export const site: SiteConfig = {
       shippingNote: "Free shipping on orders over $50",
       successTitle: "Thank you. Your order is confirmed.",
       successBody:
-        "A confirmation is on its way to your inbox. Your book will ship shortly — and your digital copy is ready now.",
+        "A confirmation is on its way to your inbox. Your book will ship shortly - and your digital copy is ready now.",
       emails: {
         customer: {
           subject: "Your CuritibaSite order is confirmed",
@@ -316,7 +316,7 @@ export const site: SiteConfig = {
             "Questions about your order? Just reply to this email. If you didn't place this order, please contact us right away.",
         },
         admin: {
-          subject: "New order — CuritibaSite",
+          subject: "New order - CuritibaSite",
           headline: "New order received",
           body: "A customer has completed checkout. Fulfillment details are below. The order is also recorded in the admin CRM.",
         },
@@ -325,7 +325,7 @@ export const site: SiteConfig = {
   },
 
   seo: {
-    title: "Curitiba: A City in Motion — by Ana Ribeiro",
+    title: "Curitiba: A City in Motion - by Ana Ribeiro",
     description:
       "Urban stories and photography from Brazil's green capital. Read the first chapter free.",
     ogTitle: "Curitiba: A City in Motion",

@@ -9,7 +9,7 @@ type Path = (string | number)[];
 // Image-ish fields get a live preview + drag-and-drop upload; videos keep the
 // path/picker only (encoding video as a data URL would be far too large).
 const IMAGE_KEY = /image|cover|logo|photo|slide|icon|avatar|thumb|art|banner/i;
-// "coverAlt"/"logoAlt"/"imageAlt" are alt TEXT, not image paths — keep them text.
+// "coverAlt"/"logoAlt"/"imageAlt" are alt TEXT, not image paths - keep them text.
 const isImageKey = (k: string) => IMAGE_KEY.test(k) && !/alt/i.test(k);
 
 /**

@@ -50,7 +50,7 @@ export default async function ArtCarousel() {
       id="art"
       className="bg-paper pt-[clamp(24px,4vh,44px)] pb-[clamp(28px,5vh,56px)]"
     >
-      {/* Fixed label — stays in place while the gallery drifts below it */}
+      {/* Fixed label - stays in place while the gallery drifts below it */}
       <div className="mb-[14px] px-[clamp(24px,6vw,96px)]">
         <a
           href={profile}

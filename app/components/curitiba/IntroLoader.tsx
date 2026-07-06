@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 /**
  * Full-screen video intro shown on every hard page load before the site.
  * - Plays public/curitiba-cafe.mp4 (muted for autoplay), then fades out.
- * - Skippable by click / Enter / Escape — never traps the visitor.
+ * - Skippable by click / Enter / Escape - never traps the visitor.
  * - Honors prefers-reduced-motion (skips straight to the site).
  * Mounted in the root layout, so it renders once per load and does NOT
  * replay on client-side navigation (the layout persists across routes).
@@ -19,7 +19,7 @@ export default function IntroLoader() {
   const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
   // When autoplay is blocked (e.g. Brave Shields) or the file fails to decode,
-  // we do NOT bail out — we hold the branded splash and let the visitor click
+  // we do NOT bail out - we hold the branded splash and let the visitor click
   // "Enter". Only this flag changes; the intro stays on screen.
   const [needsTap, setNeedsTap] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -31,7 +31,7 @@ export default function IntroLoader() {
   }, []);
 
   // Backdrop click: if autoplay was blocked, the tap is the user gesture that
-  // lets us start playback (Brave blocks autoplay by default) — play, don't
+  // lets us start playback (Brave blocks autoplay by default) - play, don't
   // skip. Once playing (or if playback is impossible), a click skips as usual.
   const onBackdropClick = useCallback(() => {
     const v = videoRef.current;
@@ -39,7 +39,7 @@ export default function IntroLoader() {
       v.muted = true; // belt-and-braces: guarantee muted at gesture time
       v.play()
         .then(() => setNeedsTap(false))
-        .catch(() => dismiss()); // truly can't play — let them in
+        .catch(() => dismiss()); // truly can't play - let them in
       return;
     }
     dismiss();
@@ -56,7 +56,7 @@ export default function IntroLoader() {
     }
     setReady(true);
     // Autoplay can be blocked (Brave/Safari/Shields). If so, hold the branded
-    // splash on the video's first frame and invite a tap — never flash away.
+    // splash on the video's first frame and invite a tap - never flash away.
     const v = videoRef.current;
     v?.play().catch(() => setNeedsTap(true));
   }, [dismiss]);

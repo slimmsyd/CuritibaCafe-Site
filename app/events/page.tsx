@@ -43,7 +43,7 @@ export default function EventsPage() {
           Past events
         </h2>
         <p className="mx-auto mb-16 max-w-[480px] text-pretty text-center text-[15px] leading-[1.6] text-muted">
-          A record of the room — what we&apos;ve poured, played, and hung on the
+          A record of the room - what we&apos;ve poured, played, and hung on the
           walls.
         </p>
         <div className="mx-auto grid max-w-[1560px] grid-cols-3 gap-2">

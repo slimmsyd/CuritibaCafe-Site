@@ -14,11 +14,11 @@ export default function Hero() {
   const { byline, headline, sub, primaryCta, secondaryCta } = site.copy.hero;
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Kick playback from JS too — some browsers (Brave) ignore the autoplay
+  // Kick playback from JS too - some browsers (Brave) ignore the autoplay
   // attribute; an explicit play() after hydration succeeds for muted video.
   useEffect(() => {
     videoRef.current?.play().catch(() => {
-      /* blocked — poster stays visible, no harm */
+      /* blocked - poster stays visible, no harm */
     });
   }, []);
 

@@ -10,7 +10,7 @@ export type SubscriberRow = {
 
 /**
  * Record a newsletter signup. Dedupes on email. No-op if DB off.
- * Returns `{ isNew }` — true only when this email was inserted for the first
+ * Returns `{ isNew }` - true only when this email was inserted for the first
  * time, so callers can send a welcome email exactly once.
  */
 export async function upsertSubscriber(

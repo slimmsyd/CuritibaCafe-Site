@@ -32,7 +32,7 @@ function deepMerge<T>(base: T, override: unknown): T {
 /**
  * The live site content. Reads the DB (merged over defaults) when enabled,
  * else returns the static config. Wrapped in React cache() so multiple reads in
- * one request hit the DB once. Never throws — falls back to defaults on error.
+ * one request hit the DB once. Never throws - falls back to defaults on error.
  */
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   if (!dbEnabled) return site;

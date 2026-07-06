@@ -7,7 +7,7 @@ import { useSiteContent } from "@/app/lib/site-content";
  * Book showcase: shows the still cover at rest, then (if a hover video is
  * configured) plays the preview through ONCE and freezes on its final frame.
  * It triggers the first time the book scrolls into view (so mobile / no-hover
- * users see it), and also on hover or focus — whichever happens first.
+ * users see it), and also on hover or focus - whichever happens first.
  * When `product.hoverVideo` is empty, only the still cover renders.
  */
 export default function BookHoverMedia() {

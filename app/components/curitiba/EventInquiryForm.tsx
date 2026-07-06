@@ -12,7 +12,7 @@ export default function EventInquiryForm() {
           Inquiry received
         </div>
         <p className="m-0 text-[15px] leading-[1.7] text-newsletter-muted">
-          Thank you — we read every inquiry and reply within two days with
+          Thank you - we read every inquiry and reply within two days with
           availability and a simple quote.
         </p>
       </div>

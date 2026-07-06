@@ -67,11 +67,11 @@ export const siteData = {
 
   announcement: {
     show: true,
-    text: "Now pouring — the winter single-origin series",
+    text: "Now pouring - the summer single-origin series",
   },
 
   seo: {
-    title: "Curitiba — Coffee, Community, Craft",
+    title: "Curitiba - Coffee, Community, Craft",
     description:
       "A neighborhood cafe focused on craft coffee, community events, and an artist shelf where 70% of every sale goes to the maker.",
     ogTitle: "Curitiba",
@@ -88,8 +88,8 @@ export const siteData = {
 
   hero: {
     video: "/curitiba-cafe.mp4",
-    placeholder: "Drop your hero image — the bar, morning light",
-    season: "Winter 2026",
+    placeholder: "Drop your hero image - the bar, morning light",
+    season: "Summer 2026",
     cta: { label: "The seasonal menu", href: "#menu" },
   },
 
@@ -116,13 +116,13 @@ export const siteData = {
 
   eventsPreview: {
     title: "Upcoming at Curitiba",
-    body: "The room after hours — cuppings, listening nights, and openings hosted with the neighborhood.",
+    body: "The room after hours - cuppings, listening nights, and openings hosted with the neighborhood.",
     items: [
       {
         date: "Thu · Jul 16",
         title: "Cupping at the slow bar",
         detail:
-          "Taste the winter single-origin series with our head roaster. 12 seats.",
+          "Taste the summer single-origin series with our head roaster. 12 seats.",
       },
       {
         date: "Sat · Jul 25",
@@ -137,7 +137,7 @@ export const siteData = {
       {
         date: "Sat · Aug 15",
         title: "Latte art, hands on",
-        detail: "A small class at the machine — milk, pitchers, patience.",
+        detail: "A small class at the machine - milk, pitchers, patience.",
       },
     ] satisfies EventItem[],
   },
@@ -149,7 +149,7 @@ export const siteData = {
       {
         slug: "marina",
         slotId: "artist-1",
-        placeholder: "Ceramics — artist photo",
+        placeholder: "Ceramics - artist photo",
         name: "Marina Duarte",
         work: "Hand-thrown cups",
         price: "from $38",
@@ -158,7 +158,7 @@ export const siteData = {
       {
         slug: "theo",
         slotId: "artist-2",
-        placeholder: "Prints — artist photo",
+        placeholder: "Prints - artist photo",
         name: "Theo Almeida",
         work: "Risograph prints",
         price: "from $24",
@@ -167,7 +167,7 @@ export const siteData = {
       {
         slug: "june",
         slotId: "artist-3",
-        placeholder: "Textiles — artist photo",
+        placeholder: "Textiles - artist photo",
         name: "June Okafor",
         work: "Woven table runners",
         price: "from $65",
@@ -180,10 +180,10 @@ export const siteData = {
     title: "Visit",
     address: ["919 Caroline Street", "Historic Downtown Fredericksburg, VA"],
     hours: [
-      { days: "Sunday — Tuesday", time: "10:00 — 17:00" },
-      { days: "Wednesday", time: "10:00 — 19:00" },
-      { days: "Thursday", time: "10:00 — 17:00" },
-      { days: "Friday — Saturday", time: "9:00 — 22:30" },
+      { days: "Sunday - Tuesday", time: "10:00 - 17:00" },
+      { days: "Wednesday", time: "10:00 - 19:00" },
+      { days: "Thursday", time: "10:00 - 17:00" },
+      { days: "Friday - Saturday", time: "9:00 - 22:30" },
     ],
     mapQuery: "Curitiba Art Café, 919 Caroline St, Fredericksburg, VA 22401",
     directionsUrl:
@@ -192,14 +192,14 @@ export const siteData = {
 
   newsletter: {
     title: "First to know",
-    body: "New menus, event invitations, and the next artists on the shelf — once a month, nothing more.",
+    body: "New menus, event invitations, and the next artists on the shelf - once a month, nothing more.",
   },
 
   reviews: {
     title: "What people say",
     // Live top-5 Google reviews load when GOOGLE_PLACES_API_KEY is set; this
     // textQuery resolves the place. These fallback quotes (real, lightly
-    // trimmed) show until the key is wired in — see app/lib/reviews.ts.
+    // trimmed) show until the key is wired in - see app/lib/reviews.ts.
     query: "Curitiba Art Café, 919 Caroline St, Fredericksburg, VA 22401",
     rating: 4.4,
     count: 407,
@@ -215,7 +215,7 @@ export const siteData = {
       {
         author: "ImAlwaysAdventuring",
         rating: 5,
-        text: "Really cute cafe nestled in historic downtown Fredericksburg — great atmosphere.",
+        text: "Really cute cafe nestled in historic downtown Fredericksburg - great atmosphere.",
         relativeTime: "",
       },
       {
@@ -247,15 +247,15 @@ export const siteData = {
   eventsPage: {
     eyebrow: "The room after hours",
     title: "Events",
-    body: "Cuppings, listening nights, classes, and openings — small, hosted with the neighborhood, and almost always with a pour in hand. Seats are limited; RSVP holds yours.",
+    body: "Cuppings, listening nights, classes, and openings - small, hosted with the neighborhood, and almost always with a pour in hand. Seats are limited; RSVP holds yours.",
     rsvpNote:
-      "RSVP sends us a short email — we confirm within a day. Most events are free; classes note their price. Walk-ins welcome if seats remain.",
+      "RSVP sends us a short email - we confirm within a day. Most events are free; classes note their price. Walk-ins welcome if seats remain.",
     host: {
       title: "Host your event here",
-      body: "After close, the room is yours — the espresso bar stays staffed, the shelf becomes gallery walls, and the sound system is in-house. We host launches, readings, supper clubs, and openings.",
+      body: "After close, the room is yours - the espresso bar stays staffed, the shelf becomes gallery walls, and the sound system is in-house. We host launches, readings, supper clubs, and openings.",
       details: [
         { label: "Capacity", value: "48 seated · 70 standing" },
-        { label: "Hours", value: "18:30 — midnight" },
+        { label: "Hours", value: "18:30 - midnight" },
         { label: "Bar", value: "Espresso, filter, or full takeover" },
         { label: "Community rate", value: "Local artists & nonprofits, ask us" },
       ],
@@ -265,33 +265,33 @@ export const siteData = {
   artistsPage: {
     eyebrow: "The artist shelf",
     title: "Local artists",
-    body: "Every piece at the counter is made within walking distance of it. Seventy percent of each sale goes directly to the artist — the rest keeps the shelf running.",
+    body: "Every piece at the counter is made within walking distance of it. Seventy percent of each sale goes directly to the artist - the rest keeps the shelf running.",
     featured: {
       name: "Marina Duarte",
-      medium: "Ceramics — hand-thrown cups & pour-over sets",
-      bio: "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in — the shelf carries the same pieces, numbered and signed.",
-      price: "At the counter — from $38",
-      imagePlaceholder: "Featured artist — portrait or work in progress",
+      medium: "Ceramics - hand-thrown cups & pour-over sets",
+      bio: "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in - the shelf carries the same pieces, numbered and signed.",
+      price: "At the counter - from $38",
+      imagePlaceholder: "Featured artist - portrait or work in progress",
     },
     sell: {
       title: "Join the shelf",
       body: "We rotate three makers every quarter. If you live or work in the neighborhood and make something with your hands, send us five photos and a line about yourself. Seventy percent of every sale is yours, paid monthly.",
       cta: "Apply to the shelf",
       ctaHref:
-        "mailto:artists@curitiba.cafe?subject=Application%20—%20The%20artist%20shelf",
-      note: "Next review — September 2026",
+        "mailto:artists@curitiba.cafe?subject=Application%20-%20The%20artist%20shelf",
+      note: "Next review - September 2026",
     },
   },
 } as const;
 
 const rsvp = (title: string) =>
-  `mailto:events@curitiba.cafe?subject=${encodeURIComponent("RSVP — " + title)}`;
+  `mailto:events@curitiba.cafe?subject=${encodeURIComponent("RSVP - " + title)}`;
 
 export const upcomingEvents: EventItem[] = [
   {
     date: "Thu · Jul 16",
     title: "Cupping at the slow bar",
-    detail: "Taste the winter single-origin series with our head roaster.",
+    detail: "Taste the summer single-origin series with our head roaster.",
     seats: "12 seats · Free",
     rsvpHref: rsvp("Cupping at the slow bar"),
   },
@@ -312,7 +312,7 @@ export const upcomingEvents: EventItem[] = [
   {
     date: "Sat · Aug 15",
     title: "Latte art, hands on",
-    detail: "A small class at the machine — milk, pitchers, patience.",
+    detail: "A small class at the machine - milk, pitchers, patience.",
     seats: "8 seats · $35",
     rsvpHref: rsvp("Latte art, hands on"),
   },
@@ -321,19 +321,19 @@ export const upcomingEvents: EventItem[] = [
 export const pastEvents: PastEvent[] = [
   {
     slotId: "past-1",
-    placeholder: "Photo — spring cupping",
+    placeholder: "Photo - spring cupping",
     title: "Spring origins cupping",
     date: "April 2026",
   },
   {
     slotId: "past-2",
-    placeholder: "Photo — poetry night",
+    placeholder: "Photo - poetry night",
     title: "Reading night: new voices",
     date: "May 2026",
   },
   {
     slotId: "past-3",
-    placeholder: "Photo — shelf opening",
+    placeholder: "Photo - shelf opening",
     title: "Artist shelf, first hang",
     date: "June 2026",
   },
@@ -343,7 +343,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "marina",
     slotId: "artist-marina",
-    placeholder: "Marina — ceramics",
+    placeholder: "Marina - ceramics",
     name: "Marina Duarte",
     work: "Hand-thrown cups",
     price: "from $38",
@@ -352,7 +352,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "theo",
     slotId: "artist-theo",
-    placeholder: "Theo — riso prints",
+    placeholder: "Theo - riso prints",
     name: "Theo Almeida",
     work: "Risograph prints",
     price: "from $24",
@@ -361,7 +361,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "june",
     slotId: "artist-june",
-    placeholder: "June — textiles",
+    placeholder: "June - textiles",
     name: "June Okafor",
     work: "Woven table runners",
     price: "from $65",
@@ -370,7 +370,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "rafa",
     slotId: "artist-rafa",
-    placeholder: "Rafa — photography",
+    placeholder: "Rafa - photography",
     name: "Rafa Lindgren",
     work: "Photography",
     price: "from $45",
@@ -379,7 +379,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "carmen",
     slotId: "artist-carmen",
-    placeholder: "Carmen — jewelry",
+    placeholder: "Carmen - jewelry",
     name: "Carmen Ito",
     work: "Jewelry",
     price: "from $52",
@@ -388,7 +388,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "dev",
     slotId: "artist-dev",
-    placeholder: "Dev — woodwork",
+    placeholder: "Dev - woodwork",
     name: "Dev Ansari",
     work: "Woodwork",
     price: "from $30",
@@ -397,7 +397,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "lena",
     slotId: "artist-lena",
-    placeholder: "Lena — zines",
+    placeholder: "Lena - zines",
     name: "Lena Moraes",
     work: "Zines & books",
     price: "from $12",
@@ -406,7 +406,7 @@ export const shelfArtists: ArtistCard[] = [
   {
     slug: "oto",
     slotId: "artist-oto",
-    placeholder: "Oto — candles",
+    placeholder: "Oto - candles",
     name: "Oto Kamau",
     work: "Candles",
     price: "from $22",
@@ -425,11 +425,11 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     link: "#",
     bio: "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in.",
     quote: "A cup should feel like it was always yours.",
-    portraitPlaceholder: "Marina — portrait or studio shot",
+    portraitPlaceholder: "Marina - portrait or studio shot",
     works: [
-      { title: "Demitasse pair", price: "$38", placeholder: "Demitasse pair — photo" },
-      { title: "Pour-over set", price: "$120", placeholder: "Pour-over set — photo" },
-      { title: "Numbered mug", price: "$46", placeholder: "Numbered mug — photo" },
+      { title: "Demitasse pair", price: "$38", placeholder: "Demitasse pair - photo" },
+      { title: "Pour-over set", price: "$120", placeholder: "Pour-over set - photo" },
+      { title: "Numbered mug", price: "$46", placeholder: "Numbered mug - photo" },
     ],
   },
   theo: {
@@ -440,13 +440,13 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     price: "from $24",
     since: "March 2026",
     link: "#",
-    bio: "Theo prints two-color risographs of the district — its corners, kiosks, and morning lines. Each run is 50 copies, numbered by hand.",
+    bio: "Theo prints two-color risographs of the district - its corners, kiosks, and morning lines. Each run is 50 copies, numbered by hand.",
     quote: "The neighborhood is the archive.",
-    portraitPlaceholder: "Theo — portrait or print studio",
+    portraitPlaceholder: "Theo - portrait or print studio",
     works: [
-      { title: "Mercer St, 7am", price: "$24", placeholder: "Mercer St, 7am — photo" },
-      { title: "The kiosk series", price: "$24", placeholder: "The kiosk series — photo" },
-      { title: "Old Market triptych", price: "$60", placeholder: "Old Market triptych — photo" },
+      { title: "Mercer St, 7am", price: "$24", placeholder: "Mercer St, 7am - photo" },
+      { title: "The kiosk series", price: "$24", placeholder: "The kiosk series - photo" },
+      { title: "Old Market triptych", price: "$60", placeholder: "Old Market triptych - photo" },
     ],
   },
   june: {
@@ -459,11 +459,11 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     link: "#",
     bio: "June weaves runners and coasters in undyed cotton on a floor loom, working in small seasonal batches.",
     quote: "Slow cloth, like slow coffee, rewards patience.",
-    portraitPlaceholder: "June — portrait or loom",
+    portraitPlaceholder: "June - portrait or loom",
     works: [
-      { title: "Table runner", price: "$65", placeholder: "Table runner — photo" },
-      { title: "Coaster set of four", price: "$40", placeholder: "Coaster set of four — photo" },
-      { title: "Wall hanging", price: "$140", placeholder: "Wall hanging — photo" },
+      { title: "Table runner", price: "$65", placeholder: "Table runner - photo" },
+      { title: "Coaster set of four", price: "$40", placeholder: "Coaster set of four - photo" },
+      { title: "Wall hanging", price: "$140", placeholder: "Wall hanging - photo" },
     ],
   },
   rafa: {
@@ -476,11 +476,11 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     link: "#",
     bio: "Rafa shoots the cafe's regulars and the district's storefronts on medium-format film, printed at a lab down the street.",
     quote: "Everyone here has a portrait waiting.",
-    portraitPlaceholder: "Rafa — portrait or contact sheet",
+    portraitPlaceholder: "Rafa - portrait or contact sheet",
     works: [
-      { title: "Regulars, vol. 1", price: "$45", placeholder: "Regulars, vol. 1 — photo" },
-      { title: "Storefront studies", price: "$45", placeholder: "Storefront studies — photo" },
-      { title: "Framed 11×14", price: "$95", placeholder: "Framed 11×14 — photo" },
+      { title: "Regulars, vol. 1", price: "$45", placeholder: "Regulars, vol. 1 - photo" },
+      { title: "Storefront studies", price: "$45", placeholder: "Storefront studies - photo" },
+      { title: "Framed 11×14", price: "$95", placeholder: "Framed 11×14 - photo" },
     ],
   },
   carmen: {
@@ -493,11 +493,11 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     link: "#",
     bio: "Carmen casts small-batch silver pieces in her home studio, finishing each by hand at the bench.",
     quote: "Small objects carry the biggest days.",
-    portraitPlaceholder: "Carmen — portrait or bench",
+    portraitPlaceholder: "Carmen - portrait or bench",
     works: [
-      { title: "Bean pendant", price: "$52", placeholder: "Bean pendant — photo" },
-      { title: "Hammered band", price: "$68", placeholder: "Hammered band — photo" },
-      { title: "Ear studs, pair", price: "$56", placeholder: "Ear studs, pair — photo" },
+      { title: "Bean pendant", price: "$52", placeholder: "Bean pendant - photo" },
+      { title: "Hammered band", price: "$68", placeholder: "Hammered band - photo" },
+      { title: "Ear studs, pair", price: "$56", placeholder: "Ear studs, pair - photo" },
     ],
   },
   dev: {
@@ -508,13 +508,13 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     price: "from $30",
     since: "June 2026",
     link: "#",
-    bio: "Dev turns offcuts from local workshops into scoops, boards, and trivets — nothing new is felled for the shelf.",
+    bio: "Dev turns offcuts from local workshops into scoops, boards, and trivets - nothing new is felled for the shelf.",
     quote: "The wood was already here. I just listen to it.",
-    portraitPlaceholder: "Dev — portrait or workshop",
+    portraitPlaceholder: "Dev - portrait or workshop",
     works: [
-      { title: "Coffee scoop", price: "$30", placeholder: "Coffee scoop — photo" },
-      { title: "Serving board", price: "$75", placeholder: "Serving board — photo" },
-      { title: "Trivet set", price: "$48", placeholder: "Trivet set — photo" },
+      { title: "Coffee scoop", price: "$30", placeholder: "Coffee scoop - photo" },
+      { title: "Serving board", price: "$75", placeholder: "Serving board - photo" },
+      { title: "Trivet set", price: "$48", placeholder: "Trivet set - photo" },
     ],
   },
   lena: {
@@ -525,13 +525,13 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     price: "from $12",
     since: "June 2026",
     link: "#",
-    bio: "Lena writes and staples quarterly zines about the neighborhood — interviews, recipes, and walking routes.",
+    bio: "Lena writes and staples quarterly zines about the neighborhood - interviews, recipes, and walking routes.",
     quote: "Print small, mean it more.",
-    portraitPlaceholder: "Lena — portrait or zine spread",
+    portraitPlaceholder: "Lena - portrait or zine spread",
     works: [
-      { title: "Issue 04: Mornings", price: "$12", placeholder: "Issue 04: Mornings — photo" },
-      { title: "Back-issue bundle", price: "$30", placeholder: "Back-issue bundle — photo" },
-      { title: "Walking routes map", price: "$14", placeholder: "Walking routes map — photo" },
+      { title: "Issue 04: Mornings", price: "$12", placeholder: "Issue 04: Mornings - photo" },
+      { title: "Back-issue bundle", price: "$30", placeholder: "Back-issue bundle - photo" },
+      { title: "Walking routes map", price: "$14", placeholder: "Walking routes map - photo" },
     ],
   },
   oto: {
@@ -542,13 +542,13 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     price: "from $22",
     since: "June 2026",
     link: "#",
-    bio: "Oto pours soy candles scented from the roastery's own notes — cascara, cedar, and toasted sugar.",
+    bio: "Oto pours soy candles scented from the roastery's own notes - cascara, cedar, and toasted sugar.",
     quote: "The room should smell like it sounds.",
-    portraitPlaceholder: "Oto — portrait or pouring",
+    portraitPlaceholder: "Oto - portrait or pouring",
     works: [
-      { title: "Cascara, 8oz", price: "$22", placeholder: "Cascara, 8oz — photo" },
-      { title: "Cedar & sugar, 8oz", price: "$22", placeholder: "Cedar & sugar, 8oz — photo" },
-      { title: "Trio gift set", price: "$58", placeholder: "Trio gift set — photo" },
+      { title: "Cascara, 8oz", price: "$22", placeholder: "Cascara, 8oz - photo" },
+      { title: "Cedar & sugar, 8oz", price: "$22", placeholder: "Cedar & sugar, 8oz - photo" },
+      { title: "Trio gift set", price: "$58", placeholder: "Trio gift set - photo" },
     ],
   },
 };

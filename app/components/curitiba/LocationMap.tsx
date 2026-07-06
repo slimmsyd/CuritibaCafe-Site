@@ -5,7 +5,7 @@ export default function LocationMap({
   query: string;
   className?: string;
 }) {
-  // Keyless embed — no API key or billing required for the interactive map.
+  // Keyless embed - no API key or billing required for the interactive map.
   const src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`;
 
   return (

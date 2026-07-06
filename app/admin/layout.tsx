@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // The admin area only exists when the CRM is configured (DB + admin env).
-// Otherwise every /admin route 404s — preserving the zero-DB template.
+// Otherwise every /admin route 404s - preserving the zero-DB template.
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   if (!crmEnabled) notFound();
   return (

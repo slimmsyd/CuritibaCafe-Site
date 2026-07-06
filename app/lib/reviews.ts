@@ -11,7 +11,7 @@ export type ReviewsData = {
   mapsUrl: string;
 };
 
-// Places API (New). A field mask of `reviews` returns Google's top 5 reviews —
+// Places API (New). A field mask of `reviews` returns Google's top 5 reviews -
 // that 5-review cap is a hard Google limitation, not something we can page past.
 const SEARCH_ENDPOINT = "https://places.googleapis.com/v1/places:searchText";
 const REVALIDATE_SECONDS = 60 * 60 * 24; // refresh once a day
@@ -48,7 +48,7 @@ function normalize(raw: PlacesReview[]): ReviewItem[] {
  * never exposed. Requires GOOGLE_PLACES_API_KEY (key must have "Places API
  * (New)" enabled and NOT be locked to HTTP-referrer restrictions, since this
  * runs from the server). Set GOOGLE_PLACE_ID to skip the text lookup. Falls
- * back to curated quotes on any missing key / error / empty result — never
+ * back to curated quotes on any missing key / error / empty result - never
  * throws, keeping the page resilient.
  */
 export async function getGoogleReviews(): Promise<ReviewsData> {

@@ -1,5 +1,5 @@
 /**
- * money.ts — shared pricing math + formatting.
+ * money.ts - shared pricing math + formatting.
  *
  * All amounts are integer CENTS until the moment they are displayed. The same
  * `computeOrder` runs on the client (order summary) and the server (the Stripe

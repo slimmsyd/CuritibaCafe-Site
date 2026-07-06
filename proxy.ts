@@ -2,9 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { SESSION_COOKIE, verifySession, crmEnabled } from "@/app/lib/auth";
 
 /**
- * Admin gate (Next 16 "proxy" — the renamed middleware; Node runtime by default).
+ * Admin gate (Next 16 "proxy" - the renamed middleware; Node runtime by default).
  * When the CRM is not configured (no DB / no admin env), the admin area does not
- * exist — every /admin and /api/admin path 404s, preserving the zero-DB template.
+ * exist - every /admin and /api/admin path 404s, preserving the zero-DB template.
  * When configured, it verifies the signed session cookie.
  *
  * Defense in depth: admin pages/actions also call requireAdmin().

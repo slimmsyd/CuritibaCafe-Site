@@ -49,7 +49,7 @@ export default async function AboutBook() {
             ))}
           </div>
 
-          {/* Filled pill button — adds the book to the cart */}
+          {/* Filled pill button - adds the book to the cart */}
           <AddToCartButton label={ctaLabel} />
 
           {/* Meta tags */}

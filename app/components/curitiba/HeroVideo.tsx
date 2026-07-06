@@ -13,7 +13,7 @@ export default function HeroVideo({
 
   useEffect(() => {
     videoRef.current?.play().catch(() => {
-      /* autoplay blocked — poster remains visible */
+      /* autoplay blocked - poster remains visible */
     });
   }, []);
 

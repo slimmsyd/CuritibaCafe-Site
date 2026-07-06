@@ -2,17 +2,17 @@
 
 Replace the placeholders in `/public/placeholder/` with your real assets, then
 point `site.config.ts` at them. You can keep them in `/public/placeholder/` or
-move them to `/public/` — just match the path in the config.
+move them to `/public/` - just match the path in the config.
 
 | Config field                 | Placeholder shipped            | Recommended file            | Size / ratio        |
 | ---------------------------- | ------------------------------ | --------------------------- | ------------------- |
 | `brand.logo`                 | `/placeholder/logo.svg`        | `/logo.svg` or `.png`       | ~184×46, transparent |
 | `product.coverImage`         | `/placeholder/cover.svg`       | `/cover.png`                | 440×560, ~4:5       |
-| `product.hoverVideo`         | _(empty — none)_               | `/book-hover.mp4`           | square-ish, muted, < 2 MB, plays once |
+| `product.hoverVideo`         | _(empty - none)_               | `/book-hover.mp4`           | square-ish, muted, < 2 MB, plays once |
 | `copy.hero.slides[]`         | `/placeholder/hero-1..3.svg`   | `/hero-1.jpg` …             | 1600×1000, full-bleed |
 | `copy.aboutAuthor.image`     | `/placeholder/author.svg`      | `/author.jpg`               | 480×600, ~4:5       |
 
-## Social / SEO images (Next.js file conventions — optional)
+## Social / SEO images (Next.js file conventions - optional)
 
 Drop these into `app/` and Next auto-wires them (no config needed):
 

@@ -78,7 +78,7 @@ export async function saveContentAction(
   _prev: SaveState,
   formData: FormData,
 ): Promise<SaveState> {
-  await requireAdmin(); // defense in depth — Server Actions are POST-reachable
+  await requireAdmin(); // defense in depth - Server Actions are POST-reachable
 
   let draft: unknown;
   try {

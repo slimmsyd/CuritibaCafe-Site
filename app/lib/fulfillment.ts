@@ -1,5 +1,5 @@
 /**
- * fulfillment.ts — pluggable order fulfillment hook.
+ * fulfillment.ts - pluggable order fulfillment hook.
  *
  * The Stripe webhook calls `fulfillOrder()` once a payment succeeds. The
  * default implementation logs the order and, if `ORDER_WEBHOOK_URL` is set,
@@ -7,7 +7,7 @@
  *
  * This template intentionally ships WITHOUT a database so it stays pull-and-go.
  * To persist orders, replace the body of `fulfillOrder` with your DB write
- * (Prisma/Drizzle/Supabase/etc.) — this is the single seam you need to touch.
+ * (Prisma/Drizzle/Supabase/etc.) - this is the single seam you need to touch.
  */
 
 export type FulfillableOrder = {

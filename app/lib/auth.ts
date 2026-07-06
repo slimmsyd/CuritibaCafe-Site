@@ -1,4 +1,4 @@
-// Admin auth primitives — single-password login with a signed session cookie.
+// Admin auth primitives - single-password login with a signed session cookie.
 //
 // NO `import "server-only"` and NO top-level throw: this module is imported by
 // proxy.ts (runs before render) and by Server Actions / route handlers, and the
@@ -6,9 +6,9 @@
 // (crypto.subtle), available in every runtime.
 //
 // Credentials live ONLY in env (reproducible template, no secrets in code):
-//   SESSION_SECRET        — HMAC key for the session cookie
-//   ADMIN_PASSWORD_HASH   — sha256 hex of the password (preferred)
-//   ADMIN_PASSWORD        — plaintext fallback
+//   SESSION_SECRET        - HMAC key for the session cookie
+//   ADMIN_PASSWORD_HASH   - sha256 hex of the password (preferred)
+//   ADMIN_PASSWORD        - plaintext fallback
 
 import { dbEnabled } from "./db";
 

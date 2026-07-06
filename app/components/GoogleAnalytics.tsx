@@ -1,11 +1,11 @@
 import Script from "next/script";
 
 /**
- * Google Analytics (gtag) — opt-in via env.
+ * Google Analytics (gtag) - opt-in via env.
  *
  * Set NEXT_PUBLIC_GA_MEASUREMENT_ID (e.g. "G-XXXXXXXXXX") to enable. With the
  * var unset, this renders nothing, so the template ships analytics-free by
- * default and turns on with one env var — no code change.
+ * default and turns on with one env var - no code change.
  */
 export default function GoogleAnalytics() {
   const id = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
