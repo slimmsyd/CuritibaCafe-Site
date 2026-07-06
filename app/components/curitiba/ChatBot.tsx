@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   getAnswerForIntent,
   getLocalChatReply,
@@ -14,6 +21,53 @@ type Message = {
 };
 
 const { chat } = siteData;
+
+const URL_RE = /https?:\/\/[^\s]+/g;
+
+function linkLabel(url: string): string {
+  if (url.includes("google.com/maps")) return "Get directions in Google Maps";
+  return "Open link";
+}
+
+function ChatMessageText({ text }: { text: string }) {
+  const parts: ReactNode[] = [];
+  let last = 0;
+
+  for (const match of text.matchAll(URL_RE)) {
+    const index = match.index ?? 0;
+    if (index > last) {
+      parts.push(
+        <span key={`text-${last}`} className="whitespace-pre-wrap">
+          {text.slice(last, index)}
+        </span>,
+      );
+    }
+
+    const url = match[0];
+    parts.push(
+      <a
+        key={`link-${index}`}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-ink underline decoration-ink/35 underline-offset-2 transition-colors hover:text-muted hover:decoration-muted"
+      >
+        {linkLabel(url)}
+      </a>,
+    );
+    last = index + url.length;
+  }
+
+  if (last < text.length) {
+    parts.push(
+      <span key={`text-${last}`} className="whitespace-pre-wrap">
+        {text.slice(last)}
+      </span>,
+    );
+  }
+
+  return <>{parts}</>;
+}
 
 function ChatIcon() {
   return (
@@ -160,7 +214,7 @@ export default function ChatBot() {
           role="dialog"
           aria-labelledby={titleId}
           aria-modal="false"
-          className="pointer-events-auto flex w-[min(100vw-2rem,380px)] flex-col overflow-hidden border border-hairline bg-white shadow-[0_18px_50px_rgba(17,17,17,0.14)] motion-safe:animate-[chat-in_220ms_ease-out]"
+          className="pointer-events-auto flex w-[min(100vw-2rem,380px)] min-w-0 max-w-[calc(100vw-2rem)] flex-col overflow-hidden border border-hairline bg-white shadow-[0_18px_50px_rgba(17,17,17,0.14)] motion-safe:animate-[chat-in_220ms_ease-out]"
         >
           <header className="flex items-center justify-between border-b border-hairline bg-sand px-4 py-3.5">
             <div>
@@ -186,18 +240,18 @@ export default function ChatBot() {
 
           <div
             ref={listRef}
-            className="flex max-h-[min(52vh,420px)] min-h-[280px] flex-col gap-3 overflow-y-auto px-4 py-4"
+            className="flex min-h-[280px] min-w-0 max-h-[min(52vh,420px)] flex-col gap-3 overflow-x-hidden overflow-y-auto px-4 py-4"
           >
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={
                   msg.role === "user"
-                    ? "ml-8 self-end rounded-sm bg-ink px-3.5 py-2.5 text-[14px] leading-[1.55] text-white"
-                    : "mr-4 self-start whitespace-pre-line border border-hairline bg-sand px-3.5 py-2.5 text-[14px] leading-[1.55] text-ink"
+                    ? "ml-8 max-w-[calc(100%-2rem)] min-w-0 self-end overflow-hidden break-words rounded-sm bg-ink px-3.5 py-2.5 text-[14px] leading-[1.55] text-white"
+                    : "mr-2 max-w-[calc(100%-0.5rem)] min-w-0 self-start overflow-hidden break-words border border-hairline bg-sand px-3.5 py-2.5 text-[14px] leading-[1.55] text-ink"
                 }
               >
-                {msg.text}
+                <ChatMessageText text={msg.text} />
               </div>
             ))}
 
@@ -214,13 +268,13 @@ export default function ChatBot() {
             ) : null}
 
             {messages.length === 1 ? (
-              <div className="flex flex-wrap gap-2 pt-1">
+              <div className="flex min-w-0 flex-wrap gap-2 pt-1">
                 {chat.suggestions.map((suggestion) => (
                   <button
                     key={suggestion}
                     type="button"
                     onClick={() => send(suggestion)}
-                    className="cursor-pointer border border-hairline bg-white px-3 py-2 text-left text-[12px] tracking-[0.02em] text-ink transition-colors hover:border-ink hover:bg-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                    className="max-w-full cursor-pointer break-words border border-hairline bg-white px-3 py-2 text-left text-[12px] tracking-[0.02em] text-ink transition-colors hover:border-ink hover:bg-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   >
                     {suggestion}
                   </button>

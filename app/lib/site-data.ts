@@ -233,7 +233,7 @@ export const siteData = {
       "Where are you located?",
     ],
     locationAnswer:
-      "919 Caroline Street, Historic Downtown Fredericksburg, VA.\n\nTap Visit on the menu for directions, or open maps: https://www.google.com/maps/dir/?api=1&destination=Curitiba+Art+Caf%C3%A9%2C+919+Caroline+St%2C+Fredericksburg%2C+VA+22401",
+      "919 Caroline Street, Historic Downtown Fredericksburg, VA.\n\nTap Visit on the menu for directions, or get directions in Google Maps:\nhttps://www.google.com/maps/dir/?api=1&destination=Curitiba+Art+Caf%C3%A9%2C+919+Caroline+St%2C+Fredericksburg%2C+VA+22401",
   },
 
   // Pulled from https://linktr.ee/CuritibaArt
