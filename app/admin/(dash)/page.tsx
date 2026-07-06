@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { getContentUpdatedAt } from "@/app/lib/content";
 import { getOrderCount } from "@/app/lib/orders";
+import { getChatMessageCount } from "@/app/lib/chat-messages";
 import { getSubscriberCount } from "@/app/lib/subscribers";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [updatedAt, orders, subs] = await Promise.all([
+  const [updatedAt, orders, subs, chats] = await Promise.all([
     getContentUpdatedAt(),
     getOrderCount(),
     getSubscriberCount(),
+    getChatMessageCount(),
   ]);
 
   const card =
@@ -23,7 +25,7 @@ export default async function AdminDashboard() {
           Manage your site
         </h1>
       </div>
-      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
         <Link href="/admin/content" className={card}>
           <span className="font-display text-[19px] tracking-[-0.01em]">Content</span>
           <span className="text-[13px] text-muted">
@@ -40,6 +42,11 @@ export default async function AdminDashboard() {
           <span className="font-display text-[19px] tracking-[-0.01em]">Subscribers</span>
           <span className="text-[13px] text-muted">{subs} on the list</span>
           <span className="mt-[4px] text-[12px] text-gold">View subscribers →</span>
+        </Link>
+        <Link href="/admin/chat" className={card}>
+          <span className="font-display text-[19px] tracking-[-0.01em]">Chat</span>
+          <span className="text-[13px] text-muted">{chats} guest questions</span>
+          <span className="mt-[4px] text-[12px] text-gold">View chat log →</span>
         </Link>
       </div>
     </div>

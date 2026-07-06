@@ -45,17 +45,29 @@ const SUBSCRIBERS_DDL = `
   );
 `;
 
+const CHAT_MESSAGES_DDL = `
+  CREATE TABLE IF NOT EXISTS chat_messages (
+    id               BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_message     TEXT NOT NULL,
+    assistant_reply  TEXT NOT NULL,
+    intent           TEXT NOT NULL DEFAULT 'unknown',
+    source           TEXT NOT NULL DEFAULT 'fallback',
+    created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
+  );
+`;
+
 try {
   await sql.query(SITE_CONTENT_DDL);
   await sql.query(ORDERS_DDL);
   await sql.query(SUBSCRIBERS_DDL);
+  await sql.query(CHAT_MESSAGES_DDL);
   // Idempotent migration for databases created before email notifications.
   await sql.query(
     `ALTER TABLE orders ADD COLUMN IF NOT EXISTS notification_sent_at TIMESTAMPTZ`,
   );
   // No seed: getSiteContent() falls back to site.config when the row is absent,
   // and the first admin save materializes the full document.
-  console.log("✓ CRM tables ready: site_content, orders, subscribers");
+  console.log("✓ CRM tables ready: site_content, orders, subscribers, chat_messages");
 } catch (err) {
   console.error("✗ Failed to initialize database:", err.message);
   process.exit(1);

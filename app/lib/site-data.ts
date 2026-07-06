@@ -129,6 +129,11 @@ export const siteData = {
         label: "House pastries",
         placeholder: "House pastries",
       },
+      {
+        id: "menu-cone",
+        label: "Soft-serve cones",
+        placeholder: "Soft-serve cone at the bar",
+      },
     ] satisfies MenuItem[],
   },
 
@@ -201,7 +206,8 @@ export const siteData = {
       { days: "Sunday - Tuesday", time: "10:00 - 17:00" },
       { days: "Wednesday", time: "10:00 - 19:00" },
       { days: "Thursday", time: "10:00 - 17:00" },
-      { days: "Friday - Saturday", time: "9:00 - 22:30" },
+      { days: "Friday", time: "10:00 - 22:00" },
+      { days: "Saturday", time: "9:00 - 22:00" },
     ],
     mapQuery: "Curitiba Art Café, 919 Caroline St, Fredericksburg, VA 22401",
     directionsUrl:
@@ -217,7 +223,7 @@ export const siteData = {
     title: "Curitiba",
     subtitle: "Ask about the bar",
     placeholder: "Hours, menu, events…",
-    disclaimer: "Preview assistant - full answers coming soon",
+    disclaimer: "Answers from our menu & hours — ask at the counter for anything else",
     greeting:
       "Welcome to Curitiba. Ask about our hours, summer menu, events, or the artist shelf.",
     suggestions: [

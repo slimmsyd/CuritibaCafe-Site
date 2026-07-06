@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { getMockChatReply } from "@/app/lib/chat-bot";
+import {
+  getAnswerForIntent,
+  getLocalChatReply,
+} from "@/app/lib/cafe-knowledge";
 import { siteData } from "@/app/lib/site-data";
 
 type Message = {
@@ -119,8 +122,29 @@ export default function ChatBot() {
     setTyping(true);
 
     const delay = 500 + Math.min(trimmed.length * 18, 700);
-    window.setTimeout(() => {
-      const reply = getMockChatReply(trimmed);
+    window.setTimeout(async () => {
+      let reply: string;
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: trimmed }),
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { reply: string };
+          reply = data.reply;
+        } else {
+          const local = getLocalChatReply(trimmed);
+          reply = local.reply || getAnswerForIntent("unknown");
+        }
+      } catch {
+        const local = getLocalChatReply(trimmed);
+        reply =
+          local.reply ||
+          getAnswerForIntent("unknown") ||
+          "Something went wrong — try again, or ask at the counter.";
+      }
+
       setMessages((prev) => [
         ...prev,
         { id: `assistant-${Date.now()}`, role: "assistant", text: reply },
