@@ -57,6 +57,10 @@ export type PastEvent = {
   placeholder: string;
   title: string;
   date: string;
+  /** Photo from the Instagram post (events derived from the feed). */
+  imageUrl?: string;
+  /** Link to the Instagram post. */
+  permalink?: string;
 };
 
 export type ReviewItem = {
@@ -80,6 +84,12 @@ export type SocialLink = {
   href: string;
   icon: SocialLinkIcon;
   external?: boolean;
+};
+
+export type FaqItem = {
+  id: string;
+  question: string;
+  answer: string;
 };
 
 export const siteData = {
@@ -111,6 +121,7 @@ export const siteData = {
     { href: "/events", label: "Events" },
     { href: "/artists", label: "Artists" },
     { href: "/#visit", label: "Visit" },
+    { href: "/#faq", label: "FAQ" },
     { href: "/#newsletter", label: "Newsletter" },
   ],
 
@@ -180,31 +191,14 @@ export const siteData = {
     body: "Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist.",
     items: [
       {
-        slug: "marina",
-        slotId: "artist-1",
-        placeholder: "Ceramics - artist photo",
-        name: "Marina Duarte",
-        work: "Hand-thrown cups",
-        price: "from $38",
-        medium: "Ceramics",
-      },
-      {
-        slug: "theo",
-        slotId: "artist-2",
-        placeholder: "Prints - artist photo",
-        name: "Theo Almeida",
-        work: "Risograph prints",
-        price: "from $24",
-        medium: "Riso prints",
-      },
-      {
-        slug: "june",
-        slotId: "artist-3",
-        placeholder: "Textiles - artist photo",
-        name: "June Okafor",
-        work: "Woven table runners",
-        price: "from $65",
-        medium: "Textiles",
+        slug: "jaime-rodriguez",
+        slotId: "artist-jaime-rodriguez",
+        placeholder: "Jaime Rodriguez - Futuro Photography",
+        name: "Jaime Rodriguez",
+        work: "Photography",
+        price: "from $100",
+        medium: "Futuro Photography",
+        imageUrl: "/assets/artists/jaime-rodriguez/work-3.jpg",
       },
     ] satisfies ArtistCard[],
   },
@@ -227,6 +221,52 @@ export const siteData = {
   newsletter: {
     title: "First to know",
     body: "New menus, event invitations, and the next artists on the shelf - once a month, nothing more.",
+  },
+
+  faq: {
+    title: "Questions",
+    body: "Everything you might want to know before you walk through the door.",
+    footer: "Still have a question?",
+    cta: "Ask at the counter",
+    ctaHref: "/#visit",
+    items: [
+      {
+        id: "hours",
+        question: "What are your hours?",
+        answer:
+          "Sunday through Tuesday, 10:00-17:00. Wednesday, 10:00-19:00. Thursday, 10:00-17:00. Friday, 10:00-22:00. Saturday, 9:00-22:00. Hours can shift for holidays and private events. Check Instagram for the latest.",
+      },
+      {
+        id: "location",
+        question: "Where are you located?",
+        answer:
+          "919 Caroline Street in historic downtown Fredericksburg, VA. Street parking is available on Caroline and nearby blocks. We are a short walk from the train station and most downtown shops.",
+      },
+      {
+        id: "menu",
+        question: "What do you serve?",
+        answer:
+          "Craft espresso, slow-bar pour overs, house pastries, soft-serve cones, and a seasonal cocktail menu on evenings and weekends. The menu rotates. Ask the barista what is pouring today.",
+      },
+      {
+        id: "events",
+        question: "How do events and RSVPs work?",
+        answer:
+          "We host cuppings, listening nights, classes, and openings throughout the month. Most events are free with limited seats. RSVP by email to hold your spot. Walk-ins are welcome when seats remain. See the Events page for what is coming up.",
+      },
+      {
+        id: "artists",
+        question: "How does the artist shelf work?",
+        answer:
+          "Local makers display work at the counter. Seventy percent of every sale goes directly to the artist, paid monthly. Pieces are sold in person only, with no shipping or holds. Interested in joining the shelf? Send five photos and a short intro to artists@curitiba.cafe.",
+      },
+      {
+        id: "wifi",
+        question: "Can I work from the café?",
+        answer:
+          "Absolutely. We have comfortable seating, free Wi-Fi, and plenty of outlets. We ask that laptop users grab a drink and keep conversations at a considerate volume. It is a shared room.",
+      },
+    ] satisfies FaqItem[],
   },
 
   chat: {
@@ -267,13 +307,6 @@ export const siteData = {
       label: "Events",
       href: "/events",
       icon: "events",
-    },
-    {
-      id: "website",
-      label: "Website",
-      href: "https://www.curitibaartcafe.com/",
-      icon: "website",
-      external: true,
     },
     {
       id: "press",
@@ -330,6 +363,7 @@ export const siteData = {
       { href: "/#menu", label: "Menu" },
       { href: "/events", label: "Events" },
       { href: "/#visit", label: "Visit" },
+      { href: "/#faq", label: "FAQ" },
     ],
     community: [
       { href: "/artists", label: "Artist shelf" },
@@ -340,7 +374,6 @@ export const siteData = {
       { href: "https://www.instagram.com/curitiba_art_cafe", label: "Instagram" },
       { href: "https://www.tiktok.com/@curitiba_art_cafe", label: "TikTok" },
       { href: "/events", label: "Events" },
-      { href: "https://www.curitibaartcafe.com/", label: "Website" },
       {
         href: "https://www.fredericksburgfreepress.com/2025/09/03/forced-to-improvise-jazz-collective-finds-new-arrangement-at-curitiba",
         label: "Press",
@@ -371,11 +404,11 @@ export const siteData = {
     title: "Local artists",
     body: "Every piece at the counter is made within walking distance of it. Seventy percent of each sale goes directly to the artist - the rest keeps the shelf running.",
     featured: {
-      name: "Marina Duarte",
-      medium: "Ceramics - hand-thrown cups & pour-over sets",
-      bio: "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in - the shelf carries the same pieces, numbered and signed.",
-      price: "At the counter - from $38",
-      imagePlaceholder: "Featured artist - portrait or work in progress",
+      name: "Jaime Rodriguez",
+      medium: "Futuro Photography",
+      bio: "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. His \"Dizzy\" print comes from his very first concert photography assignment. Original prints are available at the counter.",
+      price: "At the counter - from $100",
+      imagePlaceholder: "Jaime Rodriguez - Futuro Photography",
     },
     sell: {
       title: "Join the shelf",
@@ -445,228 +478,54 @@ export const pastEvents: PastEvent[] = [
 
 export const shelfArtists: ArtistCard[] = [
   {
-    slug: "marina",
-    slotId: "artist-marina",
-    placeholder: "Marina - ceramics",
-    name: "Marina Duarte",
-    work: "Hand-thrown cups",
-    price: "from $38",
-    medium: "Ceramics",
-  },
-  {
-    slug: "theo",
-    slotId: "artist-theo",
-    placeholder: "Theo - riso prints",
-    name: "Theo Almeida",
-    work: "Risograph prints",
-    price: "from $24",
-    medium: "Riso prints",
-  },
-  {
-    slug: "june",
-    slotId: "artist-june",
-    placeholder: "June - textiles",
-    name: "June Okafor",
-    work: "Woven table runners",
-    price: "from $65",
-    medium: "Textiles",
-  },
-  {
-    slug: "rafa",
-    slotId: "artist-rafa",
-    placeholder: "Rafa - photography",
-    name: "Rafa Lindgren",
+    slug: "jaime-rodriguez",
+    slotId: "artist-jaime-rodriguez",
+    placeholder: "Jaime Rodriguez - Futuro Photography",
+    name: "Jaime Rodriguez",
     work: "Photography",
-    price: "from $45",
-    medium: "Photography",
-  },
-  {
-    slug: "carmen",
-    slotId: "artist-carmen",
-    placeholder: "Carmen - jewelry",
-    name: "Carmen Ito",
-    work: "Jewelry",
-    price: "from $52",
-    medium: "Jewelry",
-  },
-  {
-    slug: "dev",
-    slotId: "artist-dev",
-    placeholder: "Dev - woodwork",
-    name: "Dev Ansari",
-    work: "Woodwork",
-    price: "from $30",
-    medium: "Woodwork",
-  },
-  {
-    slug: "lena",
-    slotId: "artist-lena",
-    placeholder: "Lena - zines",
-    name: "Lena Moraes",
-    work: "Zines & books",
-    price: "from $12",
-    medium: "Zines & books",
-  },
-  {
-    slug: "oto",
-    slotId: "artist-oto",
-    placeholder: "Oto - candles",
-    name: "Oto Kamau",
-    work: "Candles",
-    price: "from $22",
-    medium: "Candles",
+    price: "from $100",
+    medium: "Futuro Photography",
+    imageUrl: "/assets/artists/jaime-rodriguez/work-3.jpg",
   },
 ];
 
 export const artistProfiles: Record<string, ArtistProfileData> = {
-  marina: {
-    slug: "marina",
-    name: "Marina Duarte",
-    firstName: "Marina",
-    medium: "Ceramics",
-    price: "from $38",
-    since: "January 2026",
+  "jaime-rodriguez": {
+    slug: "jaime-rodriguez",
+    name: "Jaime Rodriguez",
+    firstName: "Jaime",
+    medium: "Futuro Photography",
+    price: "from $100",
+    since: "July 2026",
     link: "#",
-    bio: "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in.",
-    quote: "A cup should feel like it was always yours.",
-    portraitPlaceholder: "Marina - portrait or studio shot",
+    bio: "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. Original prints, signed and ready to hang.",
+    quote: "The image you see is an original print from the moment it happened.",
+    portraitPlaceholder: "Jaime Rodriguez - Futuro Photography",
+    portraitImageUrl: "/assets/artists/jaime-rodriguez/work-3.jpg",
     works: [
-      { title: "Demitasse pair", price: "$38", placeholder: "Demitasse pair - photo" },
-      { title: "Pour-over set", price: "$120", placeholder: "Pour-over set - photo" },
-      { title: "Numbered mug", price: "$46", placeholder: "Numbered mug - photo" },
-    ],
-  },
-  theo: {
-    slug: "theo",
-    name: "Theo Almeida",
-    firstName: "Theo",
-    medium: "Risograph prints",
-    price: "from $24",
-    since: "March 2026",
-    link: "#",
-    bio: "Theo prints two-color risographs of the district - its corners, kiosks, and morning lines. Each run is 50 copies, numbered by hand.",
-    quote: "The neighborhood is the archive.",
-    portraitPlaceholder: "Theo - portrait or print studio",
-    works: [
-      { title: "Mercer St, 7am", price: "$24", placeholder: "Mercer St, 7am - photo" },
-      { title: "The kiosk series", price: "$24", placeholder: "The kiosk series - photo" },
-      { title: "Old Market triptych", price: "$60", placeholder: "Old Market triptych - photo" },
-    ],
-  },
-  june: {
-    slug: "june",
-    name: "June Okafor",
-    firstName: "June",
-    medium: "Textiles",
-    price: "from $65",
-    since: "January 2026",
-    link: "#",
-    bio: "June weaves runners and coasters in undyed cotton on a floor loom, working in small seasonal batches.",
-    quote: "Slow cloth, like slow coffee, rewards patience.",
-    portraitPlaceholder: "June - portrait or loom",
-    works: [
-      { title: "Table runner", price: "$65", placeholder: "Table runner - photo" },
-      { title: "Coaster set of four", price: "$40", placeholder: "Coaster set of four - photo" },
-      { title: "Wall hanging", price: "$140", placeholder: "Wall hanging - photo" },
-    ],
-  },
-  rafa: {
-    slug: "rafa",
-    name: "Rafa Lindgren",
-    firstName: "Rafa",
-    medium: "Photography",
-    price: "from $45",
-    since: "April 2026",
-    link: "#",
-    bio: "Rafa shoots the cafe's regulars and the district's storefronts on medium-format film, printed at a lab down the street.",
-    quote: "Everyone here has a portrait waiting.",
-    portraitPlaceholder: "Rafa - portrait or contact sheet",
-    works: [
-      { title: "Regulars, vol. 1", price: "$45", placeholder: "Regulars, vol. 1 - photo" },
-      { title: "Storefront studies", price: "$45", placeholder: "Storefront studies - photo" },
-      { title: "Framed 11×14", price: "$95", placeholder: "Framed 11×14 - photo" },
-    ],
-  },
-  carmen: {
-    slug: "carmen",
-    name: "Carmen Ito",
-    firstName: "Carmen",
-    medium: "Jewelry",
-    price: "from $52",
-    since: "April 2026",
-    link: "#",
-    bio: "Carmen casts small-batch silver pieces in her home studio, finishing each by hand at the bench.",
-    quote: "Small objects carry the biggest days.",
-    portraitPlaceholder: "Carmen - portrait or bench",
-    works: [
-      { title: "Bean pendant", price: "$52", placeholder: "Bean pendant - photo" },
-      { title: "Hammered band", price: "$68", placeholder: "Hammered band - photo" },
-      { title: "Ear studs, pair", price: "$56", placeholder: "Ear studs, pair - photo" },
-    ],
-  },
-  dev: {
-    slug: "dev",
-    name: "Dev Ansari",
-    firstName: "Dev",
-    medium: "Woodwork",
-    price: "from $30",
-    since: "June 2026",
-    link: "#",
-    bio: "Dev turns offcuts from local workshops into scoops, boards, and trivets - nothing new is felled for the shelf.",
-    quote: "The wood was already here. I just listen to it.",
-    portraitPlaceholder: "Dev - portrait or workshop",
-    works: [
-      { title: "Coffee scoop", price: "$30", placeholder: "Coffee scoop - photo" },
-      { title: "Serving board", price: "$75", placeholder: "Serving board - photo" },
-      { title: "Trivet set", price: "$48", placeholder: "Trivet set - photo" },
-    ],
-  },
-  lena: {
-    slug: "lena",
-    name: "Lena Moraes",
-    firstName: "Lena",
-    medium: "Zines & books",
-    price: "from $12",
-    since: "June 2026",
-    link: "#",
-    bio: "Lena writes and staples quarterly zines about the neighborhood - interviews, recipes, and walking routes.",
-    quote: "Print small, mean it more.",
-    portraitPlaceholder: "Lena - portrait or zine spread",
-    works: [
-      { title: "Issue 04: Mornings", price: "$12", placeholder: "Issue 04: Mornings - photo" },
-      { title: "Back-issue bundle", price: "$30", placeholder: "Back-issue bundle - photo" },
-      { title: "Walking routes map", price: "$14", placeholder: "Walking routes map - photo" },
-    ],
-  },
-  oto: {
-    slug: "oto",
-    name: "Oto Kamau",
-    firstName: "Oto",
-    medium: "Candles",
-    price: "from $22",
-    since: "June 2026",
-    link: "#",
-    bio: "Oto pours soy candles scented from the roastery's own notes - cascara, cedar, and toasted sugar.",
-    quote: "The room should smell like it sounds.",
-    portraitPlaceholder: "Oto - portrait or pouring",
-    works: [
-      { title: "Cascara, 8oz", price: "$22", placeholder: "Cascara, 8oz - photo" },
-      { title: "Cedar & sugar, 8oz", price: "$22", placeholder: "Cedar & sugar, 8oz - photo" },
-      { title: "Trio gift set", price: "$58", placeholder: "Trio gift set - photo" },
+      {
+        title: "\"X\" — 1980's New York City",
+        price: "$100",
+        placeholder: "X print - 1980's New York City",
+        imageUrl: "/assets/artists/jaime-rodriguez/work-1.jpg",
+      },
+      {
+        title: "1980's New York City",
+        price: "$100",
+        placeholder: "1980's New York City - photograph",
+        imageUrl: "/assets/artists/jaime-rodriguez/work-2.jpg",
+      },
+      {
+        title: "\"Dizzy\" — Summer 1983, New York City",
+        price: "$150",
+        placeholder: "Dizzy - Summer 1983, New York City",
+        imageUrl: "/assets/artists/jaime-rodriguez/work-3.jpg",
+      },
     ],
   },
 };
 
-export const artistOrder = [
-  "marina",
-  "theo",
-  "june",
-  "rafa",
-  "carmen",
-  "dev",
-  "lena",
-  "oto",
-] as const;
+export const artistOrder = ["jaime-rodriguez"] as const;
 
 export function getArtistProfile(slug: string): ArtistProfile | undefined {
   const profile = artistProfiles[slug];
@@ -674,7 +533,7 @@ export function getArtistProfile(slug: string): ArtistProfile | undefined {
   return {
     ...profile,
     copy: resolveArtistCopy(
-      slug === "marina"
+      slug === "jaime-rodriguez"
         ? {
             featuredBio: siteData.artistsPage.featured.bio,
             featuredCta: "View her work",

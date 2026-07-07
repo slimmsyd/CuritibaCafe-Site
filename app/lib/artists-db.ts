@@ -209,6 +209,16 @@ export async function saveArtist(input: ArtistInput): Promise<number> {
     throw new Error("Slug must be lowercase letters, numbers, and hyphens.");
   }
 
+  // Friendly duplicate check (the unique constraint still backstops races).
+  const clash = await sql`
+    SELECT id FROM artists
+    WHERE slug = ${slug} AND id IS DISTINCT FROM ${input.id ?? null}
+    LIMIT 1
+  `;
+  if (clash.length > 0) {
+    throw new Error(`The slug “${slug}” is already used by another artist.`);
+  }
+
   if (input.featured) {
     await sql`UPDATE artists SET featured = false WHERE featured = true`;
   }

@@ -1,6 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+const REDUCED_MOTION_MQ = "(prefers-reduced-motion: reduce)";
+
+// Reactive prefers-reduced-motion (false during SSR).
+function subscribeReducedMotion(cb: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION_MQ);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+function useReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION_MQ).matches,
+    () => false,
+  );
+}
 
 /**
  * Full-screen video intro shown on every hard page load before the site.
@@ -12,12 +35,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
  */
 export default function IntroLoader() {
   // Start visible so the very first server/client paint covers the site with
-  // no flash-of-content; the effect below hides it immediately when the intro
-  // should be skipped.
+  // no flash-of-content; reduced-motion visitors skip straight to the site.
   const [visible, setVisible] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const [progress, setProgress] = useState(0);
+  // Fades the video in once it can actually render frames (see onCanPlay).
   const [ready, setReady] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const showing = visible && !reduceMotion;
   // When autoplay is blocked (e.g. Brave Shields) or the file fails to decode,
   // we do NOT bail out - we hold the branded splash and let the visitor click
   // "Enter". Only this flag changes; the intro stays on screen.
@@ -45,43 +70,35 @@ export default function IntroLoader() {
     dismiss();
   }, [needsTap, dismiss]);
 
-  // Decide on mount whether to show the intro at all.
+  // Autoplay can be blocked (Brave/Safari/Shields). If so, hold the branded
+  // splash on the video's first frame and invite a tap - never flash away.
   useEffect(() => {
-    const reduce = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (reduce) {
-      setVisible(false);
-      return;
-    }
-    setReady(true);
-    // Autoplay can be blocked (Brave/Safari/Shields). If so, hold the branded
-    // splash on the video's first frame and invite a tap - never flash away.
+    if (!showing) return;
     const v = videoRef.current;
     v?.play().catch(() => setNeedsTap(true));
-  }, [dismiss]);
+  }, [showing]);
 
   // Lock scroll while the intro is on screen.
   useEffect(() => {
-    if (!visible) return;
+    if (!showing) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [visible]);
+  }, [showing]);
 
   // Keyboard: Enter / Escape / Space skip.
   useEffect(() => {
-    if (!visible) return;
+    if (!showing) return;
     const onKey = (e: KeyboardEvent) => {
       if (["Enter", "Escape", " "].includes(e.key)) dismiss();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [visible, dismiss]);
+  }, [showing, dismiss]);
 
-  if (!visible) return null;
+  if (!showing) return null;
 
   return (
     <div
@@ -103,8 +120,12 @@ export default function IntroLoader() {
         playsInline
         autoPlay
         preload="auto"
+        onCanPlay={() => setReady(true)}
         onTimeUpdate={(e) => {
           const el = e.currentTarget;
+          // canplay can fire before hydration attaches handlers; timeupdate
+          // keeps firing, so use it as the fallback fade-in trigger.
+          if (!ready) setReady(true);
           if (el.duration) setProgress(el.currentTime / el.duration);
         }}
         onEnded={dismiss}

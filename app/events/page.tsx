@@ -1,6 +1,7 @@
 import SiteHeader from "../components/curitiba/SiteHeader";
 import SiteFooter from "../components/curitiba/SiteFooter";
 import ImagePlaceholder from "../components/curitiba/ImagePlaceholder";
+import CafeImage from "../components/curitiba/CafeImage";
 import EventList from "../components/curitiba/EventList";
 import EventInquiryForm from "../components/curitiba/EventInquiryForm";
 import {
@@ -8,9 +9,21 @@ import {
   siteData,
   upcomingEvents,
 } from "../lib/site-data";
+import { getInstagramPosts } from "../lib/instagram";
+import { deriveInstagramEvents } from "../lib/instagram-events";
 
-export default function EventsPage() {
+// Refresh hourly so events derived from the Instagram feed move from
+// "Upcoming" to "Past events" on their own.
+export const revalidate = 3600;
+
+export default async function EventsPage() {
   const { eventsPage } = siteData;
+  const instagram = await getInstagramPosts();
+  const derived = deriveInstagramEvents(instagram.posts);
+
+  // Real events from the feed replace the template placeholders when present.
+  const upcoming = derived.upcoming.length > 0 ? derived.upcoming : upcomingEvents;
+  const past = derived.past.length > 0 ? derived.past : pastEvents;
 
   return (
     <div className="w-full overflow-x-hidden bg-white">
@@ -32,7 +45,7 @@ export default function EventsPage() {
         <h2 className="mb-10 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-12">
           Upcoming
         </h2>
-        <EventList events={upcomingEvents} showSeats />
+        <EventList events={upcoming} showSeats />
         <p className="mx-auto mt-10 max-w-[540px] text-center text-[13px] leading-[1.7] text-faint">
           {eventsPage.rsvpNote}
         </p>
@@ -47,9 +60,20 @@ export default function EventsPage() {
           walls.
         </p>
         <div className="mx-auto grid max-w-[1560px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-2 lg:grid-cols-3">
-          {pastEvents.map((ev) => (
+          {past.map((ev) => (
             <div key={ev.slotId} className="flex flex-col items-center gap-[22px]">
-              <ImagePlaceholder label={ev.placeholder} aspect="4/5" />
+              {ev.imageUrl ? (
+                <a
+                  href={ev.permalink ?? "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
+                >
+                  <CafeImage src={ev.imageUrl} label={ev.placeholder} aspect="4/5" />
+                </a>
+              ) : (
+                <ImagePlaceholder label={ev.placeholder} aspect="4/5" />
+              )}
               <div className="flex flex-col gap-1.5 text-center">
                 <div className="text-[13px] font-medium uppercase tracking-[0.16em] text-ink">
                   {ev.title}

@@ -2,7 +2,6 @@ import "server-only";
 import type { ArtistCard, ArtistProfile } from "./site-data";
 import {
   artistOrder,
-  artistProfiles,
   getAdjacentArtists as getStaticAdjacentArtists,
   getArtistProfile as getStaticArtistProfile,
   shelfArtists,
@@ -172,15 +171,16 @@ export async function getFeaturedArtistCard(): Promise<{
     }
   }
 
-  const marina = getStaticArtistProfile("marina");
-  if (!marina) return null;
+  const jamie = getStaticArtistProfile("jaime-rodriguez");
+  if (!jamie) return null;
 
   return {
-    slug: marina.slug,
-    name: marina.name,
-    medium: marina.medium,
-    price: marina.price,
-    imagePlaceholder: marina.portraitPlaceholder,
-    copy: marina.copy,
+    slug: jamie.slug,
+    name: jamie.name,
+    medium: jamie.medium,
+    price: jamie.price,
+    imageUrl: jamie.portraitImageUrl,
+    imagePlaceholder: jamie.portraitPlaceholder,
+    copy: jamie.copy,
   };
 }

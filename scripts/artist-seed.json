@@ -1,175 +1,45 @@
 [
   {
-    "slug": "marina",
-    "slotId": "artist-marina",
-    "name": "Marina Duarte",
-    "firstName": "Marina",
-    "medium": "Ceramics",
-    "workSummary": "Hand-thrown cups",
-    "price": "from $38",
-    "placeholder": "Marina - ceramics",
-    "portraitPlaceholder": "Marina - portrait or studio shot",
-    "bio": "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in.",
-    "quote": "A cup should feel like it was always yours.",
+    "slug": "jaime-rodriguez",
+    "slotId": "artist-jaime-rodriguez",
+    "name": "Jaime Rodriguez",
+    "firstName": "Jaime",
+    "medium": "Futuro Photography",
+    "workSummary": "Photography",
+    "price": "from $100",
+    "placeholder": "Jaime Rodriguez - Futuro Photography",
+    "portraitPlaceholder": "Jaime Rodriguez - Futuro Photography",
+    "portraitImage": "/assets/artists/jaime-rodriguez/work-3.jpg",
+    "shelfImage": "/assets/artists/jaime-rodriguez/work-3.jpg",
+    "bio": "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. Original prints, signed and ready to hang.",
+    "quote": "The image you see is an original print from the moment it happened.",
     "portfolioLink": "#",
-    "onShelfSince": "January 2026",
+    "onShelfSince": "July 2026",
     "featured": true,
     "copy": {
-      "featuredBio": "Marina throws every cup in her studio two blocks from the cafe, glazing in the same warm sand tones as the room. Her demitasse set is what our espresso is served in - the shelf carries the same pieces, numbered and signed.",
-      "featuredCta": "View her work",
-      "featuredPriceLine": "At the counter - from $38"
+      "featuredBio": "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. His \"Dizzy\" print comes from his very first concert photography assignment. Original prints are available at the counter.",
+      "featuredCta": "View his work",
+      "featuredPriceLine": "At the counter - from $100"
     },
     "works": [
-      { "title": "Demitasse pair", "price": "$38", "placeholder": "Demitasse pair - photo" },
-      { "title": "Pour-over set", "price": "$120", "placeholder": "Pour-over set - photo" },
-      { "title": "Numbered mug", "price": "$46", "placeholder": "Numbered mug - photo" }
-    ]
-  },
-  {
-    "slug": "theo",
-    "slotId": "artist-theo",
-    "name": "Theo Almeida",
-    "firstName": "Theo",
-    "medium": "Riso prints",
-    "workSummary": "Risograph prints",
-    "price": "from $24",
-    "placeholder": "Theo - riso prints",
-    "portraitPlaceholder": "Theo - portrait or print studio",
-    "bio": "Theo prints two-color risographs of the district - its corners, kiosks, and morning lines. Each run is 50 copies, numbered by hand.",
-    "quote": "The neighborhood is the archive.",
-    "portfolioLink": "#",
-    "onShelfSince": "March 2026",
-    "featured": false,
-    "works": [
-      { "title": "Mercer St, 7am", "price": "$24", "placeholder": "Mercer St, 7am - photo" },
-      { "title": "The kiosk series", "price": "$24", "placeholder": "The kiosk series - photo" },
-      { "title": "Old Market triptych", "price": "$60", "placeholder": "Old Market triptych - photo" }
-    ]
-  },
-  {
-    "slug": "june",
-    "slotId": "artist-june",
-    "name": "June Okafor",
-    "firstName": "June",
-    "medium": "Textiles",
-    "workSummary": "Woven table runners",
-    "price": "from $65",
-    "placeholder": "June - textiles",
-    "portraitPlaceholder": "June - portrait or loom",
-    "bio": "June weaves runners and coasters in undyed cotton on a floor loom, working in small seasonal batches.",
-    "quote": "Slow cloth, like slow coffee, rewards patience.",
-    "portfolioLink": "#",
-    "onShelfSince": "January 2026",
-    "featured": false,
-    "works": [
-      { "title": "Table runner", "price": "$65", "placeholder": "Table runner - photo" },
-      { "title": "Coaster set of four", "price": "$40", "placeholder": "Coaster set of four - photo" },
-      { "title": "Wall hanging", "price": "$140", "placeholder": "Wall hanging - photo" }
-    ]
-  },
-  {
-    "slug": "rafa",
-    "slotId": "artist-rafa",
-    "name": "Rafa Lindgren",
-    "firstName": "Rafa",
-    "medium": "Photography",
-    "workSummary": "Photography",
-    "price": "from $45",
-    "placeholder": "Rafa - photography",
-    "portraitPlaceholder": "Rafa - portrait or contact sheet",
-    "bio": "Rafa shoots the cafe's regulars and the district's storefronts on medium-format film, printed at a lab down the street.",
-    "quote": "Everyone here has a portrait waiting.",
-    "portfolioLink": "#",
-    "onShelfSince": "April 2026",
-    "featured": false,
-    "works": [
-      { "title": "Regulars, vol. 1", "price": "$45", "placeholder": "Regulars, vol. 1 - photo" },
-      { "title": "Storefront studies", "price": "$45", "placeholder": "Storefront studies - photo" },
-      { "title": "Framed 11×14", "price": "$95", "placeholder": "Framed 11×14 - photo" }
-    ]
-  },
-  {
-    "slug": "carmen",
-    "slotId": "artist-carmen",
-    "name": "Carmen Ito",
-    "firstName": "Carmen",
-    "medium": "Jewelry",
-    "workSummary": "Jewelry",
-    "price": "from $52",
-    "placeholder": "Carmen - jewelry",
-    "portraitPlaceholder": "Carmen - portrait or bench",
-    "bio": "Carmen casts small-batch silver pieces in her home studio, finishing each by hand at the bench.",
-    "quote": "Small objects carry the biggest days.",
-    "portfolioLink": "#",
-    "onShelfSince": "April 2026",
-    "featured": false,
-    "works": [
-      { "title": "Bean pendant", "price": "$52", "placeholder": "Bean pendant - photo" },
-      { "title": "Hammered band", "price": "$68", "placeholder": "Hammered band - photo" },
-      { "title": "Ear studs, pair", "price": "$56", "placeholder": "Ear studs, pair - photo" }
-    ]
-  },
-  {
-    "slug": "dev",
-    "slotId": "artist-dev",
-    "name": "Dev Ansari",
-    "firstName": "Dev",
-    "medium": "Woodwork",
-    "workSummary": "Woodwork",
-    "price": "from $30",
-    "placeholder": "Dev - woodwork",
-    "portraitPlaceholder": "Dev - portrait or workshop",
-    "bio": "Dev turns offcuts from local workshops into scoops, boards, and trivets - nothing new is felled for the shelf.",
-    "quote": "The wood was already here. I just listen to it.",
-    "portfolioLink": "#",
-    "onShelfSince": "June 2026",
-    "featured": false,
-    "works": [
-      { "title": "Coffee scoop", "price": "$30", "placeholder": "Coffee scoop - photo" },
-      { "title": "Serving board", "price": "$75", "placeholder": "Serving board - photo" },
-      { "title": "Trivet set", "price": "$48", "placeholder": "Trivet set - photo" }
-    ]
-  },
-  {
-    "slug": "lena",
-    "slotId": "artist-lena",
-    "name": "Lena Moraes",
-    "firstName": "Lena",
-    "medium": "Zines & books",
-    "workSummary": "Zines & books",
-    "price": "from $12",
-    "placeholder": "Lena - zines",
-    "portraitPlaceholder": "Lena - portrait or zine spread",
-    "bio": "Lena writes and staples quarterly zines about the neighborhood - interviews, recipes, and walking routes.",
-    "quote": "Print small, mean it more.",
-    "portfolioLink": "#",
-    "onShelfSince": "June 2026",
-    "featured": false,
-    "works": [
-      { "title": "Issue 04: Mornings", "price": "$12", "placeholder": "Issue 04: Mornings - photo" },
-      { "title": "Back-issue bundle", "price": "$30", "placeholder": "Back-issue bundle - photo" },
-      { "title": "Walking routes map", "price": "$14", "placeholder": "Walking routes map - photo" }
-    ]
-  },
-  {
-    "slug": "oto",
-    "slotId": "artist-oto",
-    "name": "Oto Kamau",
-    "firstName": "Oto",
-    "medium": "Candles",
-    "workSummary": "Candles",
-    "price": "from $22",
-    "placeholder": "Oto - candles",
-    "portraitPlaceholder": "Oto - portrait or pouring",
-    "bio": "Oto pours soy candles scented from the roastery's own notes - cascara, cedar, and toasted sugar.",
-    "quote": "The room should smell like it sounds.",
-    "portfolioLink": "#",
-    "onShelfSince": "June 2026",
-    "featured": false,
-    "works": [
-      { "title": "Cascara, 8oz", "price": "$22", "placeholder": "Cascara, 8oz - photo" },
-      { "title": "Cedar & sugar, 8oz", "price": "$22", "placeholder": "Cedar & sugar, 8oz - photo" },
-      { "title": "Trio gift set", "price": "$58", "placeholder": "Trio gift set - photo" }
+      {
+        "title": "\"X\" — 1980's New York City",
+        "price": "$100",
+        "placeholder": "X print - 1980's New York City",
+        "imageUrl": "/assets/artists/jaime-rodriguez/work-1.jpg"
+      },
+      {
+        "title": "1980's New York City",
+        "price": "$100",
+        "placeholder": "1980's New York City - photograph",
+        "imageUrl": "/assets/artists/jaime-rodriguez/work-2.jpg"
+      },
+      {
+        "title": "\"Dizzy\" — Summer 1983, New York City",
+        "price": "$150",
+        "placeholder": "Dizzy - Summer 1983, New York City",
+        "imageUrl": "/assets/artists/jaime-rodriguez/work-3.jpg"
+      }
     ]
   }
 ]

@@ -11,10 +11,14 @@ import LocationMap from "./components/curitiba/LocationMap";
 import Reviews from "./components/curitiba/Reviews";
 import InstagramFeed from "./components/curitiba/InstagramFeed";
 import SocialLinks from "./components/curitiba/SocialLinks";
+import HeroParallax from "./components/curitiba/HeroParallax";
+import Reveal from "./components/curitiba/Reveal";
+import FAQ from "./components/curitiba/FAQ";
 import { getArtistsPreviewItems } from "./lib/artists";
 import { siteData } from "./lib/site-data";
 import { getGoogleReviews } from "./lib/reviews";
 import { getInstagramPosts } from "./lib/instagram";
+import { deriveInstagramEvents } from "./lib/instagram-events";
 
 export const maxDuration = 90;
 
@@ -25,14 +29,20 @@ export default async function HomePage() {
     getArtistsPreviewItems(),
   ]);
 
+  // Real upcoming events announced on Instagram replace the template list.
+  const igEvents = deriveInstagramEvents(instagram.posts);
+  const eventsPreviewItems =
+    igEvents.upcoming.length > 0
+      ? igEvents.upcoming.slice(0, 4)
+      : siteData.eventsPreview.items;
+
   return (
     <div className="w-full overflow-x-hidden bg-white">
       <AnnouncementBar />
       <SiteHeader variant="landing" />
 
-      <section id="top" className="sticky top-0 z-0">
-        <div className="relative h-[72vh] min-h-[420px] overflow-hidden bg-ink sm:h-[78vh] sm:min-h-[520px] lg:h-[82vh] lg:min-h-[560px]">
-          <HeroVideo src={siteData.hero.video} />
+      <HeroParallax>
+        <HeroVideo src={siteData.hero.video} />
           <div
             className="pointer-events-none absolute inset-0 z-[1]"
             style={{
@@ -84,10 +94,10 @@ export default async function HomePage() {
               </span>
             </div>
           </div>
-        </div>
-      </section>
+      </HeroParallax>
 
       <div className="relative z-10 bg-white shadow-[0_-24px_60px_rgba(0,0,0,0.12)]">
+        <Reveal>
         <section id="menu" className="px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
           <h2 className="mb-10 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink sm:mb-16">
             {siteData.menu.title}
@@ -106,7 +116,9 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+        </Reveal>
 
+        <Reveal>
         <section id="events" className="px-5 pb-16 sm:px-8 sm:pb-20 lg:px-10 lg:pb-[120px]">
           <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
             {siteData.eventsPreview.title}
@@ -114,7 +126,7 @@ export default async function HomePage() {
           <p className="mx-auto mb-10 max-w-[520px] text-pretty text-center text-[15px] leading-[1.6] text-muted sm:mb-14">
             {siteData.eventsPreview.body}
           </p>
-          <EventList events={siteData.eventsPreview.items} />
+          <EventList events={eventsPreviewItems} />
           <div className="mt-10 flex flex-col items-center justify-center gap-6 sm:mt-12 sm:flex-row sm:gap-12">
             <Link
               href="/events"
@@ -130,7 +142,9 @@ export default async function HomePage() {
             </Link>
           </div>
         </section>
+        </Reveal>
 
+        <Reveal>
         <section id="artists" className="bg-sand px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-[120px] lg:pt-[110px]">
           <h2 className="mb-3 text-center text-[15px] font-semibold uppercase tracking-[0.18em] text-ink">
             {siteData.artistsPreview.title}
@@ -172,11 +186,17 @@ export default async function HomePage() {
             </Link>
           </div>
         </section>
+        </Reveal>
 
-        <InstagramFeed data={instagram} />
+        <Reveal>
+          <Reviews data={reviews} />
+        </Reveal>
 
-        <Reviews data={reviews} />
+        <Reveal>
+          <InstagramFeed data={instagram} />
+        </Reveal>
 
+        <Reveal>
         <section id="visit" className="grid min-h-0 grid-cols-1 lg:min-h-[620px] lg:grid-cols-2">
           <LocationMap query={siteData.visit.mapQuery} className="min-h-[320px] lg:min-h-[620px]" />
           <div className="flex flex-col items-center justify-center gap-8 px-5 py-14 text-center sm:gap-10 sm:px-10 sm:py-20 lg:px-[60px]">
@@ -208,7 +228,13 @@ export default async function HomePage() {
             </Link>
           </div>
         </section>
+        </Reveal>
 
+        <Reveal>
+          <FAQ />
+        </Reveal>
+
+        <Reveal>
         <section
           id="newsletter"
           className="flex flex-col items-center gap-7 bg-ink px-5 py-16 text-white sm:gap-9 sm:px-8 sm:py-20 lg:px-10 lg:py-[110px]"
@@ -221,6 +247,7 @@ export default async function HomePage() {
           </p>
           <NewsletterForm />
         </section>
+        </Reveal>
 
         <SiteFooter variant="full" />
       </div>

@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useSyncExternalStore,
 } from "react";
 
@@ -70,7 +71,12 @@ export function CartProvider({
   maxQty?: number;
   children: React.ReactNode;
 }) {
-  MAX = maxQty;
+  // Sync the module-level cap outside of render, then re-clamp whatever is in
+  // storage so subscribers see a value within the new cap.
+  useEffect(() => {
+    MAX = maxQty;
+    writeQty(readQty());
+  }, [maxQty]);
   const qty = useSyncExternalStore(subscribe, readQty, () => 0);
 
   const add = useCallback(() => writeQty(readQty() + 1), []);
