@@ -150,7 +150,7 @@ try {
     ["works_heading", "On the shelf"],
     [
       "works_footer",
-      "Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.",
+      "Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist.",
     ],
     ["sold_label", "(sold)"],
     ["prev_artist_label", "Previous artist"],
@@ -171,7 +171,7 @@ try {
       counter_line = COALESCE(NULLIF(counter_line, ''), 'At the counter - {price}'),
       since_line = COALESCE(NULLIF(since_line, ''), 'On the shelf since {since}'),
       works_heading = COALESCE(NULLIF(works_heading, ''), 'On the shelf'),
-      works_footer = COALESCE(NULLIF(works_footer, ''), 'Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.'),
+      works_footer = COALESCE(NULLIF(works_footer, ''), 'Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist.'),
       sold_label = COALESCE(NULLIF(sold_label, ''), '(sold)'),
       prev_artist_label = COALESCE(NULLIF(prev_artist_label, ''), 'Previous artist'),
       next_artist_label = COALESCE(NULLIF(next_artist_label, ''), 'Next artist'),

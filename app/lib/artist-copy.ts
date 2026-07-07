@@ -19,7 +19,7 @@ export const DEFAULT_ARTIST_COPY: ArtistPageCopy = {
   sinceLine: "On the shelf since {since}",
   worksHeading: "On the shelf",
   worksFooter:
-    "Every piece is sold at the counter only - no shipping, no holds. Seventy percent goes directly to {firstName}.",
+    "Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist.",
   soldLabel: "(sold)",
   prevArtistLabel: "Previous artist",
   nextArtistLabel: "Next artist",

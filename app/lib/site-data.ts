@@ -258,7 +258,7 @@ export const siteData = {
         id: "artists",
         question: "How does the artist shelf work?",
         answer:
-          "Local makers display work at the counter. Seventy percent of every sale goes directly to the artist, paid monthly. Pieces are sold in person only, with no shipping or holds. Interested in joining the shelf? Send five photos and a short intro to artists@curitiba.cafe.",
+          "Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist. Interested in joining the shelf? Send five photos and a short intro to artists@curitiba.cafe.",
       },
       {
         id: "wifi",
@@ -402,17 +402,17 @@ export const siteData = {
   artistsPage: {
     eyebrow: "The artist shelf",
     title: "Local artists",
-    body: "Every piece at the counter is made within walking distance of it. Seventy percent of each sale goes directly to the artist - the rest keeps the shelf running.",
+    body: "Work by neighborhood makers, sold at the counter. Seventy percent of every sale goes directly to the artist.",
     featured: {
       name: "Jaime Rodriguez",
       medium: "Futuro Photography",
-      bio: "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. His \"Dizzy\" print comes from his very first concert photography assignment. Original prints are available at the counter.",
+      bio: "Jaime Rodriguez captures New York City through Futuro Photography, from 1980s street portraits to legendary jazz nights at The Blue Note. His \"Dizzy\" print comes from his very first concert photography assignment.",
       price: "At the counter - from $100",
       imagePlaceholder: "Jaime Rodriguez - Futuro Photography",
     },
     sell: {
       title: "Join the shelf",
-      body: "We rotate three makers every quarter. If you live or work in the neighborhood and make something with your hands, send us five photos and a line about yourself. Seventy percent of every sale is yours, paid monthly.",
+      body: "We rotate three makers every quarter. If you live or work in the neighborhood and make something with your hands, send us five photos and a line about yourself.",
       cta: "Apply to the shelf",
       ctaHref:
         "mailto:artists@curitiba.cafe?subject=Application%20-%20The%20artist%20shelf",
@@ -498,7 +498,7 @@ export const artistProfiles: Record<string, ArtistProfileData> = {
     price: "from $100",
     since: "July 2026",
     link: "#",
-    bio: "Jaime Rodriguez captures New York City through Futuro Photography — from 1980s street portraits to legendary jazz nights at The Blue Note. Original prints, signed and ready to hang.",
+    bio: "Jaime Rodriguez captures New York City through Futuro Photography, from 1980s street portraits to legendary jazz nights at The Blue Note.",
     quote: "The image you see is an original print from the moment it happened.",
     portraitPlaceholder: "Jaime Rodriguez - Futuro Photography",
     portraitImageUrl: "/assets/artists/jaime-rodriguez/work-3.jpg",
